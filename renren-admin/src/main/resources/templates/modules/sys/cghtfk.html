@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>采购合同付款</title>
+		<#include "/header.html">
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn">
+           <div>
+				<label class="form-inline" />合同名称：<input type="text" class="form-control" v-model="q.htmc" @keyup.enter="query" >
+				<label class="form-inline" />合同编号：<input type="text" class="form-control" v-model="q.htbh" @keyup.enter="query" >
+				<label class="form-inline" />合同类型：<input type="text" class="form-control" v-model="q.htlx" @keyup.enter="query" >
+				
+				<a class="btn btn-default form-inline" @click="query">查询</a>
+			
+			</div>
+			<#if shiro.hasPermission("sys:cghtfk:save")>
+            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+			</#if>
+			<#if shiro.hasPermission("sys:cghtfk:update")>
+            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+			</#if>
+			<#if shiro.hasPermission("sys:cghtfk:delete")>
+            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+			</#if>
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form class="form-horizontal">
+														                    <div class="form-group">
+                        <div class="col-sm-2 control-label">所属项目名称</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtfk.ssxmmc" placeholder="所属项目名称"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">合同编号</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtfk.htzt" placeholder="合同编号"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">合同名称</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtfk.htmc" placeholder="合同名称"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">合同编号</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtfk.htbh" placeholder="合同编号"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">支付编号</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtfk.zfbh" placeholder="支付编号"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">支付类别</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtfk.zflb" placeholder="支付类别"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">付款方式</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtfk.fkfs" placeholder="付款方式"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">付款方</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtfk.fkf" placeholder="付款方"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">付款方联系人</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtfk.fkflxr" placeholder="付款方联系人"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">申请方</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtfk.sqf" placeholder="申请方"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">申请方联系人</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtfk.sqflxr" placeholder="申请方联系人"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">发票情况</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtfk.fpqk" placeholder="发票情况"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">期数</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtfk.qs" placeholder="期数"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">发票类型</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtfk.fplx" placeholder="发票类型"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">同步NC</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtfk.tbnc" placeholder="同步NC"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">总金额</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtfk.zje" placeholder="总金额"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">本次付款金额</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtfk.bcfkje" placeholder="本次付款金额"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">已付款金额</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtfk.yfkje" placeholder="已付款金额"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">剩余付款金额</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtfk.syfkje" placeholder="剩余付款金额"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">付款理由</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtfk.fkly" placeholder="付款理由"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">备注</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtfk.bz" placeholder="备注"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">扣发发票税金</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtfk.kffpsj" placeholder="扣发发票税金"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">税金比率</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtfk.sjbl" placeholder="税金比率"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">是否发票补齐</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtfk.sffpbq" placeholder="是否发票补齐"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"></div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtfk.czr" placeholder=""/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"></div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtfk.czsj" placeholder=""/>
+                        </div>
+                    </div>
+							            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/sys/cghtfk.js?_${.now?long}"></script>
+</body>
+</html>

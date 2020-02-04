@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.modules.sys.dao.BzjfkDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.renren.modules.sys.entity.BzjfkEntity" id="bzjfkMap">
+        <result property="bzjfkId" column="bzjfk_id"/>
+        <result property="xmmc" column="xmmc"/>
+        <result property="hsdyfzr" column="hsdyfzr"/>
+        <result property="sfzfbzj" column="sfzfbzj"/>
+        <result property="skdw" column="skdw"/>
+        <result property="khyh" column="khyh"/>
+        <result property="skdwlxr" column="skdwlxr"/>
+        <result property="skdwdh" column="skdwdh"/>
+        <result property="yhzh" column="yhzh"/>
+        <result property="fkfs" column="fkfs"/>
+        <result property="tbbzj" column="tbbzj"/>
+        <result property="hkjzrq" column="hkjzrq"/>
+        <result property="tbnc" column="tbnc"/>
+        <result property="cwbh" column="cwbh"/>
+        <result property="fkly" column="fkly"/>
+        <result property="xmxq" column="xmxq"/>
+        <result property="bz" column="bz"/>
+        <result property="spzt" column="spzt"/>
+        <result property="cjr" column="cjr"/>
+        <result property="cjsj" column="cjsj"/>
+        <result property="czr" column="czr"/>
+        <result property="czsj" column="czsj"/>
+    </resultMap>
+
+
+</mapper>

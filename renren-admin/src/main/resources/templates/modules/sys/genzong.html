@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>项目跟踪监控</title>
+		<#include "/header.html">
+</head>
+<body>
+<div id="rrapp" v-cloak>
+     <div v-show="showList">
+        <div class="grid-btn">
+			<div class="row" >
+			<div>
+				 <label class="form-inline" />项目名称：<input class="form-control"  type="text"  v-model="q.xmname" @keyup.enter="query" >	
+				 <label class="form-inline" />申请部门：<input class="form-control"  type="text"  v-model="q.xmbh"  @keyup.enter="query">	
+				 <label class="form-inline" />进展状况：<input class="form-control"  type="text"  v-model="q.jzzk"  @keyup.enter="query" >	
+				<a class="btn btn-default  form-inline" @click="query">查询</a>
+			</div>
+			</div>
+			
+			
+		
+			<#if shiro.hasPermission("sys:genzong:update")>
+            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;查看</a>
+			</#if>
+		
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form class="form-horizontal">
+															         			                    <div class="form-group">
+                        <div class="col-sm-2 control-label">项目名称</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" class="form-control" v-model="genzong.xmname" placeholder="项目名称"/>
+                        
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">项目编号</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" class="form-control" v-model="genzong.xmbh" placeholder="项目编号"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">核算单元</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" class="form-control" v-model="genzong.hsdy" placeholder="核算单元"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">核算单元负责人</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" class="form-control" v-model="genzong.hsdyfzr" placeholder="核算单元负责人"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">核算单元负责人电话</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" class="form-control" v-model="genzong.hsfzrdh" placeholder="核算单元负责人电话"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">行业</div>
+                        <div class="col-sm-10">
+<!--                             <input type="text" class="form-control" v-model="genzong.hy" placeholder="行业"/>
+ -->                            <input type="text"   readonly class="form-control" v-model="genzong.hy" id="">
+                            	
+                            	
+                            </select>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">申请部门</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" class="form-control" v-model="genzong.sqbm" placeholder="申请编号"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">经办人</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" class="form-control" v-model="genzong.jbr" placeholder="经办人"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">经办人电话</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" class="form-control" v-model="genzong.jbrdh" placeholder="经办人电话"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                    <!--     <div class="col-sm-2 control-label">申请时间</div>
+                        <div class="col-sm-10"> -->
+                           <!--  <input type="text" class="form-control" v-model="genzong.sqsj" placeholder="申请时间"/> -->
+			               
+		 			            <div class="form-group">
+					                <input type="hidden" id="datetimepicker"   v-model="genzong.sqsj" class="form-control" value="111111"  placeholder="">
+					    <!--          <button onclick="show()" type="button"  class="btn btn-primary">显示</button>
+					             <button onclick="update()" type="button"  class="btn btn-primary">更新</button> -->
+					             
+					      <!--     <span class="input-group-addon">
+
+				                   	 <span onclick="show()" class="glyphicon glyphicon-calendar"></span>
+				
+				                	</span> -->
+					            </div>   
+					     
+		
+					           
+					           
+					        
+
+
+				         <!--    <script>
+				          //使用当前输入框中的值更新日期时间选择器。
+				       	
+				       
+				       			
+				       		
+				       		
+				            function update(){
+				                $('#datetimepicker').datetimepicker('update');
+				            }
+				            //显示日期时间选择器。
+				            function show(){
+				                $('#datetimepicker').datetimepicker('show');
+				            }
+
+				            //移除日期时间选择器。同时移除已经绑定的event、内部绑定的对象和HTML元素。
+				            function remove(){
+				                $('#datetimepicker').datetimepicker('remove');
+				            }
+
+				            //隐藏日期时间选择器。
+				            function hide(){
+				                $('#datetimepicker').datetimepicker('hide');
+				            }
+				  
+				            $('#datetimepicker').datetimepicker({
+				                language: 'zh-CN',//显示中文
+				                format: 'yyyy-mm-dd',//显示格式
+				                minView: "month",//设置只显示到月份
+				                initialDate: new Date(),
+				                todayBtn: true,//显示今日按钮
+				                autoclose: true,//选中自动关闭
+				                locale: moment.locale('zh-cn')
+				            });
+				   
+				            </script> -->
+                  <!--       </div>
+                    </div> -->
+              
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">项目所在区域</div>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control" v-model="genzong.xmszqy" placeholder="项目所在区域"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">地区负责人姓名</div>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control" v-model="genzong.dqfzrxm" placeholder="地区负责人姓名"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">地区负责人电话</div>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control" v-model="genzong.dqfzrdh" placeholder="地区负责人电话"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">业务内容概况</div>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control" v-model="genzong.ywnrgk" placeholder="业务内容概况"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">形象进度</div>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control" v-model="genzong.xxjd" placeholder="形象进度"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">主要决策部门及决策人</div>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control" v-model="genzong.jcbmjcr" placeholder="主要决策部门及决策人"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">其他信息</div>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control" v-model="genzong.qtxx" placeholder="其他信息"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">报备事由</div>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control" v-model="genzong.bbsy" placeholder="报备事由"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">备注</div>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control" v-model="genzong.bz" placeholder="备注"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">投资建设单位</div>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control" v-model="genzong.tzjsdw" placeholder="投资建设单位"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">企业性质</div>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control" v-model="genzong.qyxz" placeholder="企业性质"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">项目地址</div>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control" v-model="genzong.xmdz" placeholder="项目地址"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">建设规模</div>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control" v-model="genzong.jsgm" placeholder="建设规模"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">拟招标形式</div>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control" v-model="genzong.nzbxs" placeholder="拟招标形式"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">弱电系统概算（万元）</div>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control" v-model="genzong.rdxtgs" placeholder="弱电系统概算（万元）"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">资金来源</div>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control" v-model="genzong.zjly" placeholder=""/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">信息来源</div>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control" v-model="genzong.xxly" placeholder=""/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">目前状况</div>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control" v-model="genzong.mqzk" placeholder=""/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">跟踪情况</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" class="form-control" v-model="genzong.gzqk" placeholder=""/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">预计招标时间</div>
+                        <div class="col-sm-10">
+<!--                    <input type="text" class="form-control" v-model="genzong.yzbsj" placeholder=""/>
+ -->                        
+ 							           <div class="input-group">
+					                <input readonly type="text" id="datetimepicker1"  v-model="genzong.yzbsj" class="form-control"  placeholder="请选择日期">
+<!-- 					             <button onclick="show()" type="button"  class="btn btn-primary">显示</button>
+ -->			<!-- 		             <span class="input-group-addon">
+
+				                   	 <span onclick="show1()" class="glyphicon glyphicon-calendar"></span>
+				
+				                	</span> -->
+					            </div>
+					                  <script>
+				     
+				            //显示日期时间选择器。
+				            function show1(){
+				                $('#datetimepicker1').datetimepicker('show');
+				            }
+
+				        
+				  
+				            $('#datetimepicker1').datetimepicker({
+				                language: 'zh-CN',//显示中文
+				                format: 'yyyy-mm-dd',//显示格式
+				                minView: "month",//设置只显示到月份
+				                initialDate: new Date(),
+				                todayBtn: true,//显示今日按钮
+				                autoclose: true,//选中自动关闭
+				                locale: moment.locale('zh-cn')
+				            });
+				   
+				            </script>
+ 						</div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">项目概况</div>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control" v-model="genzong.xmgk" placeholder=""/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">竞争优势及关系资源
+                  </div>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control" v-model="genzong.jzysgxzy" placeholder=""/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">负责人</div>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control" v-model="genzong.fzr" placeholder=""/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">联系方式</div>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control" v-model="genzong.fzrdh" placeholder=""/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">项目分管领导</div>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control" v-model="genzong.fgld" placeholder=""/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">联系方式</div>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control" v-model="genzong.fglddh" placeholder=""/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">部门负责人</div>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control" v-model="genzong.bmfzr" placeholder=""/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">联系方式</div>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control" v-model="genzong.bmfzrdh" placeholder=""/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">项目专业工程师</div>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control" v-model="genzong.zygcs" placeholder=""/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">总包单位名称</div>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control" v-model="genzong.zbdwmc" placeholder=""/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">联系人</div>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control" v-model="genzong.zblxr" placeholder=""/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">电话</div>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control" v-model="genzong.zbdh" placeholder=""/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">招标代理名称</div>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control" v-model="genzong.zbdlmc" placeholder=""/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">联系人</div>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control" v-model="genzong.dllxr" placeholder=""/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">电话</div>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control" v-model="genzong.dldh" placeholder=""/>
+                        </div>
+                    </div>
+				
+							            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+          <!--       <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="读取中..." @click="saveOrUpdate" value="保存"/> -->
+                <!-- &nbsp;&nbsp; --><input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+            </div>
+        </form>
+      
+    </div>
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/sys/genzongjiankong.js?_${.now?long}"></script>
+</body>
+</html>

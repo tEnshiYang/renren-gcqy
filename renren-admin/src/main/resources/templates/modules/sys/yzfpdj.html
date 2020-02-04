@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>业主发票登记</title>
+		<#include "/header.html">
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn">
+			<#if shiro.hasPermission("sys:yzfpdj:save")>
+            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+			</#if>
+			<#if shiro.hasPermission("sys:yzfpdj:update")>
+            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+			</#if>
+			<#if shiro.hasPermission("sys:yzfpdj:delete")>
+            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+			</#if>
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form class="form-horizontal">
+														                    <div class="form-group">
+                        <div class="col-sm-2 control-label">项目名称</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzfpdj.xmmc" placeholder="项目名称"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">审批状态</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzfpdj.spzt" placeholder="审批状态"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">项目地址</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzfpdj.xmdz" placeholder="项目地址"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">合同名称</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzfpdj.htmc" placeholder="合同名称"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">合同编号</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzfpdj.htbh" placeholder="合同编号"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">申请时间</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzfpdj.sqsj" placeholder="申请时间"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">申请人</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzfpdj.sqr" placeholder="申请人"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">单位地址</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzfpdj.dwdz" placeholder="单位地址"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">单位电话</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzfpdj.dwdh" placeholder="单位电话"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">单位开户银行</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzfpdj.dwkhyh" placeholder="单位开户银行"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">单位开户账号</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzfpdj.dwkhzh" placeholder="单位开户账号"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">单位全称</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzfpdj.dwqc" placeholder="单位全称"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">暂扣金额</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzfpdj.zkje" placeholder="暂扣金额"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">单位纳税识别号</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzfpdj.dwnssbh" placeholder="单位纳税识别号"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">金额</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzfpdj.je" placeholder="金额"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">发票类型</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzfpdj.fplx" placeholder="发票类型"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">开票税率</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzfpdj.kpsl" placeholder="开票税率"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">项目到票明细</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzfpdj.xudpmx" placeholder="项目到票明细"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">开票内容</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzfpdj.kpnr" placeholder="开票内容"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">备注</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzfpdj.bz" placeholder="备注"/>
+                        </div>
+                    </div>
+							            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/sys/yzfpdj.js?_${.now?long}"></script>
+</body>
+</html>

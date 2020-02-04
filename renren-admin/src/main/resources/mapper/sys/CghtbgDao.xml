@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.modules.sys.dao.CghtbgDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.renren.modules.sys.entity.CghtbgEntity" id="cghtbgMap">
+        <result property="cghtbgId" column="cghtbg_id"/>
+        <result property="ssxmmc" column="ssxmmc"/>
+        <result property="spzt" column="spzt"/>
+        <result property="htmc" column="htmc"/>
+        <result property="bgbh" column="bgbh"/>
+        <result property="bgbt" column="bgbt"/>
+        <result property="htyje" column="htyje"/>
+        <result property="bcbgje" column="bcbgje"/>
+        <result property="sqrxm" column="sqrxm"/>
+        <result property="bghje" column="bghje"/>
+        <result property="yfdw" column="yfdw"/>
+        <result property="yflxr" column="yflxr"/>
+        <result property="bgje" column="bgje"/>
+        <result property="bgyy" column="bgyy"/>
+        <result property="bz" column="bz"/>
+    </resultMap>
+
+
+</mapper>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.modules.sys.dao.XmDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.renren.modules.sys.entity.XmEntity" id="xmMap">
+        <result property="xmId" column="xm_id"/>
+        <result property="xmname" column="xmname"/>
+        <result property="xmsname" column="xmsname"/>
+        <result property="gcBh" column="gcbh"/>
+        <result property="xmHb" column="xmhb"/>
+        <result property="jsdw" column="jsdw"/>
+        <result property="kgrq" column="kgrq"/>
+        <result property="wgrq" column="wgrq"/>
+        <result property="hsdy" column="hsdy"/>
+        <result property="hsdyfzr" column="hsdyfzr"/>
+        <result property="xmjl" column="xmjl"/>
+        <result property="dd" column="dd"/>
+        <result property="sm" column="sm"/>
+        <result property="zjjl" column="zjjl"/>
+        <result property="aqpxjl" column="aqpxjl"/>
+        <result property="khmyd" column="khmyd"/>
+        <result property="filepath" column="filepath"/>
+    </resultMap>
+
+
+</mapper>

@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>保证金付款</title>
+		<#include "/header.html">
+</head>
+<body>
+ <style>
+	.red{
+		color:red;
+	}
+</style>
+<script>
+    $(document).ready(function(){
+    	$('#gzform').bootstrapValidator({
+    	    // 默认的提示消息
+    	    message: 'This value is not valid',
+    	    // 表单框里右侧的icon
+    	    feedbackIcons: {
+    	      　　　　　　　　valid: 'glyphicon glyphicon-ok',
+    	      　　　　　　　　invalid: 'glyphicon glyphicon-remove',
+    	      　　　　　　　　validating: 'glyphicon glyphicon-refresh'
+    	    },
+    	    submitHandler: function (validator, form, submitButton) {
+    	      // 表单提交成功时会调用此方法
+    	      // validator: 表单验证实例对象
+    	      // form  jq对象  指定表单对象
+    	      // submitButton  jq对象  指定提交按钮的对象
+    	    },
+    	    fields: {
+    	    	xmmc: {
+    	       
+    	        validators: {
+    	          notEmpty: {
+    	            message: '该项不能为空'
+    	          }
+    	        }
+    	       
+    	      },
+    	      hsdyfzr: {
+    	        
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      sfzfbzj: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      skdw: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      khyh: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      skdwlxr: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      skdwdh: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      yhzh: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      fkfs: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      hkjzrq: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      }
+    	    }
+    	  });
+    	  
+
+    	});
+    	
+    	
+    </script>
+<div id="rrapp" v-cloak>
+<span id="syssqr" style="display:none;">{{user.username}}</span>
+
+    <div v-show="showList">
+        <div class="grid-btn">
+        	<div class="row" >
+			<div>
+				<label class="form-inline" />付款方式：<input class="form-control"  type="text"  v-model="q.fkfs" @keyup.enter="query" >	
+				
+				 <label class="form-inline" />回款单位：<input class="form-control"  type="text"  v-model="q.skdw"  @keyup.enter="query" >	
+			<a class="btn btn-default form-inline" @click="query">查询</a>
+			</div>
+			</div>
+			<#if shiro.hasPermission("sys:bzjfk:save")>
+            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+			</#if>
+			<#if shiro.hasPermission("sys:bzjfk:update")>
+            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+			</#if>
+			<#if shiro.hasPermission("sys:bzjfk:delete")>
+            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+			</#if>
+			<a class="btn btn-primary" @click="shenpi" id="shenpi"><i class="fa fa-pencil-square-o"></i>&nbsp;审批</a>
+			
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form id="gzform" class="form-horizontal">
+						   <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>项目名称</div>
+                        <div class="col-sm-10 ">
+                        <div class="input-group">
+                            <input readonly type="text" name="xmmc" class="form-control" id="xmmc" v-model="bzjfk.xmmc" placeholder="项目名称"/>
+                           <span class="input-group-addon" data-toggle="modal" data-target="#myModal" >+</span>
+                       </div>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>核算单元负责人</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text"  name="hsdyfzr" class="form-control" id="hsdyfzr" v-model="bzjfk.hsdyfzr" placeholder="核算单元负责人"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>是否支付保证金</div>
+                        <div class="col-sm-10">
+<!--                             <input type="text" name="sfzfbzj" class="form-control" v-model="bzjfk.sfzfbzj" placeholder="是否支付保证金"/>
+ -->                         <select class="form-control" name="sfzfbzj" v-model="bzjfk.sfzfbzj" id="">
+  							<option value="是">是</option>
+  							<option value="否">否</option>
+  						
+  
+ 						</select>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>收款单位</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="skdw" class="form-control" v-model="bzjfk.skdw" placeholder="收款单位"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>开户银行</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="khyh" class="form-control" v-model="bzjfk.khyh" placeholder="开户银行"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>收款单位联系人</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="skdwlxr" class="form-control" v-model="bzjfk.skdwlxr" placeholder="收款单位联系人"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>收款单位联系方式</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="skdwdh" class="form-control" v-model="bzjfk.skdwdh" placeholder="收款单位联系方式"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>银行账号</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="yhzh" class="form-control" v-model="bzjfk.yhzh" placeholder="银行账号"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>付款方式</div>
+                        <div class="col-sm-10">
+<!--                             <input type="text" name="fkfs" class="form-control" v-model="bzjfk.fkfs" placeholder="付款方式"/>
+ -->                           <select class="form-control" name="fkfs" v-model="bzjfk.fkfs" id="">
+                    		  <option value="网银">网银</option>
+                    		  <option value="本票">本票</option>
+                    		  <option value="汇票">汇票</option>
+                    		  <option value="电汇">电汇</option>
+                    		  <option value="支票">支票</option>
+                    		  <option value="现金">现金</option>
+                    		  <option value="银行承兑汇票">银行承兑汇票</option>
+                    		  <option value="其他">其他</option>
+                    		  
+                    	  </select>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">投标保证金(元)</div>
+                        <div class="col-sm-10">
+                            <input type="text"  class="form-control" v-model="bzjfk.tbbzj" placeholder="投标保证金(元)"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>汇款截止时间</div>
+                       <!--  <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="bzjfk.hkjzrq" placeholder="汇款截止时间"/>
+                        </div> -->
+                              <!-- 日期选择 -->
+                            <div class="col-sm-10">
+                     
+ 				
+				           <div >
+				           <div class="input-group">
+								
+							
+		                    <input name="hkjzrq" readonly type='text' class="form-control" id='datetime' />
+							<span class="input-group-addon"><span onClick=show() class="glyphicon glyphicon-th"></span></span>
+							<input type="hidden" id="yzbdate" v-model="bzjfk.hkjzrq"  value="" />
+		
+							</div>
+		<script>
+			function show(){
+				$('#datetime').datetimepicker('show');
+			}
+			$(function() {
+				$('#datetime')
+				.datetimepicker()
+				.on('changeDate', function(ev){
+				  var da=$('#datetime').val()+'';
+				  $('#yzbdate').val(da);
+				
+
+				});
+				$("#datetime").datetimepicker({
+					 language : 'zh-CN',
+                     //format : 'yyyy-mm-dd hh:ii:ss',//日期格式。可以将日期格式，定成年月日时分秒。
+                     format : 'yyyy-mm-dd hh:ii:ss',//日期格式。可以将日期格式，定成年月日时，分秒为0。
+                     weekStart: 1,
+                     todayBtn:  1,
+                     autoclose: 1,
+                     todayHighlight: 1,
+                     startView: 2,
+                     forceParse: 0,
+                     showMeridian: 1
+					
+				});
+			});
+		</script>
+
+				            </div>
+				             
+ 						</div>
+ 						<!--日期选择完  -->
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>同步NC</div>
+                        <div class="col-sm-10">
+<!--                             <input type="text" name="tbnc" class="form-control" v-model="bzjfk.tbnc" placeholder="同步NC"/>
+ -->                          <select class="form-control" name="tbnc" v-model="bzjfk.tbnc" id="">
+                    		  <option value="NC">NC</option>
+                    	
+                    		  <option value="其他">其他</option>
+                    		  
+                    	  </select>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">财务编号</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="bzjfk.cwbh" placeholder="财务编号"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">付款理由</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="bzjfk.fkly" placeholder="付款理由"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">项目需求</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="bzjfk.xmxq" placeholder="项目需求"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">备注</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="bzjfk.bz" placeholder="备注"/>
+                        </div>
+                    </div>
+											                   
+						
+							
+							            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+            </div>
+        </form>
+    </div>
+       <div class="container">
+    
+    
+     
+        <!-- 模态框（Modal） -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            选择人员
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                     <div class="grid-btn">
+                    	<div>
+ 							<label class="form-inline" />项目名称：<input type="text" v-model="ry.xmmc" class="form-control"  @keyup.enter="query1" >
+ 			
+							</div>
+						<a class="btn btn-default" @click="query1">查询</a>
+						</div>
+							
+                         <table id="ryGrid"></table>
+       					 <div id="ryGridPager"></div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" @click="saveusername" class="btn btn-primary">
+                        		    确定
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal  $("input[name='FORMID']").val(); -->
+        </div>
+     <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            审核
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                     <div class="grid-btn">
+                     <div  class="panel panel-default">
+        <div class="panel-heading">审批</div>
+        <form class="form-horizontal">
+						 <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>项目名称</div>
+                        <div class="col-sm-10 ">
+                        <div class="input-group">
+                            <input readonly type="text" name="xmmc" class="form-control" id="xmmc" v-model="bzjfk.xmmc" placeholder="项目名称"/>
+                           <span class="input-group-addon" data-toggle="modal" data-target="#myModal" >+</span>
+                       </div>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>核算单元负责人</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text"  name="hsdyfzr" class="form-control" id="hsdyfzr" v-model="bzjfk.hsdyfzr" placeholder="核算单元负责人"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>是否支付保证金</div>
+                        <div class="col-sm-10">
+<!--                             <input type="text" name="sfzfbzj" class="form-control" v-model="bzjfk.sfzfbzj" placeholder="是否支付保证金"/>
+ -->                         <select readonly class="form-control" name="sfzfbzj" v-model="bzjfk.sfzfbzj" id="">
+  							<option value="是">是</option>
+  							<option value="否">否</option>
+  						
+  
+ 						</select>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>收款单位</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" name="skdw" class="form-control" v-model="bzjfk.skdw" placeholder="收款单位"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>开户银行</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" name="khyh" class="form-control" v-model="bzjfk.khyh" placeholder="开户银行"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>收款单位联系人</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" name="skdwlxr" class="form-control" v-model="bzjfk.skdwlxr" placeholder="收款单位联系人"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>收款单位联系方式</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" name="skdwdh" class="form-control" v-model="bzjfk.skdwdh" placeholder="收款单位联系方式"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>银行账号</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" name="yhzh" class="form-control" v-model="bzjfk.yhzh" placeholder="银行账号"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>付款方式</div>
+                        <div class="col-sm-10">
+<!--                             <input type="text" name="fkfs" class="form-control" v-model="bzjfk.fkfs" placeholder="付款方式"/>
+ -->                           <select readonly class="form-control" name="fkfs" v-model="bzjfk.fkfs" id="">
+                    		  <option value="网银">网银</option>
+                    		  <option value="本票">本票</option>
+                    		  <option value="汇票">汇票</option>
+                    		  <option value="电汇">电汇</option>
+                    		  <option value="支票">支票</option>
+                    		  <option value="现金">现金</option>
+                    		  <option value="银行承兑汇票">银行承兑汇票</option>
+                    		  <option value="其他">其他</option>
+                    		  
+                    	  </select>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">投标保证金(元)</div>
+                        <div class="col-sm-10">
+                            <input type="text" readonly  class="form-control" v-model="bzjfk.tbbzj" placeholder="投标保证金(元)"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>汇款截止时间</div>
+                       <!--  <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="bzjfk.hkjzrq" placeholder="汇款截止时间"/>
+                        </div> -->
+                              <!-- 日期选择 -->
+                            <div class="col-sm-10">
+                     
+ 				
+				           <div >
+				           <div class="input-group">
+								
+							
+		                    <input readonly name="hkjzrq" readonly type='text' class="form-control" id='datetime' />
+							<span class="input-group-addon"><span onClick=show() class="glyphicon glyphicon-th"></span></span>
+							<input readonly type="hidden" id="yzbdate" v-model="bzjfk.hkjzrq"  value="" />
+		
+							</div>
+	
+
+				            </div>
+				             
+ 						</div>
+ 						<!--日期选择完  -->
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>同步NC</div>
+                        <div class="col-sm-10">
+<!--                             <input type="text" name="tbnc" class="form-control" v-model="bzjfk.tbnc" placeholder="同步NC"/>
+ -->                          <select readonly class="form-control" name="tbnc" v-model="bzjfk.tbnc" id="">
+                    		  <option value="NC">NC</option>
+                    	
+                    		  <option value="其他">其他</option>
+                    		  
+                    	  </select>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">财务编号</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" class="form-control" v-model="bzjfk.cwbh" placeholder="财务编号"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">付款理由</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" class="form-control" v-model="bzjfk.fkly" placeholder="付款理由"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">项目需求</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" class="form-control" v-model="bzjfk.xmxq" placeholder="项目需求"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">备注</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" class="form-control" v-model="bzjfk.bz" placeholder="备注"/>
+                        </div>
+                    </div>
+                    						                    <div class="form-group">
+                        <div class="col-sm-2 control-label">是否审批通过</div>
+                        <div class="col-sm-10">
+                            <input readonly type="checkbox" id="sptg" class="form-control" />
+                        </div>
+                    </div>
+					
+        </form>
+    </div> 
+                    
+						
+						</div>
+							
+                       
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" @click="saveOrUpdate" class="btn btn-primary">
+                        		    确定
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal  $("input[name='FORMID']").val(); -->
+        </div>
+    
+    </div>
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/sys/bzjfk.js?_${.now?long}"></script>
+</body>
+</html>

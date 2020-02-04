@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>项目跟踪报备</title>
+		<#include "/header.html">
+	<link rel="stylesheet" href="${request.contextPath}/statics/css/bootstrap-table.min.css">
+		<link rel="stylesheet" href="${request.contextPath}/statics/plugins/treegrid/jquery.treegrid.css">
+		<script src="${request.contextPath}/statics/libs/bootstrap-table.min.js"></script>
+		<script src="${request.contextPath}/statics/plugins/treegrid/jquery.treegrid.min.js"></script>
+		<script src="${request.contextPath}/statics/plugins/treegrid/jquery.treegrid.bootstrap3.js"></script>
+		<script src="${request.contextPath}/statics/plugins/treegrid/jquery.treegrid.extension.js"></script>
+		<script src="${request.contextPath}/statics/plugins/treegrid/tree.table.js"></script>
+<link rel="stylesheet" href="${request.contextPath}/statics/css/bootstrapValidator.min.css">
+<script src="${request.contextPath}/statics/js/bootstrapValidator.min.js"></script>
+</head>
+<body>
+
+<style>
+		.container {
+			height: 50px;
+			line-height: 50px;
+			vertical-align: bottom;
+		}
+		.fake-file-btn {
+			position: relative;
+			display: inline-block;
+			background: #D0EEFF;
+			border: 1px solid #99D3F5;
+			border-radius: 4px;
+			padding: 4px 12px;
+			overflow: hidden;
+			color: #1E88C7;
+			text-decoration: none;
+			text-indent: 0;
+			line-height: 20px;
+		}
+		.fake-file-btn:active {
+			box-shadow: 0 1px 5px 1px rgba(0, 255, 255, 0.3) inset;
+		}
+		.fake-file-btn input[type=file] {
+			position: absolute;
+			font-size: 100px;
+			right: 0;
+			top: 0;
+			opacity: 0;
+			filter: alpha(opacity=0);
+			cursor: pointer
+		}
+	</style>
+<script>
+$(document).ready(function(){
+$('#gzform').bootstrapValidator({
+    // 默认的提示消息
+    message: 'This value is not valid',
+    // 表单框里右侧的icon
+    feedbackIcons: {
+      　　　　　　　　valid: 'glyphicon glyphicon-ok',
+      　　　　　　　　invalid: 'glyphicon glyphicon-remove',
+      　　　　　　　　validating: 'glyphicon glyphicon-refresh'
+    },
+    submitHandler: function (validator, form, submitButton) {
+      // 表单提交成功时会调用此方法
+      // validator: 表单验证实例对象
+      // form  jq对象  指定表单对象
+      // submitButton  jq对象  指定提交按钮的对象
+    },
+    fields: {
+    	xmname: {
+       
+        validators: {
+          notEmpty: {
+            message: '该项不能为空'
+          }
+        }
+       
+      },
+      xmbh: {
+        
+          validators: {
+            notEmpty: {
+              message: '该项不能为空'
+            }
+          }
+      },
+      hsdy: {
+          
+          validators: {
+            notEmpty: {
+              message: '该项不能为空'
+            }
+          }
+      },
+      hsdyfzr: {
+          
+          validators: {
+            notEmpty: {
+              message: '该项不能为空'
+            }
+          }
+      },
+      hsdyfzrdh: {
+          
+          validators: {
+            notEmpty: {
+              message: '该项不能为空'
+            }
+          }
+      },
+      hy: {
+          
+          validators: {
+            notEmpty: {
+              message: '该项不能为空'
+            }
+          }
+      },
+      sqbm: {
+          
+          validators: {
+            notEmpty: {
+              message: '该项不能为空'
+            }
+          }
+      },
+      jbr: {
+          
+          validators: {
+            notEmpty: {
+              message: '该项不能为空'
+            }
+          }
+      },
+      jbrdh: {
+          
+          validators: {
+            notEmpty: {
+              message: '该项不能为空'
+            }
+          }
+      },
+      xmszqy: {
+          
+          validators: {
+            notEmpty: {
+              message: '该项不能为空'
+            }
+          }
+      },
+      dqfzrxm: {
+          
+          validators: {
+            notEmpty: {
+              message: '该项不能为空'
+            }
+          }
+      },
+      xxjd: {
+          
+          validators: {
+            notEmpty: {
+              message: '该项不能为空'
+            }
+          }
+      },
+      ywnrgk: {
+          
+          validators: {
+            notEmpty: {
+              message: '该项不能为空'
+            }
+          }
+      },
+      jcbmjcr: {
+          
+          validators: {
+            notEmpty: {
+              message: '该项不能为空'
+            }
+          }
+      },
+      qtxx: {
+          
+          validators: {
+            notEmpty: {
+              message: '该项不能为空'
+            }
+          }
+      },
+      bbsy: {
+          
+          validators: {
+            notEmpty: {
+              message: '该项不能为空'
+            }
+          }
+      },
+      tzjsdw: {
+          
+          validators: {
+            notEmpty: {
+              message: '该项不能为空'
+            }
+          }
+      },
+      xmdz: {
+          
+          validators: {
+            notEmpty: {
+              message: '该项不能为空'
+            }
+          }
+      },
+      nzbxs: {
+          
+          validators: {
+            notEmpty: {
+              message: '该项不能为空'
+            }
+          }
+      },
+      rdxtgs: {
+          
+          validators: {
+            notEmpty: {
+              message: '该项不能为空'
+            }
+          }
+      },
+      zjly: {
+          
+          validators: {
+            notEmpty: {
+              message: '该项不能为空'
+            }
+          }
+      },
+      xxly: {
+          
+          validators: {
+            notEmpty: {
+              message: '该项不能为空'
+            }
+          }
+      },
+      mqzk: {
+          
+          validators: {
+            notEmpty: {
+              message: '该项不能为空'
+            }
+          }
+      },
+      gzqk: {
+          
+          validators: {
+            notEmpty: {
+              message: '该项不能为空'
+            }
+          }
+      },
+      yzbsj: {
+          
+          validators: {
+            notEmpty: {
+              message: '该项不能为空'
+            }
+          }
+      },
+      fzr: {
+          
+          validators: {
+            notEmpty: {
+              message: '该项不能为空'
+            }
+          }
+      },
+      fzrdh: {
+          
+          validators: {
+            notEmpty: {
+              message: '该项不能为空'
+            }
+          }
+      },
+      fgld: {
+          
+          validators: {
+            notEmpty: {
+              message: '该项不能为空'
+            }
+          }
+      },
+      fglddh: {
+          
+          validators: {
+            notEmpty: {
+              message: '该项不能为空'
+            }
+          }
+      },
+      bmfzr: {
+          
+          validators: {
+            notEmpty: {
+              message: '该项不能为空'
+            }
+          }
+      },
+      bmfzrdh: {
+          
+          validators: {
+            notEmpty: {
+              message: '该项不能为空'
+            }
+          }
+      },
+      zygcs: {
+          
+          validators: {
+            notEmpty: {
+              message: '该项不能为空'
+            }
+          }
+      },
+      gcsdh: {
+          
+          validators: {
+            notEmpty: {
+              message: '该项不能为空'
+            }
+          }
+      },
+      zbdwmc: {
+          
+          validators: {
+            notEmpty: {
+              message: '该项不能为空'
+            }
+          }
+      },
+      zblxr: {
+          
+          validators: {
+            notEmpty: {
+              message: '该项不能为空'
+            }
+          }
+      },
+      zbdh: {
+          
+          validators: {
+            notEmpty: {
+              message: '该项不能为空'
+            }
+          }
+      },
+      zbdlmc: {
+          
+          validators: {
+            notEmpty: {
+              message: '该项不能为空'
+            }
+          }
+      },
+      dllxr: {
+          
+          validators: {
+            notEmpty: {
+              message: '该项不能为空'
+            }
+          }
+      },
+      dldh: {
+          
+          validators: {
+            notEmpty: {
+              message: '该项不能为空'
+            }
+          }
+      }
+    }
+  });
+  
+
+});
+</script>
+<style>
+	.red{
+		color:red;
+	}
+</style>
+<div id="rrapp" v-cloak>
+	<span id="sysjbr" style="display:none;">{{user.username}}</span>
+	<span id="sysdh" style="display:none;">{{user.mobile}}</span>
+	
+    <div v-show="showList">
+        <div class="grid-btn">
+        <div class="row" >
+			<div>
+				 <label class="form-inline" />项目名称：<input class="form-control"  type="text"  v-model="q.xmname" @keyup.enter="query" >	
+				 <label class="form-inline" />申请部门：<input class="form-control"  type="text"  v-model="q.xmbh"  @keyup.enter="query">	
+				 <label class="form-inline" />进展状况：<input class="form-control"  type="text"  v-model="q.jzzk"  @keyup.enter="query" >	
+				<a class="btn btn-default  form-inline" @click="query">查询</a>
+			</div>
+			</div>
+			<#if shiro.hasPermission("sys:genzong:save")>
+            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;增加</a>
+			</#if>
+			<#if shiro.hasPermission("sys:genzong:update")>
+            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+			</#if>
+			<#if shiro.hasPermission("sys:genzong:delete")>
+            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+			</#if>
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form id="gzform" class="form-horizontal">
+															         			                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>项目名称</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="xmname" class="form-control" v-model="genzong.xmname" placeholder="项目名称"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>项目编号</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="xmbh" class="form-control" v-model="genzong.xmbh" placeholder="项目编号"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>核算单元</div>
+                        <div class="col-sm-10">
+                        <div class=" input-group">
+                            <input type="text" name="hsdy" class="form-control" readonly id="hsdy" v-model="genzong.hsdy" placeholder="核算单元"/>
+                            <span class="input-group-addon" @click="deptTree">+</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                    
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>核算单元负责人</div>
+                        <div class="col-sm-10 ">
+                        <div class=" input-group">
+                            <input type="text" name="hsdyfzr" class="form-control" readonly id="hsdyfzr" v-model="genzong.hsdyfzr" placeholder="核算单元负责人"/>
+                            <span class="input-group-addon" data-toggle="modal" data-target="#myModal" onClick="q1()">+</span>
+                        </div>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>核算单元负责人电话</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="hsdyfzrdh" class="form-control" id="hsdyfzrdh" v-model="genzong.hsfzrdh" placeholder="核算单元负责人电话"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>行业</div>
+                        <div class="col-sm-10">
+<!--                             <input type="text" class="form-control" v-model="genzong.hy" placeholder="行业"/>
+ -->                            <select name="hy" class="form-control" v-model="genzong.hy" id="">
+                            	<option value="高速机电">高速机电</option>
+                            	<option value="城市智慧交通">城市智慧交通</option>
+                            	<option value="维保">维保</option>
+                                <option value="其他">其他</option>
+                            	
+                            </select>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>申请编号</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="sqbm" class="form-control" v-model="genzong.sqbm" placeholder="申请编号"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>经办人</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="jbr" class="form-control" id="jbr" v-model="genzong.jbr"  />
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>经办人电话</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="jbrdh" class="form-control" v-model="genzong.jbrdh" value="{{user.mobile}}" placeholder="经办人电话"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                    <!--     <div class="col-sm-2 control-label">申请时间</div>
+                        <div class="col-sm-10"> -->
+                           <!--  <input type="text" class="form-control" v-model="genzong.sqsj" placeholder="申请时间"/> -->
+			               
+		 			            <div class="form-group">
+					                <input type="hidden" id="datetimepicker"   v-model="genzong.sqsj" class="form-control" value="111111"  placeholder="">
+					
+					            </div>   
+					     
+		
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>项目所在区域</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="xmszqy" class="form-control" v-model="genzong.xmszqy" placeholder="项目所在区域"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>地区负责人姓名</div>
+                        <div class="col-sm-10">
+	                         <div class=" input-group">
+	                            <input type="text" class="form-control" name="dqfzrxm" readonly id="dqfzrxm" v-model="genzong.dqfzrxm" placeholder="地区负责人姓名"/>
+	                           <span class="input-group-addon"  data-toggle="modal" data-target="#myModal" onClick="q2()">+</span>
+	                         </div>	
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">地区负责人电话</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="dqfzrdh" v-model="genzong.dqfzrdh" placeholder="地区负责人电话"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>业务内容概况</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="ywnrgk" v-model="genzong.ywnrgk" placeholder="业务内容概况"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>形象进度</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="xxjd" v-model="genzong.xxjd" placeholder="形象进度"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>主要决策部门及决策人</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="jcbmjcr" v-model="genzong.jcbmjcr" placeholder="主要决策部门及决策人"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>其他信息</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="qtxx" v-model="genzong.qtxx" placeholder="其他信息"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>报备事由</div>
+                        <div class="col-sm-10">
+<!--                             <input type="text" class="form-control" v-model="genzong.bbsy" placeholder="报备事由"/>
+ -->                            <select class="form-control" name="bbsy" v-model="genzong.bbsy" id="">
+                            	<option value="刚了解项目信息，先报备跟踪，寻找机会">刚了解项目信息，先报备跟踪，寻找机会</option>
+                            	<option value="有关系，重点跟踪项目">有关系，重点跟踪项目</option>
+                            	<option value="刚看到招标信息进行报备">刚看到招标信息进行报备</option>
+                                <option value="其他">其他</option>
+                            	
+                            </select>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">备注</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="genzong.bz" placeholder="备注"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>投资建设单位</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="tzjsdw" v-model="genzong.tzjsdw" placeholder="投资建设单位"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">企业性质</div>
+                        <div class="col-sm-10">
+<!--                             <input type="text" class="form-control" v-model="genzong.qyxz" placeholder="企业性质"/>
+ -->                         <select class="form-control" v-model="genzong.qyxz" id="">
+                     		 <option value="合伙企业">合伙企业</option>
+                     		 <option value="集体企业">集体企业</option>
+                     		 <option value="国有企业">国有企业</option>
+                     		 <option value="联营企业">联营企业</option>
+                     		 <option value="有限责任公司">有限责任公司</option>
+                     		 <option value="股份合作制企业">股份合作制企业</option>
+                     		 <option value="私营企业">私营企业</option>
+                     		 <option value="政府">政府</option>
+                     		 <option value="部队">部队</option>
+                     		 <option value="个体工商户">个体工商户</option>
+                     		 <option value="事业单位">事业单位</option>
+                     		 <option value="个人独资企业">个人独资企业</option>
+                     		 
+                     		 </select>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>项目地址</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="xmdz" v-model="genzong.xmdz" placeholder="项目地址"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">建设规模</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="genzong.jsgm" placeholder="建设规模"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>拟招标形式</div>
+                        <div class="col-sm-10">
+<!--                             <input type="text" class="form-control" v-model="genzong.nzbxs" placeholder="拟招标形式"/>
+ -->                           <select class="form-control" name="nzbxs" v-model="genzong.nzbxs" id="">
+ 										<option value="设计施工分开">设计施工分开</option>
+ 										<option value="已招设计，只招施工">已招设计，只招施工</option>
+ 										<option value="设计施工一体化分两阶段">设计施工一体化分两阶段</option>
+ 										
+ 								</select>
+                        
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>弱电系统概算（万元）</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="rdxtgs" v-model="genzong.rdxtgs" placeholder="弱电系统概算（万元）"/>
+                    
+                         </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>资金来源</div>
+                        <div class="col-sm-10">
+<!--                             <input type="text" class="form-control" v-model="genzong.zjly" placeholder=""/>
+ -->                             <select class="form-control" name="zjly" v-model="genzong.zjly" id="">
+ 									<option value="政府性资金">政府性资金</option>
+ 									<option value="来自预算">来自预算</option>
+ 									<option value="采购资金">采购资金</option>
+ 									<option value="企业自筹">企业自筹</option>
+ 									<option value="财政资金">财政资金</option>
+ 									<option value="军费">军费</option>
+ 									<option value="自国家补助、企业自筹和国内银行贷款">自国家补助、企业自筹和国内银行贷款</option>
+ 
+ 								</select>
+                         </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>信息来源</div>
+                        <div class="col-sm-10">
+<!--                             <input type="text" id="xxl" class="form-control" v-model="genzong.xxly" placeholder=""/>
+ -->                 		 <select class="form-control" name="xxly" v-model="genzong.xxly" id="">
+ 								<option value="网上查找">网上查找</option>
+ 								<option value="朋友介绍">朋友介绍</option>
+ 								<option value="自己从其他渠道得到">自己从其他渠道得到</option>
+ 							</select>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>目前状况</div>
+                        <div class="col-sm-10">
+<!--                             <input type="text" class="form-control" v-model="genzong.mqzk" placeholder=""/>
+ --> 					 <select class="form-control" name="mqzk" v-model="genzong.mqzk" id="">
+  							<option value="土建">土建</option>
+  							<option value="外装">外装</option>
+  							<option value="内装">内装</option>
+  
+ 						</select>
+                       </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>跟踪情况</div>
+                        <div class="col-sm-10">
+<!--                             <input type="text" class="form-control" v-model="genzong.gzqk" placeholder=""/>
+ -->
+					 <select class="form-control" name="gzqk" v-model="genzong.gzqk" id="">
+ 						<option value="已拜访过甲">已拜访过甲</option>
+ 						<option value="项目现场照片">项目现场照片</option>
+ 
+ 					</select>
+                         </div>
+                    </div>
+											                    <div class="form-group">
+											                   
+                        <div class="col-sm-2 control-label"><span class="red">*</span>预计招标时间</div>
+                        <div class="col-sm-10">
+                     
+ 				
+				           <div >
+				           <div class="input-group">
+								
+							
+		                    <input readonly type='text' name="yzbsj" class="form-control" id='datetime' />
+							<span class="input-group-addon"><span onClick=show() class="glyphicon glyphicon-th"></span></span>
+							<input type="hidden" id="yzbdate" v-model="genzong.yzbsj"  value="" />
+		
+							</div>
+		<script>
+			function show(){
+				$('#datetime').datetimepicker('show');
+			}
+			$(function() {
+				$('#datetime')
+				.datetimepicker()
+				.on('changeDate', function(ev){
+				  var da=$('#datetime').val()+'';
+				  $('#yzbdate').val(da);
+				
+
+				});
+				$("#datetime").datetimepicker({
+					 language : 'zh-CN',
+                     //format : 'yyyy-mm-dd hh:ii:ss',//日期格式。可以将日期格式，定成年月日时分秒。
+                     format : 'yyyy-mm-dd hh:ii:ss',//日期格式。可以将日期格式，定成年月日时，分秒为0。
+                     weekStart: 1,
+                     todayBtn:  1,
+                     autoclose: 1,
+                     todayHighlight: 1,
+                     startView: 2,
+                     forceParse: 0,
+                     showMeridian: 1
+					
+				});
+			});
+		</script>
+
+				            </div>
+				             
+ 						</div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">项目概况</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="genzong.xmgk" placeholder=""/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">竞争优势及关系资源
+                  </div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="genzong.jzysgxzy" placeholder=""/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>负责人</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="fzr" v-model="genzong.fzr" placeholder=""/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>联系方式</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="fzrdh" v-model="genzong.fzrdh" placeholder=""/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>项目分管领导</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="fgld" v-model="genzong.fgld" placeholder=""/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>联系方式</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="fglddh" v-model="genzong.fglddh" placeholder=""/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>部门负责人</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="bmfzr" v-model="genzong.bmfzr" placeholder=""/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>联系方式</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="bmfzrdh" v-model="genzong.bmfzrdh" placeholder=""/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>项目专业工程师</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="zygcs" v-model="genzong.zygcs" placeholder=""/>
+                        </div>
+                    </div>
+                    				                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>联系方式</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="gcsdh" v-model="genzong.gcsdh" placeholder=""/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>总包单位名称</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="zbdwmc" v-model="genzong.zbdwmc" placeholder=""/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>联系人</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="zblxr" v-model="genzong.zblxr" placeholder=""/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>电话</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="zbdh" v-model="genzong.zbdh" placeholder=""/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>招标代理名称</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="zbdlmc" v-model="genzong.zbdlmc" placeholder=""/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>联系人</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="dllxr" v-model="genzong.dllxr" placeholder=""/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>电话</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="dldh" v-model="genzong.dldh" placeholder=""/>
+                        </div>
+                    </div>
+                    <!--  file-->
+	             <!--     <input type="button" name="button" value="添加附件" onclick="addInput()">
+						<input type="button" name="button" value="删除附件" onclick="deleteInput()">
+						<span id="upload"></span>  -->
+
+					　<script type="text/javascript">
+				/* 	var attachname = "attach";
+					var i=1;
+					function addInput(){
+					if(i>0){
+					var attach = attachname + i ;
+					if(createInput(attach))
+					i=i+1;
+					}
+					}
+					function deleteInput(){
+					if(i>1){
+					i=i-1;
+					if(!removeInput())
+					i=i+1;
+					}
+					}
+					function createInput(nm){
+					var aElement=document.createElement("input");
+					aElement.name=nm;
+					aElement.id=nm;
+					aElement.type="file";
+					aElement.size="50";
+					//aElement.value="thanks";
+					//aElement.onclick=Function("asdf()");
+					if(document.getElementById("upload").appendChild(aElement) == null)
+					return false;
+					return true;
+					}
+					function removeInput(nm){
+					var aElement = document.getElementById("upload");
+					if(aElement.removeChild(aElement.lastChild) == null)
+					return false;
+					return true;
+					} */
+					</script>
+
+							            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="读取中..." @click="saveOrUpdate" value="保存"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="取消"/>
+            </div>
+        </form>
+      
+    </div>
+     <div class="container">
+    
+    
+     
+        <!-- 模态框（Modal） -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            选择人员
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                     <div class="grid-btn">
+                    	<div>
+							<label class="form-inline" />姓名：<input type="text" v-model="ry.username" class="form-control"  @keyup.enter="query1" >
+			
+							</div>
+						<a class="btn btn-default" @click="query1">查询</a>
+						</div>
+							
+                         <table id="ryGrid"></table>
+       					 <div id="ryGridPager"></div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" @click="saveusername" class="btn btn-primary">
+                        		    确定
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal  $("input[name='FORMID']").val(); -->
+        </div>
+    
+    
+    </div>
+    <script>
+   
+
+    /* $('#myModal').on('shown.bs.modal', function () {
+        alert("完全显示模态框");
+    }); */
+
+    	function q1(){
+    		//设定预算单元负责人
+    		qselect=1;
+    	}
+    	function q2(){
+    		//设定项目经理 公用一个模态框
+    		qselect=2;
+    	}
+    </script>
+</div>
+<!-- 选择部门 -->
+<div id="deptLayer" style="display: none;padding:10px;">
+	<ul id="deptTree" class="ztree"></ul>
+</div>
+<script src="${request.contextPath}/statics/js/modules/sys/genzong.js?_${.now?long}"></script>
+</body>
+</html>

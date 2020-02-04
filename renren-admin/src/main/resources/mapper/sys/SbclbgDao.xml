@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.modules.sys.dao.SbclbgDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.renren.modules.sys.entity.SbclbgEntity" id="sbclbgMap">
+        <result property="sbclbgId" column="sbclbg_id"/>
+        <result property="spzt" column="spzt"/>
+        <result property="dh" column="dh"/>
+        <result property="ssxm" column="ssxm"/>
+        <result property="bt" column="bt"/>
+        <result property="xqsj" column="xqsj"/>
+        <result property="bgqksm" column="bgqksm"/>
+        <result property="bz" column="bz"/>
+        <result property="czr" column="czr"/>
+        <result property="czsj" column="czsj"/>
+        <result property="cjr" column="cjr"/>
+        <result property="cjsj" column="cjsj"/>
+    </resultMap>
+
+
+</mapper>

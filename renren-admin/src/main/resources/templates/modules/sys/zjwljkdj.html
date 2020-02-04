@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>借款登记</title>
+		<#include "/header.html">
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn">
+         <div class="row" >
+			<div>
+				 <label class="form-inline" />标题：<input class="form-control"  type="text"  v-model="q.bt" @keyup.enter="query" >	
+				 <label class="form-inline" />申请人：<input class="form-control"  type="text"  v-model="sqr"  @keyup.enter="query">	
+				 <label class="form-inline" />借款类型：<input class="form-control"  type="text"  v-model="q.jklx" @keyup.enter="query" >	
+					<a class="btn btn-default form-inline" @click="query">查询</a>
+			</div>
+			</div>
+			<#if shiro.hasPermission("sys:zjwljkdj:save")>
+            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+			</#if>
+			<#if shiro.hasPermission("sys:zjwljkdj:update")>
+            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+			</#if>
+			<#if shiro.hasPermission("sys:zjwljkdj:delete")>
+            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+			</#if>
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form class="form-horizontal">
+														                    <div class="form-group">
+                        <div class="col-sm-2 control-label">项目名称</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="zjwljkdj.xmmc" placeholder="项目名称"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">审批状态</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="zjwljkdj.spzt" placeholder="审批状态"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">标题</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="zjwljkdj.bt" placeholder="标题"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">申请人</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="zjwljkdj.sqr" placeholder="申请人"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">申请部门</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="zjwljkdj.sqbm" placeholder="申请部门"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">借款金额</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="zjwljkdj.jkje" placeholder="借款金额"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">借款类型</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="zjwljkdj.jklx" placeholder="借款类型"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">被借项目</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="zjwljkdj.bjxm" placeholder="被借项目"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">借款时间</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="zjwljkdj.jksj" placeholder="借款时间"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">借款周期</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="zjwljkdj.jkzq" placeholder="借款周期"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">月息%</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="zjwljkdj.yx" placeholder="月息%"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">超期利息%</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="zjwljkdj.cqlx" placeholder="超期利息%"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">到期还款本金</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="zjwljkdj.dqhkbj" placeholder="到期还款本金"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">到期还款利息</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="zjwljkdj.dqhklx" placeholder="到期还款利息"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">同步NC</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="zjwljkdj.tbnc" placeholder="同步NC"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">借款说明</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="zjwljkdj.jksm" placeholder="借款说明"/>
+                        </div>
+                    </div>
+							            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/sys/zjwljkdj.js?_${.now?long}"></script>
+</body>
+</html>

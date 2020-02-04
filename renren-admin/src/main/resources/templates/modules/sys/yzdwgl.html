@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>业主单位管理</title>
+		<#include "/header.html">
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn">
+        	<div>
+				<label class="form-inline" />工程名：<input type="text" class="form-control" v-model="q.gsmc" @keyup.enter="query" >
+				<a class="btn btn-default form-inline" @click="query">查询</a>
+			
+			</div>
+			
+			<#if shiro.hasPermission("sys:yzdwgl:save")>
+            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+			</#if>
+			<#if shiro.hasPermission("sys:yzdwgl:update")>
+            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+			</#if>
+			<#if shiro.hasPermission("sys:yzdwgl:delete")>
+            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+			</#if>
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form class="form-horizontal">
+														                    <div class="form-group">
+                        <div class="col-sm-2 control-label">公司名称</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzdwgl.gsmc" placeholder="公司名称"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">公司代码</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzdwgl.gsdm" placeholder="公司代码"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">公名缩写</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzdwgl.gmsx" placeholder="公名缩写"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">公司税号</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzdwgl.gssh" placeholder="公司税号"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">开户银行</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzdwgl.khyh" placeholder="开户银行"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">账户</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzdwgl.zh1" placeholder="账户"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">账号</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzdwgl.zh2" placeholder="账号"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">注册资金</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzdwgl.zczj" placeholder="注册资金"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">项目角色</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzdwgl.xmjs" placeholder="项目角色"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">传真</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzdwgl.cz" placeholder="传真"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">办公室电话</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzdwgl.bgsdh" placeholder="办公室电话"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">Email</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzdwgl.e" placeholder="Email"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">有效期</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzdwgl.yxq" placeholder="有效期"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">地址</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzdwgl.dz" placeholder="地址"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">甲乙方人员基本信息</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzdwgl.jyfryjbxx" placeholder="甲乙方人员基本信息"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">备注</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzdwgl.bz" placeholder="备注"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">附件</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzdwgl.fj" placeholder="附件"/>
+                        </div>
+                    </div>
+							            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/sys/yzdwgl.js?_${.now?long}"></script>
+</body>
+</html>

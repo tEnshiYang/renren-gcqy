@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.modules.sys.dao.ZbxqdDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.renren.modules.sys.entity.ZbxqdEntity" id="zbxqdMap">
+        <result property="zbxqdId" column="zbxqd_id"/>
+        <result property="xmmc" column="xmmc"/>
+        <result property="xmdz" column="xmdz"/>
+        <result property="xmgs" column="xmgs"/>
+        <result property="zblx" column="zblx"/>
+        <result property="tbrq" column="tbrq"/>
+         <result property="spzt" column="spzt"/>
+         <result property="jzzk" column="jzzk"/>
+         <result property="czr" column="czr"/>
+         <result property="czsj" column="czsj"/>
+      
+        
+        <result property="tbjzrq" column="tbjzrq"/>
+        <result property="zbsqr" column="zbsqr"/>
+        <result property="npsqdb" column="npsqdb"/>
+        <result property="zgscfs" column="zgscfs"/>
+        <result property="zbfs" column="zbfs"/>
+        <result property="sqbm" column="sqbm"/>
+        <result property="kbjldc" column="kbjldc"/>
+        <result property="zbjlzsyz" column="zbjlzsyz"/>
+        <result property="zbjlzsgs" column="zbjlzsgs"/>
+        <result property="jlxcdb" column="jlxcdb"/>
+        <result property="jlzgyq" column="jlzgyq"/>
+        <result property="jlsbyq" column="jlsbyq"/>
+        <result property="xmjlzgtjyjyq" column="xmjlzgtjyjyq"/>
+        <result property="xmjldftjyjyq" column="xmjldftjyjyq"/>
+        <result property="yjccxktx" column="yjccxktx"/>
+        <result property="bszzfy" column="bszzfy"/>
+        <result property="qyzgtjyjyq" column="qyzgtjyjyq"/>
+        <result property="qydftjyjyq" column="qydftjyjyq"/>
+        <result property="cpsqjzb" column="cpsqjzb"/>
+        <result property="sqdbsbnx" column="sqdbsbnx"/>
+        <result property="fddbrsfcc" column="fddbrsfcc"/>
+        <result property="kbsj" column="kbsj"/>
+        <result property="kbdd" column="kbdd"/>
+        <result property="tblx" column="tblx"/>
+        <result property="zztbwjZ" column="zztbwj_z"/>
+        <result property="zztbwjF" column="zztbwj_f"/>
+        <result property="dztbwjG" column="dztbwj_g"/>
+        <result property="dztbwjU" column="dztbwj_u"/>
+        <result property="dztbwjjm" column="dztbwjjm"/>
+        <result property="tbwjzc" column="tbwjzc"/>
+        <result property="tbwjpath" column="tbwjpath"/>
+        <result property="bz" column="bz"/>
+        <result property="filepath" column="filepath"/>
+    </resultMap>
+
+
+</mapper>

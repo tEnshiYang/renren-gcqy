@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>保证金退款</title>
+		<#include "/header.html">
+</head>
+<body>
+<style>
+	.red{
+		color:red;
+	}
+</style>
+<script>
+    $(document).ready(function(){
+    	$('#gzform').bootstrapValidator({
+    	    // 默认的提示消息
+    	    message: 'This value is not valid',
+    	    // 表单框里右侧的icon
+    	    feedbackIcons: {
+    	      　　　　　　　　valid: 'glyphicon glyphicon-ok',
+    	      　　　　　　　　invalid: 'glyphicon glyphicon-remove',
+    	      　　　　　　　　validating: 'glyphicon glyphicon-refresh'
+    	    },
+    	    submitHandler: function (validator, form, submitButton) {
+    	      // 表单提交成功时会调用此方法
+    	      // validator: 表单验证实例对象
+    	      // form  jq对象  指定表单对象
+    	      // submitButton  jq对象  指定提交按钮的对象
+    	    },
+    	    fields: {
+    	    	xmmc: {
+    	       
+    	        validators: {
+    	          notEmpty: {
+    	            message: '该项不能为空'
+    	          }
+    	        }
+    	       
+    	      },
+    	      sqbm: {
+    	        
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      sfzb: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      hkdw: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      hkje: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      hkrq: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      hsdyfzr: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      tbnc: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      }
+    	    }
+    	  });
+    	  
+
+    	});
+    	
+    	
+    </script>
+<div id="rrapp" v-cloak>
+<span id="syssqr" style="display:none;">{{user.username}}</span>
+
+    <div v-show="showList">
+        <div class="grid-btn">
+        	<div class="row" >
+			<div>
+				 <label class="form-inline" />申请部门：<input class="form-control"  type="text"  v-model="q.sqbm"  @keyup.enter="query">	
+				<label class="form-inline" />项目名称：<input class="form-control"  type="text"  v-model="q.xmmc" @keyup.enter="query" >	
+				
+				 <label class="form-inline" />回款单位：<input class="form-control"  type="text"  v-model="q.hkdw"  @keyup.enter="query" >	
+			<a class="btn btn-default form-inline" @click="query">查询</a>
+			</div>
+			</div>
+			
+			<#if shiro.hasPermission("sys:bzjtk:save")>
+            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+			</#if>
+			<#if shiro.hasPermission("sys:bzjtk:update")>
+            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+			</#if>
+			<#if shiro.hasPermission("sys:bzjtk:delete")>
+            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+			</#if>
+			<a class="btn btn-primary" @click="shenpi" id="shenpi"><i class="fa fa-pencil-square-o"></i>&nbsp;审批</a>
+			
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form id="gzform" class="form-horizontal">
+														                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>项目名称</div>
+                        <div class="col-sm-10">
+                        <div class="input-group">
+                            <input readonly type="text" name="xmmc" class="form-control" id="xmmc" v-model="bzjtk.xmmc" placeholder="项目名称"/>
+                          <span class="input-group-addon" data-toggle="modal" data-target="#myModal" >+</span>
+                        </div>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>申请部门</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="sqbm" class="form-control" v-model="bzjtk.sqbm" placeholder="申请部门"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>是否中标</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="sfzb" class="form-control" v-model="bzjtk.sfzb" placeholder="是否中标"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>回款单位</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="hkdw" class="form-control" v-model="bzjtk.hkdw" placeholder="回款单位"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>回款日期</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="hkrq" class="form-control" v-model="bzjtk.hkrq" placeholder="回款日期"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>回款金额</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="hkje" class="form-control" v-model="bzjtk.hkje" placeholder="回款金额"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>核算单元负责人</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" name="hsdyfzr" class="form-control" id="hsdyfzr" v-model="bzjtk.hsdyfzr" placeholder="核算单元负责人"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>同步NC</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="tbnc" class="form-control" v-model="bzjtk.tbnc" placeholder="同步NC"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">公示网址链接</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="bzjtk.gswzlj" placeholder="公示网址链接"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">备注</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="bzjtk.bz" placeholder="备注"/>
+                        </div>
+                    </div>
+							
+							            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+            </div>
+        </form>
+    </div>
+      <div class="container">
+    
+    
+     
+        <!-- 模态框（Modal） -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            选择人员
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                     <div class="grid-btn">
+                    	<div>
+ 							<label class="form-inline" />项目名称：<input type="text" v-model="ry.xmmc" class="form-control"  @keyup.enter="query1" >
+ 			
+							</div>
+						<a class="btn btn-default" @click="query1">查询</a>
+						</div>
+							
+                         <table id="ryGrid"></table>
+       					 <div id="ryGridPager"></div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" @click="saveusername" class="btn btn-primary">
+                        		    确定
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal  $("input[name='FORMID']").val(); -->
+        </div>
+    
+            <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            审核
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                     <div class="grid-btn">
+                     <div  class="panel panel-default">
+        <div class="panel-heading">审批</div>
+        <form class="form-horizontal">
+				       <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>项目名称</div>
+                        <div class="col-sm-10">
+                        <div class="input-group">
+                            <input readonly type="text" name="xmmc" class="form-control" id="xmmc" v-model="bzjtk.xmmc" placeholder="项目名称"/>
+                          <span class="input-group-addon" data-toggle="modal" data-target="#myModal" >+</span>
+                        </div>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>申请部门</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" name="sqbm" class="form-control" v-model="bzjtk.sqbm" placeholder="申请部门"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>是否中标</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" name="sfzb" class="form-control" v-model="bzjtk.sfzb" placeholder="是否中标"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>回款单位</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" name="hkdw" class="form-control" v-model="bzjtk.hkdw" placeholder="回款单位"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>回款日期</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" name="hkrq" class="form-control" v-model="bzjtk.hkrq" placeholder="回款日期"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>回款金额</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" name="hkje" class="form-control" v-model="bzjtk.hkje" placeholder="回款金额"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>核算单元负责人</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" name="hsdyfzr" class="form-control" id="hsdyfzr" v-model="bzjtk.hsdyfzr" placeholder="核算单元负责人"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>同步NC</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" name="tbnc" class="form-control" v-model="bzjtk.tbnc" placeholder="同步NC"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">公示网址链接</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" class="form-control" v-model="bzjtk.gswzlj" placeholder="公示网址链接"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">备注</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" class="form-control" v-model="bzjtk.bz" placeholder="备注"/>
+                        </div>
+                    </div>
+							
+                    						                    <div class="form-group">
+                        <div class="col-sm-2 control-label">是否审批通过</div>
+                        <div class="col-sm-10">
+                            <input  type="checkbox" id="sptg" class="form-control" />
+                        </div>
+                    </div>
+					
+        </form>
+    </div> 
+                    
+						
+						</div>
+							
+                       
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" @click="saveOrUpdate" class="btn btn-primary">
+                        		    确定
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal  $("input[name='FORMID']").val(); -->
+        </div>
+    </div>
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/sys/bzjtk.js?_${.now?long}"></script>
+</body>
+</html>

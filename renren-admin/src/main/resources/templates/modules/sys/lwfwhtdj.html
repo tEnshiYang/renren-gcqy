@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>劳务服务合同登记</title>
+		<#include "/header.html">
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn">
+          <div class="row" >
+			<div>
+				 <label class="form-inline" />合同名称：<input class="form-control"  type="text"  v-model="q.htmc" @keyup.enter="query" >	
+			<label class="form-inline" />合同编号：<input class="form-control"  type="text"  v-model="q.htbh"  @keyup.enter="query">	
+				
+				 <label class="form-inline" />创建人姓名：<input class="form-control"  type="text"  v-model="q.cjrxm"  @keyup.enter="query">	
+						
+						<a class="btn btn-default form-inline" @click="query">查询</a>
+			
+			</div>
+			</div>
+			<#if shiro.hasPermission("sys:lwfwhtdj:save")>
+            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+			</#if>
+			<#if shiro.hasPermission("sys:lwfwhtdj:update")>
+            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+			</#if>
+			<#if shiro.hasPermission("sys:lwfwhtdj:delete")>
+            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+			</#if>
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form class="form-horizontal">
+														                    <div class="form-group">
+                        <div class="col-sm-2 control-label">劳务合同总额</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwfwhtdj.lwhtze" placeholder="劳务合同总额"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">合同状态</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwfwhtdj.htzt" placeholder="合同状态"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">审批状态</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwfwhtdj.spzt" placeholder="审批状态"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">所属项目名称</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwfwhtdj.ssxmmc" placeholder="所属项目名称"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">核算单元</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwfwhtdj.hsdy" placeholder="核算单元"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">合同名称</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwfwhtdj.htmc" placeholder="合同名称"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">合同编号</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwfwhtdj.htbh" placeholder="合同编号"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">合同金额</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwfwhtdj.htje" placeholder="合同金额"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">签约单位</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwfwhtdj.qydw" placeholder="签约单位"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">合同主要内容</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwfwhtdj.htzynr" placeholder="合同主要内容"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">合同发起人</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwfwhtdj.htfqr" placeholder="合同发起人"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">签约单位联系人</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwfwhtdj.qydwlxr" placeholder="签约单位联系人"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">签约单位联系方式</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwfwhtdj.qydwlxfs" placeholder="签约单位联系方式"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">签订日期</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwfwhtdj.qdrq" placeholder="签订日期"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">与业主签订合同金额</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwfwhtdj.yyzqdhtje" placeholder="与业主签订合同金额"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">已签采购合同金额</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwfwhtdj.yqcghtje" placeholder="已签采购合同金额"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">已签劳务服务合同金额</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwfwhtdj.yqlwfuhtje" placeholder="已签劳务服务合同金额"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">已签采购合同比例</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwfwhtdj.yqcghtbl" placeholder="已签采购合同比例"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">已签劳务合同比例</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwfwhtdj.yqlwhtbl" placeholder="已签劳务合同比例"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">已到款金额</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwfwhtdj.ydkje" placeholder="已到款金额"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">本项目近期拟到款金额</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwfwhtdj.bxmjqndkje" placeholder="本项目近期拟到款金额"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">本项目资金池金额</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwfwhtdj.bxmzjcye" placeholder="本项目资金池金额"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">本核算单元资金池余额</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwfwhtdj.bhsdyzjcye" placeholder="本核算单元资金池余额"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">是否包含劳务分包</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwfwhtdj.sfbhlwfb" placeholder="是否包含劳务分包"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">是否包含设备材料</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwfwhtdj.sfbhsbcl" placeholder="是否包含设备材料"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">是否设计或技术服务</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwfwhtdj.sfsjhjsfw" placeholder="是否设计或技术服务"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">是否包含工程分包</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwfwhtdj.sfbhgcfb" placeholder="是否包含工程分包"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">签订原因</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwfwhtdj.qdyy" placeholder="签订原因"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">备注</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwfwhtdj.bz" placeholder="备注"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">创建人</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwfwhtdj.cjr" placeholder="创建人"/>
+                        </div>
+                    </div>
+							            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/sys/lwfwhtdj.js?_${.now?long}"></script>
+</body>
+</html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>采购合同登记</title>
+		<#include "/header.html">
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn">
+        <div>
+				<label class="form-inline" />合同名称：<input type="text" class="form-control" v-model="q.htmc" @keyup.enter="query" >
+				<label class="form-inline" />合同编号：<input type="text" class="form-control" v-model="q.htbh" @keyup.enter="query" >
+				<label class="form-inline" />合同类型：<input type="text" class="form-control" v-model="q.htlx" @keyup.enter="query" >
+				
+				<a class="btn btn-default form-inline" @click="query">查询</a>
+			
+			</div>
+			<#if shiro.hasPermission("sys:cghtdj:save")>
+            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+			</#if>
+			<#if shiro.hasPermission("sys:cghtdj:update")>
+            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+			</#if>
+			<#if shiro.hasPermission("sys:cghtdj:delete")>
+            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+			</#if>
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form class="form-horizontal">
+														                    <div class="form-group">
+                        <div class="col-sm-2 control-label">采购合同总额</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtdj.cghtze" placeholder="采购合同总额"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">审批状态</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtdj.spzt" placeholder="审批状态"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">合同状态</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtdj.htzt" placeholder="合同状态"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">占业主合同金额比例</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtdj.jebl" placeholder="占业主合同金额比例"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">所属项目名称</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtdj.ssxmmc" placeholder="所属项目名称"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">合同名称</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtdj.htmc" placeholder="合同名称"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">合同编号</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtdj.htbh" placeholder="合同编号"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">合同类型</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtdj.htlx" placeholder="合同类型"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">甲方单位</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtdj.jfdw" placeholder="甲方单位"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">甲方联系人</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtdj.jflxr" placeholder="甲方联系人"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">乙方单位</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtdj.yfdw" placeholder="乙方单位"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">乙方联系人</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtdj.yflxr" placeholder="乙方联系人"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">经办人</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtdj.jbr" placeholder="经办人"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">发票税点</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtdj.fpsd" placeholder="发票税点"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">采购事由</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtdj.cgsz" placeholder="采购事由"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">签订日期</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtdj.qdrq" placeholder="签订日期"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">累计到票金额</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtdj.ljdpje" placeholder="累计到票金额"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">交货时间</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtdj.jhsj" placeholder="交货时间"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">到货地点</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtdj.dhdd" placeholder="到货地点"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">到货联系人</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtdj.shlxr" placeholder="到货联系人"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">运输方式及运输费用</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtdj.ysfsjfy" placeholder="运输方式及运输费用"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">甲方材料员</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtdj.jfcly" placeholder="甲方材料员"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">电话</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtdj.dh1" placeholder="电话"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">甲方现场项目经理</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtdj.jfxcxmjl" placeholder="甲方现场项目经理"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">电话</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtdj.dh2" placeholder="电话"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">甲方采购服务专员</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtdj.jfcgfwzy" placeholder="甲方采购服务专员"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">电话</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtdj.dh3" placeholder="电话"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">邮箱</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtdj.yx" placeholder="邮箱"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">设备安装调试服务</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtdj.sbazts" placeholder="设备安装调试服务"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">设备保修方式</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtdj.sbbxfs" placeholder="设备保修方式"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">质保期_年</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtdj.zbq" placeholder="质保期_年"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">其他</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtdj.qt" placeholder="其他"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">最终价</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtdj.zzj" placeholder="最终价"/>
+                        </div>
+                    </div>
+							            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/sys/cghtdj.js?_${.now?long}"></script>
+</body>
+</html>

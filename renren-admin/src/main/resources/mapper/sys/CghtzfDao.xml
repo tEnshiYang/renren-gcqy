@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.modules.sys.dao.CghtzfDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.renren.modules.sys.entity.CghtzfEntity" id="cghtzfMap">
+        <result property="cghtzfId" column="cghtzf_id"/>
+        <result property="ssxmmc" column="ssxmmc"/>
+        <result property="spzt" column="spzt"/>
+        <result property="htmc" column="htmc"/>
+        <result property="zfbh" column="zfbh"/>
+        <result property="sqrxm" column="sqrxm"/>
+        <result property="sqrq" column="sqrq"/>
+        <result property="jfgsmc" column="jfgsmc"/>
+        <result property="yfgsmc" column="yfgsmc"/>
+        <result property="htqdrq" column="htqdrq"/>
+        <result property="qdje" column="qdje"/>
+        <result property="zfqksm" column="zfqksm"/>
+        <result property="bz" column="bz"/>
+        <result property="zfmx" column="zfmx"/>
+        <result property="czr" column="czr"/>
+        <result property="czsj" column="czsj"/>
+        <result property="cjr" column="cjr"/>
+        <result property="cjsj" column="cjsj"/>
+    </resultMap>
+
+
+</mapper>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>费用报销管理</title>
+		<#include "/header.html">
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn">
+          <div class="row" >
+			<div>
+				 <label class="form-inline" />报销部门：<input class="form-control"  type="text"  v-model="q.bxbm"  @keyup.enter="query">		
+					<a class="btn btn-default form-inline" @click="query">查询</a>
+			</div>
+			</div>
+			<#if shiro.hasPermission("sys:fybxgl:save")>
+            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+			</#if>
+			<#if shiro.hasPermission("sys:fybxgl:update")>
+            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+			</#if>
+			<#if shiro.hasPermission("sys:fybxgl:delete")>
+            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+			</#if>
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form class="form-horizontal">
+														                    <div class="form-group">
+                        <div class="col-sm-2 control-label">项目名称</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="fybxgl.xmmc" placeholder="项目名称"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">审批状态</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="fybxgl.spzt" placeholder="审批状态"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">报销部门</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="fybxgl.bxbm" placeholder="报销部门"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">经办人</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="fybxgl.jbr" placeholder="经办人"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">报销时间</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="fybxgl.bxsj" placeholder="报销时间"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">发票数量</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="fybxgl.fpsl" placeholder="发票数量"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">收款方</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="fybxgl.skf" placeholder="收款方"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">付款方式</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="fybxgl.fkfs" placeholder="付款方式"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">开户行</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="fybxgl.khh" placeholder="开户行"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">账号</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="fybxgl.zh" placeholder="账号"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">同步NC</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="fybxgl.tbnc" placeholder="同步NC"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">报销事由</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="fybxgl.bxsy" placeholder="报销事由"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">费用清单</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="fybxgl.fyqd" placeholder="费用清单"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">备注</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="fybxgl.bz" placeholder="备注"/>
+                        </div>
+                    </div>
+							            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/sys/fybxgl.js?_${.now?long}"></script>
+</body>
+</html>

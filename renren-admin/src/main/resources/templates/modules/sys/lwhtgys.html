@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>劳务合同供应商</title>
+		<#include "/header.html">
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn">
+         <div class="row" >
+			<div>
+				 <label class="form-inline" />供应商名称：<input class="form-control"  type="text"  v-model="q.gysmc" @keyup.enter="query" >	
+				 <label class="form-inline" />确认人：<input class="form-control"  type="text"  v-model="q.qrr"  @keyup.enter="query">	
+						
+						<a class="btn btn-default form-inline" @click="query">查询</a>
+			
+			</div>
+			</div>
+			
+			<#if shiro.hasPermission("sys:lwhtgys:save")>
+            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+			</#if>
+			<#if shiro.hasPermission("sys:lwhtgys:update")>
+            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+			</#if>
+			<#if shiro.hasPermission("sys:lwhtgys:delete")>
+            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+			</#if>
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form class="form-horizontal">
+														                    <div class="form-group">
+                        <div class="col-sm-2 control-label">状态</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwhtgys.zy" placeholder="状态"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">供应商名称</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwhtgys.gysmc" placeholder="供应商名称"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">项目编号</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwhtgys.xmbh" placeholder="项目编号"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">法人姓名</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwhtgys.frxm" placeholder="法人姓名"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">股东姓名</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwhtgys.gdxm" placeholder="股东姓名"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">供应商类型</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwhtgys.gyslx" placeholder="供应商类型"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">纳税人类型</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwhtgys.nsrlx" placeholder="纳税人类型"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">合同类型</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwhtgys.htlx" placeholder="合同类型"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">开户银行</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwhtgys.khyh" placeholder="开户银行"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">银行账号</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwhtgys.yhzh" placeholder="银行账号"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">开户许可证</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwhtgys.khxkz" placeholder="开户许可证"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">营业执照</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwhtgys.yyzz" placeholder="营业执照"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">资质证明</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwhtgys.zzzm" placeholder="资质证明"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">企业信用查询结果</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwhtgys.qyxycx" placeholder="企业信用查询结果"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">备注</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwhtgys.bz" placeholder="备注"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">确认人</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwhtgys.qrr" placeholder="确认人"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">确认时间</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="lwhtgys.qrsj" placeholder="确认时间"/>
+                        </div>
+                    </div>
+							            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/sys/lwhtgys.js?_${.now?long}"></script>
+</body>
+</html>

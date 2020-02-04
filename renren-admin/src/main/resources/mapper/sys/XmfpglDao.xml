@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.modules.sys.dao.XmfpglDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.renren.modules.sys.entity.XmfpglEntity" id="xmfpglMap">
+        <result property="xmfpglId" column="xmfpgl_id"/>
+        <result property="ssxm" column="ssxm"/>
+        <result property="zt" column="zt"/>
+        <result property="gysmc" column="gysmc"/>
+        <result property="htmc" column="htmc"/>
+        <result property="fphm" column="fphm"/>
+        <result property="fplx" column="fplx"/>
+        <result property="fpsl" column="fpsl"/>
+        <result property="fpnr" column="fpnr"/>
+        <result property="kpsj" column="kpsj"/>
+        <result property="je" column="je"/>
+        <result property="djr" column="djr"/>
+        <result property="bz" column="bz"/>
+        <result property="czr" column="czr"/>
+        <result property="czsj" column="czsj"/>
+    </resultMap>
+
+
+</mapper>

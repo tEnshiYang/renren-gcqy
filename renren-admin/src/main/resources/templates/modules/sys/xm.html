@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>主项目</title>
+		<#include "/header.html">
+		<link rel="stylesheet" href="${request.contextPath}/statics/css/bootstrap-table.min.css">
+		<link rel="stylesheet" href="${request.contextPath}/statics/plugins/treegrid/jquery.treegrid.css">
+		<script src="${request.contextPath}/statics/libs/bootstrap-table.min.js"></script>
+		<script src="${request.contextPath}/statics/plugins/treegrid/jquery.treegrid.min.js"></script>
+		<script src="${request.contextPath}/statics/plugins/treegrid/jquery.treegrid.bootstrap3.js"></script>
+		<script src="${request.contextPath}/statics/plugins/treegrid/jquery.treegrid.extension.js"></script>
+		<script src="${request.contextPath}/statics/plugins/treegrid/tree.table.js"></script>
+<link rel="stylesheet" href="${request.contextPath}/statics/css/bootstrapValidator.min.css">
+<script src="${request.contextPath}/statics/js/bootstrapValidator.min.js"></script>
+</head>
+<body>
+<style>
+	.red{
+		color:red;
+	}
+	.showfile{
+		display:block;
+	}
+	.hidefile{
+		display:none;
+		background:red;
+	}
+</style>
+<script>
+$(document).ready(function(){
+$('#xmform').bootstrapValidator({
+    // 默认的提示消息
+    message: 'This value is not valid',
+    // 表单框里右侧的icon
+    feedbackIcons: {
+      　　　　　　　　valid: 'glyphicon glyphicon-ok',
+      　　　　　　　　invalid: 'glyphicon glyphicon-remove',
+      　　　　　　　　validating: 'glyphicon glyphicon-refresh'
+    },
+    submitHandler: function (validator, form, submitButton) {
+      // 表单提交成功时会调用此方法
+      // validator: 表单验证实例对象
+      // form  jq对象  指定表单对象
+      // submitButton  jq对象  指定提交按钮的对象
+    },
+    fields: {
+    	xmname: {
+       
+        validators: {
+          notEmpty: {
+            message: '项目名称不能为空'
+          }/* ,
+          stringLength: {  //长度限制
+            min: 6,
+            max: 18,
+            message: '用户名长度必须在6到18位之间'
+          },
+          regexp: { //正则表达式
+            regexp: /^[a-zA-Z0-9_]+$/,
+            message: '用户名只能包含大写、小写、数字和下划线'
+          },
+          different: {  //比较
+            field: 'username', //需要进行比较的input name值
+            message: '密码不能与用户名相同'
+          },
+          identical: {  //比较是否相同
+            field: 'password',  //需要进行比较的input name值
+            message: '两次密码不一致'
+          } */
+        }
+       
+      }
+    }
+  });
+  
+
+});
+</script>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn">
+        	<div>
+				<label class="form-inline" />工程名：<input type="text" class="form-control" v-model="q.xmname" @keyup.enter="query" >
+				<label class="form-inline" />工程编号：<input  type="text" class="form-control" v-model="q.gcbh" @keyup.enter="query">
+						<a class="btn btn-default form-inline" @click="query">查询</a>
+			
+			</div>
+			
+			<#if shiro.hasPermission("sys:xm:save")>
+            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+			</#if>
+			<#if shiro.hasPermission("sys:xm:update")>
+            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+			</#if>
+			<#if shiro.hasPermission("sys:xm:delete")>
+            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+			</#if>
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form id="xmform"  class="form-horizontal" >
+        
+														                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>项目名称</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="xmname" v-model="xm.xmname" placeholder="项目名称"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">项目短名</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="xm.xmsname" placeholder="项目短名"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">工程编号</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="xm.gcbh" placeholder="工程编号"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">项目货币</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="xm.xmhb" placeholder="项目货币"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">建设单位</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="xm.jsdw" placeholder="建设单位"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">开工日期</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="xm.kgrq" placeholder="开工日期"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">完工日期</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="xm.wgrq" placeholder="完工日期"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>核算单元</div>
+                        <div class="col-sm-10 input-group">
+                            <input type="text" class="form-control" readonly id="hsdy" v-model="xm.hsdy" placeholder="核算单元"/>
+                              <span class="input-group-addon" @click="deptTree">+</span>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>核算单元负责人</div>
+                        <div class="col-sm-10 input-group">
+                            <input type="text" class="form-control" readonly id="hsdyfzr" v-model="xm.hsdyfzr" placeholder="核算单元负责人"/>
+                            <span class="input-group-addon" data-toggle="modal" data-target="#myModal" onClick="q1()">+</span>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">项目经理</div>
+                        <div class="col-sm-10 input-group">
+                            <input type="text" class="form-control" readonly id="xmjl" v-model="xm.xmjl" placeholder="项目经理"/>
+                            <span class="input-group-addon" data-toggle="modal" data-target="#myModal" onClick="q2()">+</span>
+                            
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">地点</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="xm.dd" placeholder="地点"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">说明</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="xm.sm" placeholder="说明"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">自检记录</div>
+                        <div class="col-sm-10">
+                            <input type="checkbox" id="zjjl" class="form-control"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">安全培训记录</div>
+                        <div class="col-sm-10">
+                            <input type="checkbox" id="aqpxjl" class="form-control"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">客户满意度报告</div>
+                        <div class="col-sm-10">
+                            <input type="checkbox" id="khmyd" class="form-control" />
+                        </div>
+                    </div>
+									
+							            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+            </div>
+        </form>
+    </div>
+     <div class="container">
+    
+    
+     
+        <!-- 模态框（Modal） -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            选择人员
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                     <div class="grid-btn">
+                    	<div>
+							<label class="form-inline" />姓名：<input type="text" v-model="ry.username" class="form-control"  @keyup.enter="query1" >
+			
+							</div>
+						<a class="btn btn-default" @click="query1">查询</a>
+						</div>
+							
+                         <table id="ryGrid"></table>
+       					 <div id="ryGridPager"></div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" @click="saveusername" class="btn btn-primary">
+                        		    确定
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal  $("input[name='FORMID']").val(); -->
+        </div>
+    
+    
+    </div>
+    
+    <div class="container">
+    
+    
+     
+        <!-- 模态框（Modal） -->
+        <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            选择附件
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                     <div class="grid-btn">
+                    	
+							
+                         <table id="fiGrid">
+                         	<form id= "uploadForm">  
+						      <input type="hidden" id="scxmId"  />
+ 						      <p >上传文件： <input  type="file" name="file1" id="file1"  multiple="multiple"  /></p> 
+ 						     <p > <input  type="file" name="file2" id="file2"  multiple="multiple"  /></p> 
+ 						      	<p > <input   type="file" name="file3" id="file3"  multiple="multiple"  /></p>
+ 						      	<p > <input  type="file" name="file4" id="file4"  multiple="multiple"  /></p>
+ 						      	<p > <input   type="file" name="file5" id="file5"  multiple="multiple"  /></p>					      						    
+							  <input type="button" name="button" value="添加附件" onclick="addInput()">
+							<input type="button" name="button" value="删除附件" onclick="deleteInput()">
+							<span id="upload"></span>
+						</form> 
+                         </table>
+       					 <div id="fiGridPager"></div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" @click="doUpload" class="btn btn-primary">
+                        		    确定
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal  $("input[name='FORMID']").val(); -->
+        </div>
+    
+    
+    </div>
+    
+          <!-- x下载模态框（Modal） -->
+        <div class="modal fade" id="downModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            	选择附件
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                     <div class="grid-btn">
+                    	
+							
+                         <table id="downlist">
+                        
+                         </table>
+       					
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                      
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal  $("input[name='FORMID']").val(); -->
+        </div>
+    
+    
+    </div>
+    　<script type="text/javascript">
+				 
+				
+	</script>
+    <script>
+    	function q1(){
+    		//设定预算单元负责人
+    		qselect=1;
+    	}
+    	function q2(){
+    		//设定项目经理 公用一个模态框
+    		qselect=2;
+    	}
+    </script>
+    <!--  <div class="container">
+    
+    
+      
+        模态框（Modal）
+        <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            选择人员
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                     <div class="grid-btn">
+                    	<div>
+							<label class="form-inline" />姓名：<input type="text" v-model="ry.username" class="form-control"  @keyup.enter="query1" >
+			
+							</div>
+						<a class="btn btn-default" @click="query1">查询</a>
+						</div>
+							
+                         <table id="ryGrid"></table>
+       						 <div id="ryGridPager"></div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" @click="saveusername1" class="btn btn-primary">
+                        		    确定
+                        </button>
+                    </div>
+                </div>/.modal-content
+            </div>/.modal  $("input[name='FORMID']").val();
+        </div>
+    
+    
+    </div> -->
+    
+</div>
+     
+
+
+<!-- 选择部门 -->
+<div id="deptLayer" style="display: none;padding:10px;">
+	<ul id="deptTree" class="ztree"></ul>
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/sys/xm.js?_${.now?long}"></script>
+<script type="text/javascript">
+    
+ 
+/* 	$('#myModal').on('show.bs.modal', function () {
+	    alert("显示模态框");
+	}); */
+    
+      
+    
+    </script>
+</body>
+</html>

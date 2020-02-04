@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.modules.sys.dao.CghtdjDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.renren.modules.sys.entity.CghtdjEntity" id="cghtdjMap">
+        <result property="cghtdjId" column="cghtdj_id"/>
+        <result property="cghtze" column="cghtze"/>
+        <result property="spzt" column="spzt"/>
+        <result property="htzt" column="htzt"/>
+        <result property="jebl" column="jebl"/>
+        <result property="ssxmmc" column="ssxmmc"/>
+        <result property="htmc" column="htmc"/>
+        <result property="htbh" column="htbh"/>
+        <result property="htlx" column="htlx"/>
+        <result property="jfdw" column="jfdw"/>
+        <result property="jflxr" column="jflxr"/>
+        <result property="yfdw" column="yfdw"/>
+        <result property="yflxr" column="yflxr"/>
+        <result property="jbr" column="jbr"/>
+        <result property="fpsd" column="fpsd"/>
+        <result property="cgsz" column="cgsz"/>
+        <result property="qdrq" column="qdrq"/>
+        <result property="ljdpje" column="ljdpje"/>
+        <result property="jhsj" column="jhsj"/>
+        <result property="dhdd" column="dhdd"/>
+        <result property="shlxr" column="shlxr"/>
+        <result property="ysfsjfy" column="ysfsjfy"/>
+        <result property="jfcly" column="jfcly"/>
+        <result property="dh1" column="dh1"/>
+        <result property="jfxcxmjl" column="jfxcxmjl"/>
+        <result property="dh2" column="dh2"/>
+        <result property="jfcgfwzy" column="jfcgfwzy"/>
+        <result property="dh3" column="dh3"/>
+        <result property="yx" column="yx"/>
+        <result property="sbazts" column="sbazts"/>
+        <result property="sbbxfs" column="sbbxfs"/>
+        <result property="zbq" column="zbq"/>
+        <result property="qt" column="qt"/>
+        <result property="zzj" column="zzj"/>
+    </resultMap>
+
+
+</mapper>

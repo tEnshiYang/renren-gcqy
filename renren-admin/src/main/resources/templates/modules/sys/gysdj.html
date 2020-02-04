@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>供应商登记</title>
+		<#include "/header.html">
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn">
+        <div>
+				<label class="form-inline" />单位名称：<input type="text" class="form-control" v-model="q.dwmc" @keyup.enter="query" >
+							<label class="form-inline" />确认人：<input type="text" class="form-control" v-model="q.qrr" @keyup.enter="query" >
+							<label class="form-inline" />创建人：<input type="text" class="form-control" v-model="q.cjr" @keyup.enter="query" >
+			
+			
+				<a class="btn btn-default form-inline" @click="query">查询</a>
+			
+			</div>
+			<#if shiro.hasPermission("sys:gysdj:save")>
+            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+			</#if>
+			<#if shiro.hasPermission("sys:gysdj:update")>
+            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+			</#if>
+			<#if shiro.hasPermission("sys:gysdj:delete")>
+            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+			</#if>
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form class="form-horizontal">
+														                    <div class="form-group">
+                        <div class="col-sm-2 control-label">单位名称</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="gysdj.dwmc" placeholder="单位名称"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">状态</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="gysdj.zt" placeholder="状态"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">注册资金</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="gysdj.zczj" placeholder="注册资金"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">开户银行</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="gysdj.khyh" placeholder="开户银行"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">账户</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="gysdj.zh" placeholder="账户"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">传真</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="gysdj.cz" placeholder="传真"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">电话</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="gysdj.dh" placeholder="电话"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">Email</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="gysdj.e" placeholder="Email"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">企业性质</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="gysdj.qyxz" placeholder="企业性质"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">供应商联系人</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="gysdj.gyslxr" placeholder="供应商联系人"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">联系方式</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="gysdj.lxfs" placeholder="联系方式"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">渠道来源</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="gysdj.qdly" placeholder="渠道来源"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">品牌</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="gysdj.pp" placeholder="品牌"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">供应范围</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="gysdj.gyfw" placeholder="供应范围"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">地址</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="gysdj.dz" placeholder="地址"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">营业执照</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="gysdj.yyzz" placeholder="营业执照"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">产品代理证</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="gysdj.cpdlz" placeholder="产品代理证"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">其他信息</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="gysdj.qtxx" placeholder="其他信息"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">联系人信息</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="gysdj.lxrxx" placeholder="联系人信息"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">备注</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="gysdj.bz" placeholder="备注"/>
+                        </div>
+                    </div>
+							            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/sys/gysdj.js?_${.now?long}"></script>
+</body>
+</html>

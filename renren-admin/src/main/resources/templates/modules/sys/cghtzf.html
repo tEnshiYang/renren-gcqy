@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>采购合同作废</title>
+		<#include "/header.html">
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn">
+           <div>
+				<label class="form-inline" />合同名称：<input type="text" class="form-control" v-model="q.htmc" @keyup.enter="query" >
+				<label class="form-inline" />作废编号：<input type="text" class="form-control" v-model="q.zfbh" @keyup.enter="query" >
+				<label class="form-inline" />申请人姓名：<input type="text" class="form-control" v-model="q.sqrxm" @keyup.enter="query" >
+				
+				<a class="btn btn-default form-inline" @click="query">查询</a>
+			
+			</div>
+			<#if shiro.hasPermission("sys:cghtzf:save")>
+            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+			</#if>
+			<#if shiro.hasPermission("sys:cghtzf:update")>
+            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+			</#if>
+			<#if shiro.hasPermission("sys:cghtzf:delete")>
+            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+			</#if>
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form class="form-horizontal">
+														                    <div class="form-group">
+                        <div class="col-sm-2 control-label">所属项目名称</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtzf.ssxmmc" placeholder="所属项目名称"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">审批状态</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtzf.spzt" placeholder="审批状态"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">合同名称</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtzf.htmc" placeholder="合同名称"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">作废编号</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtzf.zfbh" placeholder="作废编号"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">申请人姓名</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtzf.sqrxm" placeholder="申请人姓名"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">申请日期</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtzf.sqrq" placeholder="申请日期"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">甲方公司名称</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtzf.jfgsmc" placeholder="甲方公司名称"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">乙方公司名称</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtzf.yfgsmc" placeholder="乙方公司名称"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">合同签订日期</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtzf.htqdrq" placeholder="合同签订日期"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">签订金额</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtzf.qdje" placeholder="签订金额"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">作废情况说明</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtzf.zfqksm" placeholder="作废情况说明"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">备注</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtzf.bz" placeholder="备注"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">作废明细</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtzf.zfmx" placeholder="作废明细"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">操作人</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtzf.czr" placeholder="操作人"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">操作时间</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtzf.czsj" placeholder="操作时间"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">创建人</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtzf.cjr" placeholder="创建人"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">创建时间</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cghtzf.cjsj" placeholder="创建时间"/>
+                        </div>
+                    </div>
+							            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/sys/cghtzf.js?_${.now?long}"></script>
+</body>
+</html>

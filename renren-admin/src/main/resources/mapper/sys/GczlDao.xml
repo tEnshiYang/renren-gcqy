@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.modules.sys.dao.GczlDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.renren.modules.sys.entity.GczlEntity" id="gczlMap">
+        <result property="gczlId" column="gczl_id"/>
+        <result property="ssxm" column="ssxm"/>
+        <result property="zlmc" column="zlmc"/>
+        <result property="zlwjlx" column="zlwjlx"/>
+        <result property="jlsj" column="jlsj"/>
+        <result property="bz" column="bz"/>
+        <result property="fj" column="fj"/>
+        <result property="czr" column="czr"/>
+        <result property="czsj" column="czsj"/>
+        <result property="cjr" column="cjr"/>
+        <result property="cjsj" column="cjsj"/>
+    </resultMap>
+
+
+</mapper>

@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>投标盖章申请</title>
+		<#include "/header.html">
+</head>
+<body>
+<style>
+	.red{
+		color:red;
+	}
+</style>
+<script>
+    $(document).ready(function(){
+    	$('#gzform').bootstrapValidator({
+    	    // 默认的提示消息
+    	    message: 'This value is not valid',
+    	    // 表单框里右侧的icon
+    	    feedbackIcons: {
+    	      　　　　　　　　valid: 'glyphicon glyphicon-ok',
+    	      　　　　　　　　invalid: 'glyphicon glyphicon-remove',
+    	      　　　　　　　　validating: 'glyphicon glyphicon-refresh'
+    	    },
+    	    submitHandler: function (validator, form, submitButton) {
+    	      // 表单提交成功时会调用此方法
+    	      // validator: 表单验证实例对象
+    	      // form  jq对象  指定表单对象
+    	      // submitButton  jq对象  指定提交按钮的对象
+    	    },
+    	    fields: {
+    	    	xmmc: {
+    	       
+    	        validators: {
+    	          notEmpty: {
+    	            message: '该项不能为空'
+    	          }
+    	        }
+    	       
+    	      },
+    	      tbsj: {
+    	        
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      gzsj: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      tbbzj: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      fkfs: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      zbr: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      zblxr: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      zbdl: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      zbdllxr: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      zjly: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      xmszd: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      hsdyfzr: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      qtxx: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      jsf: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      swf: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      swkfqk: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      jgf: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      zgxj: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      zdj: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      jzjjsfs: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      gk: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      dk: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      sbclcb: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      nbj: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      nzyjzds: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      fddbrsfcc: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      kbsj: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      kbdd: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      tblx: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      zztbwjZ: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      zztbwjF: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      dztbwjG: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      dztbwjU: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      dztbwjjm: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
+    	      tbwjzc: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      }
+    	      
+    	      
+    	    }
+    	  });
+    	  
+
+    	});
+    	
+    	
+    </script>
+<div id="rrapp" v-cloak>
+<span id="syssqr" style="display:none;">{{user.username}}</span>
+
+    <div v-show="showList">
+        <div class="grid-btn">
+        	<div class="row" >
+			<div>
+			<label class="form-inline" />项目名称：<input class="form-control"  type="text"  v-model="q.xmmc" @keyup.enter="query" >	
+			
+				 <label class="form-inline" />投标保证金额：<input class="form-control"  type="text"  v-model="q.tbbzj"  @keyup.enter="query">	
+				
+			<a class="btn btn-default form-inline" @click="query">查询</a>
+			</div>
+			</div>
+			<#if shiro.hasPermission("sys:tbgzsq:save")>
+            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+			</#if>
+			<#if shiro.hasPermission("sys:tbgzsq:update")>
+            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+			</#if>
+			<#if shiro.hasPermission("sys:tbgzsq:delete")>
+            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+			</#if>
+			<a class="btn btn-primary" @click="shenpi" id="shenpi"><i class="fa fa-pencil-square-o"></i>&nbsp;审批</a>
+			
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form id="gzform" class="form-horizontal">
+														                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>项目名称</div>
+                        <div class="col-sm-10">
+                        <div class=" input-group">
+                            <input readonly type="text" name="xmmc" id="xmmc" class="form-control" v-model="tbgzsq.xmmc" placeholder="项目名称"/>
+                            <span class="input-group-addon" data-toggle="modal" data-target="#myModal" >+</span>
+                        </div>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>投标时间</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="tbsj" class="form-control" v-model="tbgzsq.tbsj" placeholder="投标时间"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>盖章时间</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="gzsj" class="form-control" v-model="tbgzsq.gzsj" placeholder="盖章时间"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>投标保证金</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="tbbzj" class="form-control" v-model="tbgzsq.tbbzj" placeholder="投标保证金"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>付款方式</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="fkfs" class="form-control" v-model="tbgzsq.fkfs" placeholder="付款方式"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>招标人</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="zbr" class="form-control" v-model="tbgzsq.zbr" placeholder="招标人"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>招标联系人</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="zblxr" class="form-control" v-model="tbgzsq.zblxr" placeholder="招标联系人"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>招标代理</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="zbdl" class="form-control" v-model="tbgzsq.zbdl" placeholder="招标代理"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>招标代理联系人</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="zbdllxr"  class="form-control" v-model="tbgzsq.zbdllxr" placeholder="招标代理联系人"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>资金来源</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="zjly"  class="form-control" v-model="tbgzsq.zjly" placeholder="资金来源"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>项目所在地</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="xmszd" class="form-control" v-model="tbgzsq.xmszd" placeholder="项目所在地"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>核算单元负责人</div>
+                        <div class="col-sm-10">
+                            <input readonly name="hsdyfzr" type="text" id="hsdyfzr" class="form-control" v-model="tbgzsq.hsdyfzr" placeholder="核算单元负责人"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>其他信息</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="qtxx" class="form-control" v-model="tbgzsq.qtxx" placeholder="其他信息"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>技术分</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="jsf" class="form-control" v-model="tbgzsq.jsf" placeholder="技术分"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>商务分</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="swf" class="form-control" v-model="tbgzsq.swf" placeholder="商务分"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>商务扣分情况</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="swkfqk" class="form-control" v-model="tbgzsq.swkfqk" placeholder="商务扣分情况"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>价格分</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="jgf" class="form-control" v-model="tbgzsq.jgf" placeholder="价格分"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>最高限价</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="zgxj" class="form-control" v-model="tbgzsq.zgxj" placeholder="最高限价"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>暂定价</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="zdj" class="form-control" v-model="tbgzsq.zdj" placeholder="暂定价"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>基准价计算方式</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="jzjjsfs" class="form-control" v-model="tbgzsq.jzjjsfs" placeholder="基准价计算方式"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>高扣</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="gk" class="form-control" v-model="tbgzsq.gk" placeholder="高扣"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>抵扣</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="dk" class="form-control" v-model="tbgzsq.dk" placeholder="抵扣"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>设备材料成本</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="sbclcb" class="form-control" v-model="tbgzsq.sbclcb" placeholder="设备材料成本"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>拟报价</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="nbj" class="form-control" v-model="tbgzsq.nbj" placeholder="拟报价"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>拟主要竞争对手情况</div>
+                        <div class="col-sm-10">
+                            <input type="text" name="nzyjzds" class="form-control" v-model="tbgzsq.nzyjzds" placeholder="拟主要竞争对手情况"/>
+                        </div>
+                    </div>
+									
+							            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+            </div>
+        </form>
+    </div>
+    <div class="container">
+    
+    
+     
+        <!-- 模态框（Modal） -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            选择人员
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                     <div class="grid-btn">
+                    	<div>
+ 							<label class="form-inline" />项目名称：<input type="text" v-model="ry.xmmc" class="form-control"  @keyup.enter="query1" >
+ 			
+							</div>
+						<a class="btn btn-default" @click="query1">查询</a>
+						</div>
+							
+                         <table id="ryGrid"></table>
+       					 <div id="ryGridPager"></div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" @click="saveusername" class="btn btn-primary">
+                        		    确定
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal  $("input[name='FORMID']").val(); -->
+        </div>
+    
+     <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            审核
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                     <div class="grid-btn">
+                     <div  class="panel panel-default">
+        <div class="panel-heading">审批</div>
+        <form class="form-horizontal">
+						                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>项目名称</div>
+                        <div class="col-sm-10">
+                        <div class=" input-group">
+                            <input readonly type="text" name="xmmc" id="xmmc" class="form-control" v-model="tbgzsq.xmmc" placeholder="项目名称"/>
+                            <span class="input-group-addon" data-toggle="modal" data-target="#myModal" >+</span>
+                        </div>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>投标时间</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" name="tbsj" class="form-control" v-model="tbgzsq.tbsj" placeholder="投标时间"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>盖章时间</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" name="gzsj" class="form-control" v-model="tbgzsq.gzsj" placeholder="盖章时间"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>投标保证金</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" name="tbbzj" class="form-control" v-model="tbgzsq.tbbzj" placeholder="投标保证金"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>付款方式</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" name="fkfs" class="form-control" v-model="tbgzsq.fkfs" placeholder="付款方式"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>招标人</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" name="zbr" class="form-control" v-model="tbgzsq.zbr" placeholder="招标人"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>招标联系人</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" name="zblxr" class="form-control" v-model="tbgzsq.zblxr" placeholder="招标联系人"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>招标代理</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" name="zbdl" class="form-control" v-model="tbgzsq.zbdl" placeholder="招标代理"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>招标代理联系人</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" name="zbdllxr"  class="form-control" v-model="tbgzsq.zbdllxr" placeholder="招标代理联系人"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>资金来源</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" name="zjly"  class="form-control" v-model="tbgzsq.zjly" placeholder="资金来源"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>项目所在地</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" name="xmszd" class="form-control" v-model="tbgzsq.xmszd" placeholder="项目所在地"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>核算单元负责人</div>
+                        <div class="col-sm-10">
+                            <input readonly readonly name="hsdyfzr" type="text" id="hsdyfzr" class="form-control" v-model="tbgzsq.hsdyfzr" placeholder="核算单元负责人"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>其他信息</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" name="qtxx" class="form-control" v-model="tbgzsq.qtxx" placeholder="其他信息"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>技术分</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" name="jsf" class="form-control" v-model="tbgzsq.jsf" placeholder="技术分"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>商务分</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" name="swf" class="form-control" v-model="tbgzsq.swf" placeholder="商务分"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>商务扣分情况</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" name="swkfqk" class="form-control" v-model="tbgzsq.swkfqk" placeholder="商务扣分情况"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>价格分</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" name="jgf" class="form-control" v-model="tbgzsq.jgf" placeholder="价格分"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>最高限价</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" name="zgxj" class="form-control" v-model="tbgzsq.zgxj" placeholder="最高限价"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>暂定价</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" name="zdj" class="form-control" v-model="tbgzsq.zdj" placeholder="暂定价"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>基准价计算方式</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" name="jzjjsfs" class="form-control" v-model="tbgzsq.jzjjsfs" placeholder="基准价计算方式"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>高扣</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" name="gk" class="form-control" v-model="tbgzsq.gk" placeholder="高扣"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>抵扣</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" name="dk" class="form-control" v-model="tbgzsq.dk" placeholder="抵扣"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>设备材料成本</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" name="sbclcb" class="form-control" v-model="tbgzsq.sbclcb" placeholder="设备材料成本"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>拟报价</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" name="nbj" class="form-control" v-model="tbgzsq.nbj" placeholder="拟报价"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"><span class="red">*</span>拟主要竞争对手情况</div>
+                        <div class="col-sm-10">
+                            <input readonly type="text" name="nzyjzds" class="form-control" v-model="tbgzsq.nzyjzds" placeholder="拟主要竞争对手情况"/>
+                        </div>
+                    </div>
+                    						                    <div class="form-group">
+                        <div class="col-sm-2 control-label">是否审批通过</div>
+                        <div class="col-sm-10">
+                            <input readonly type="checkbox" id="sptg" class="form-control" />
+                        </div>
+                    </div>
+					
+        </form>
+    </div> 
+                    
+						
+						</div>
+							
+                       
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" @click="saveOrUpdate" class="btn btn-primary">
+                        		    确定
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal  $("input[name='FORMID']").val(); -->
+        </div>
+    </div>
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/sys/tbgzsq.js?_${.now?long}"></script>
+</body>
+</html>

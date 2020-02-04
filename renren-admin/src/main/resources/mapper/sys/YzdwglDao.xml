@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.modules.sys.dao.YzdwglDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.renren.modules.sys.entity.YzdwglEntity" id="yzdwglMap">
+        <result property="yzdwId" column="yzdw_id"/>
+        <result property="gsmc" column="gsmc"/>
+        <result property="gsdm" column="gsdm"/>
+        <result property="gmsx" column="gmsx"/>
+        <result property="gssh" column="gssh"/>
+        <result property="khyh" column="khyh"/>
+        <result property="zh1" column="zh1"/>
+        <result property="zh2" column="zh2"/>
+        <result property="zczj" column="zczj"/>
+        <result property="xmjs" column="xmjs"/>
+        <result property="cz" column="cz"/>
+        <result property="bgsdh" column="bgsdh"/>
+        <result property="e" column="E"/>
+        <result property="yxq" column="yxq"/>
+        <result property="dz" column="dz"/>
+        <result property="jyfryjbxx" column="jyfryjbxx"/>
+        <result property="bz" column="bz"/>
+        <result property="fj" column="fj"/>
+    </resultMap>
+
+
+</mapper>

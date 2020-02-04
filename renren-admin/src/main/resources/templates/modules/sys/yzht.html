@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>业主合同登记</title>
+		<#include "/header.html">
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn">
+        <div>
+				<label class="form-inline" />工程名：<input type="text" class="form-control" v-model="q.ssxmmc" @keyup.enter="query" >
+								<label class="form-inline" />工程名：<input type="text" class="form-control" v-model="q.htmc" @keyup.enter="query" >
+								<label class="form-inline" />工程名：<input type="text" class="form-control" v-model="q.dabh" @keyup.enter="query" >
+				
+				
+				
+				<a class="btn btn-default form-inline" @click="query">查询</a>
+			
+			</div>
+			<#if shiro.hasPermission("sys:yzht:save")>
+            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+			</#if>
+			<#if shiro.hasPermission("sys:yzht:update")>
+            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+			</#if>
+			<#if shiro.hasPermission("sys:yzht:delete")>
+            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+			</#if>
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form class="form-horizontal">
+														                    <div class="form-group">
+                        <div class="col-sm-2 control-label">所属项目名称</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.ssxmmc" placeholder="所属项目名称"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">合同名称</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.htmc" placeholder="合同名称"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">签约主体</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.qyzt" placeholder="签约主体"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">项目类别</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.xmlb" placeholder="项目类别"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">档案编号</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.dabh" placeholder="档案编号"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">合同金额</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.htje" placeholder="合同金额"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">财务编号</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.cwbh" placeholder="财务编号"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">投标保证金金额</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.tbbzj" placeholder="投标保证金金额"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">发票类型</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.fplx" placeholder="发票类型"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">甲方单位</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.jfdw" placeholder="甲方单位"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">乙方单位</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.yfdw" placeholder="乙方单位"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">甲方联系人</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.jflxr" placeholder="甲方联系人"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">乙方联系人</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.yflxr" placeholder="乙方联系人"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">甲方联系人电话</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.jfdh" placeholder="甲方联系人电话"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">乙方联系人电话</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.yfdh" placeholder="乙方联系人电话"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">总包单位</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.zbdw" placeholder="总包单位"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">监理单位</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.jldw" placeholder="监理单位"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">总包联系人</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.zblxr" placeholder="总包联系人"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">监理联系人</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.jllxr" placeholder="监理联系人"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">总包联系人电话</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.zbdh" placeholder="总包联系人电话"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">监理联系人电话</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.jldh" placeholder="监理联系人电话"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">现场经理</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.xcjl" placeholder="现场经理"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">现场经理电话</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.xcjldh" placeholder="现场经理电话"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">质量员</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.zly" placeholder="质量员"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">质量员电话</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.zlydh" placeholder="质量员电话"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">安全员</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.aqy" placeholder="安全员"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">安全员电话</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.aqydh" placeholder="安全员电话"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">施工队长</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.sgdz" placeholder="施工队长"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">施工队长电话</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.sgdzdh" placeholder="施工队长电话"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">申请人</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.sqr" placeholder="申请人"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">申请单位</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.sqdw" placeholder="申请单位"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">合同支付方式</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.htzffs" placeholder="合同支付方式"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">工程地址</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.gcdz" placeholder="工程地址"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">承包内容</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.cbnr" placeholder="承包内容"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">所属地区</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.ssdq" placeholder="所属地区"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">所属领域</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.ssly" placeholder="所属领域"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">项目创优目标</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.xmcymb" placeholder="项目创优目标"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">工程结构形成</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.gcjgxc" placeholder="工程结构形成"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">资金来源</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.zjly" placeholder="资金来源"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">保修期</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.bxq" placeholder="保修期"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">招标代理</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.zbdl" placeholder="招标代理"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">招标文件</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.zbwj" placeholder="招标文件"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">投标文件</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.tbwj" placeholder="投标文件"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">投标清单</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.tbqd" placeholder="投标清单"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">中标通知书</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.zbtzs" placeholder="中标通知书"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">合同电子档</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.htdzd" placeholder="合同电子档"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">备注</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.bz" placeholder="备注"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">审批状态</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.spzt" placeholder="审批状态"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">合同状态</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="yzht.htzt" placeholder="合同状态"/>
+                        </div>
+                    </div>
+							            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/sys/yzht.js?_${.now?long}"></script>
+</body>
+</html>

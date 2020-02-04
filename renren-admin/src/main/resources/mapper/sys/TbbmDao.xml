@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.modules.sys.dao.TbbmDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.renren.modules.sys.entity.TbbmEntity" id="tbbmMap">
+        <result property="xmmc" column="xmmc"/>
+        <result property="tbbmId" column="tbbm_id"/>
+        <result property="sqr" column="sqr"/>
+        <result property="sqsj" column="sqsj"/>
+         <result property="spzt" column="spzt"/>
+        <result property="bmmc" column="bmmc"/>
+        <result property="tbsj" column="tbsj"/>
+        <result property="tbfs" column="tbfs"/>
+        
+        <result property="dbqk" column="dbqk"/>
+        <result property="gsyz" column="gsyz"/>
+        <result property="zgdj" column="zgdj"/>
+        <result property="sbyq" column="sbyq"/>
+        <result property="zsfs" column="zsfs"/>
+        <result property="tbbzj" column="tbbzj"/>
+        <result property="xmkzj" column="xmkzj"/>
+        <result property="xmjlyjyq" column="xmjlyjyq"/>
+        <result property="sfgw" column="sfgw"/>
+        <result property="zbpt" column="zbpt"/>
+        <result property="qyyjyq" column="qyyjyq"/>
+        <result property="jzys" column="jzys"/>
+        <result property="swkfqk" column="swkfqk"/>
+        <result property="cjzbly" column="cjzbly"/>
+        <result property="zyjzds" column="zyjzds"/>
+        <result property="zbwj" column="zbwj"/>
+        <result property="gzbbspd" column="gzbbspd"/>
+        <result property="bz" column="bz"/>
+        <result property="filepath" column="filepath"/>
+    </resultMap>
+
+
+</mapper>

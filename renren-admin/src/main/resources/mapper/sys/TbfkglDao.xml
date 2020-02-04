@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.modules.sys.dao.TbfkglDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.renren.modules.sys.entity.TbfkglEntity" id="tbfkglMap">
+        <result property="tbfkId" column="tbfk_id"/>
+        <result property="xmmc" column="xmmc"/>
+        <result property="cjry" column="cjry"/>
+        <result property="pfbf" column="pfbf"/>
+        <result property="kbsj" column="kbsj"/>
+        <result property="fklx" column="fklx"/>
+        <result property="jg" column="jg"/>
+        <result property="zbsqr" column="zbsqr"/>
+        <result property="bz" column="bz"/>
+        <result property="rwdw" column="rwdw"/>
+        <result property="czr" column="czr"/>
+        <result property="czsj" column="czsj"/>
+        <result property="caozr" column="caozr"/>
+        <result property="caozsj" column="caozsj"/>
+        <result property="zbqk" column="zbqk"/>
+        <result property="sffkb" column="sffkb"/>
+        <result property="sfxm" column="sfxm"/>
+    </resultMap>
+
+
+</mapper>
