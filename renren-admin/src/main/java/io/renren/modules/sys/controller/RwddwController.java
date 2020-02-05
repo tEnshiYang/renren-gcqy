@@ -36,7 +36,6 @@ public class RwddwController {
      * 列表
      */
     @RequestMapping("/list")
-    @RequiresPermissions("sys:rwddw:list")
     public R list(@RequestParam Map<String, Object> params){
         PageUtils page = rwddwService.queryPage(params);
 
@@ -70,7 +69,6 @@ public class RwddwController {
      * 修改
      */
     @RequestMapping("/update")
-    @RequiresPermissions("sys:rwddw:update")
     public R update(@RequestBody RwddwEntity rwddw){
         ValidatorUtils.validateEntity(rwddw);
         rwddwService.updateById(rwddw);
