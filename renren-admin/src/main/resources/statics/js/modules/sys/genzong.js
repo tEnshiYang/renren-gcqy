@@ -197,7 +197,7 @@ var vm = new Vue({
 		 $('#btnSaveOrUpdate').button('loading').delay(1000).queue(function() {
 		
              var url = vm.genzong.genzongId == null ? "sys/genzong/save" : "sys/genzong/update";
-     		vm.genzong.yzbsj=$('#yzbdate').val();
+     		vm.genzong.yzbsj=$('#datetime').val();
 
           	var date=new Date();
 
@@ -293,6 +293,9 @@ var vm = new Vue({
 		getInfo: function(genzongId){
 			$.get(baseURL + "sys/genzong/info/"+genzongId, function(r){
                 vm.genzong = r.genzong;
+                console.log(r.genzong.yzbsj);
+                $('#datetime').val(r.genzong.yzbsj);
+                $('#datetime').text(r.genzong.yzbsj);
             });
 		},
 		 deptTree: function(){
@@ -328,6 +331,7 @@ var vm = new Vue({
 
                 page:page
             }).trigger("reloadGrid");
+			window.location.reload();
 		},
 		ryload: function (event) {
 			/*

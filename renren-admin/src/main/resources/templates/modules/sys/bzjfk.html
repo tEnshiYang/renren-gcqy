@@ -242,10 +242,10 @@
 				           <div class="input-group">
 								
 							
-		                    <input name="hkjzrq" readonly type='text' class="form-control" id='datetime' />
+		                    <input name="hkjzrq" readonly type='text' v-model="bzjfk.hkjzrq"  class="form-control" id='datetime' />
 							<span class="input-group-addon"><span onClick=show() class="glyphicon glyphicon-th"></span></span>
-							<input type="hidden" id="yzbdate" v-model="bzjfk.hkjzrq"  value="" />
-		
+<!-- 							<input type="hidden" id="yzbdate" v-model="bzjfk.hkjzrq"  value="" />
+ -->		
 							</div>
 		<script>
 			function show(){
@@ -255,8 +255,8 @@
 				$('#datetime')
 				.datetimepicker()
 				.on('changeDate', function(ev){
-				  var da=$('#datetime').val()+'';
-				  $('#yzbdate').val(da);
+				/*   var da=$('#datetime').val()+'';
+				  $('#yzbdate').val(da); */
 				
 
 				});

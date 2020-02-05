@@ -685,10 +685,10 @@ $('#gzform').bootstrapValidator({
 				           <div class="input-group">
 								
 							
-		                    <input readonly type='text' name="yzbsj" class="form-control" id='datetime' />
+		                    <input readonly type='text' name="yzbsj" v-model="genzong.yzbsj"  class="form-control" id='datetime' />
 							<span class="input-group-addon"><span onClick=show() class="glyphicon glyphicon-th"></span></span>
-							<input type="hidden" id="yzbdate" v-model="genzong.yzbsj"  value="" />
-		
+<!-- 							<input type="hidden" id="yzbdate" v-model="genzong.yzbsj"  value="" />
+ -->		
 							</div>
 		<script>
 			function show(){
@@ -698,8 +698,8 @@ $('#gzform').bootstrapValidator({
 				$('#datetime')
 				.datetimepicker()
 				.on('changeDate', function(ev){
-				  var da=$('#datetime').val()+'';
-				  $('#yzbdate').val(da);
+			/* 	  var da=$('#datetime').val()+'';
+				  $('#yzbdate').val(da); */
 				
 
 				});

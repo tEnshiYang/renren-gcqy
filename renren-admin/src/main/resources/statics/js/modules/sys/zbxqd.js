@@ -293,6 +293,13 @@ var vm = new Vue({
 		   	 }
 		    	var url = vm.zbxqd.zbxqdId == null ? "sys/zbxqd/save" : "sys/zbxqd/update";
                 var bootstrapValidator = $("#gzform").data('bootstrapValidator');          
+
+//				
+                vm.zbxqd.tbrq=$('#datetime1').val();
+                vm.zbxqd.tbjzrq=$('#datetime2').val();
+                vm.zbxqd.kbsj=$('#datetime3').val();
+            
+
                 //手动触发验证
                 bootstrapValidator.validate();
                 if(bootstrapValidator.isValid()){
@@ -303,7 +310,7 @@ var vm = new Vue({
                     data: JSON.stringify(vm.zbxqd),
                     success: function(r){
                         if(r.code === 0){
-                             layer.msg("操作成功", {icon: 1});
+                        	 layer.msg("操作成功", {icon: 1});
                              vm.reload();
                              $('#btnSaveOrUpdate').button('reset');
                              $('#btnSaveOrUpdate').dequeue();
@@ -357,6 +364,12 @@ var vm = new Vue({
 		getInfo: function(zbxqdId){
 			$.get(baseURL + "sys/zbxqd/info/"+zbxqdId, function(r){
                 vm.zbxqd = r.zbxqd;
+                $('#datetime1').val(r.zbxqd.tbrq);
+                $('#datetime1').text(r.zbxqd.tbrq);
+                $('#datetime2').val(r.zbxqd.tbjzrq);
+                $('#datetime2').text(r.zbxqd.tbjzrq);
+                $('#datetime3').val(r.zbxqd.kbsj);
+                $('#datetime3').text(r.zbxqd.kbsj);
             });
 		},
 		 deptTree: function(){
@@ -389,6 +402,7 @@ var vm = new Vue({
 
                 page:page
             }).trigger("reloadGrid");
+			window.location.reload();
 		},
 		ryload: function (event) {
 			/*

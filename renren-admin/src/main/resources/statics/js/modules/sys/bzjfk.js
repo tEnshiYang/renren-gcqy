@@ -179,7 +179,9 @@ var vm = new Vue({
 			         }
 			   	 }
 		    	var url = vm.bzjfk.bzjfkId == null ? "sys/bzjfk/save" : "sys/bzjfk/update";
-                var bootstrapValidator = $("#gzform").data('bootstrapValidator');          
+	     		vm.bzjfk.hkjzrq=$('#datetime').val();
+
+		    	var bootstrapValidator = $("#gzform").data('bootstrapValidator');          
                 //手动触发验证
                 bootstrapValidator.validate();
                 if(bootstrapValidator.isValid()){
@@ -244,6 +246,8 @@ var vm = new Vue({
 		getInfo: function(bzjfkId){
 			$.get(baseURL + "sys/bzjfk/info/"+bzjfkId, function(r){
                 vm.bzjfk = r.bzjfk;
+                $('#datetime1').val(r.bzjfk.hkjzrq);
+                $('#datetime1').text(r.bzjfk.hkjzrq);
             });
 		},
 		reload: function (event) {
@@ -254,6 +258,7 @@ var vm = new Vue({
 
                 page:page
             }).trigger("reloadGrid");
+			location.reload();
 		},
 		ryload: function (event) {
 			/*

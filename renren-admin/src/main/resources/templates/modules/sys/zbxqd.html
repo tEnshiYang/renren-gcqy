@@ -172,6 +172,14 @@
     	            }
     	          }
     	      },
+  				jlsbyq: {
+    	          
+    	          validators: {
+    	            notEmpty: {
+    	              message: '该项不能为空'
+    	            }
+    	          }
+    	      },
     	      xmjlzgtjyjyq: {
     	          
     	          validators: {
@@ -393,15 +401,87 @@
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label"><span class="red">*</span>投标日期</div>
                         <div class="col-sm-10">
-                            <input type="text" name="tbrq" class="form-control" v-model="zbxqd.tbrq"/>
+                            
+<!--                             <input type="text" name="tbrq" class="form-control" v-model="zbxqd.tbrq"/>
+ -->                         <div class="input-group">
+								
+							
+		                    <input readonly type='text' name="tbrq" v-model="zbxqd.tbrq" class="form-control" id='datetime1' />
+							<span class="input-group-addon"><span onClick=show1() class="glyphicon glyphicon-th"></span></span>
+		
+							</div>
                         </div>
                     </div>
+                    <script>
+			function show1(){
+				$('#datetime1').datetimepicker('show');
+			}
+			$(function() {
+				$('#datetime1')
+				.datetimepicker()
+				.on('changeDate', function(ev){
+				  var da=$('#datetime1').val()+'';
+				  $('#yzbdate1').val(da);
+				
+
+				});
+				$("#datetime1").datetimepicker({
+					 language : 'zh-CN',
+                     //format : 'yyyy-mm-dd hh:ii:ss',//日期格式。可以将日期格式，定成年月日时分秒。
+                     format : 'yyyy-mm-dd',//日期格式。可以将日期格式，定成年月日时，分秒为0。
+                     weekStart: 1,
+                     todayBtn:  1,
+                     autoclose: 1,
+                     todayHighlight: 1,
+                     startView: 2,
+                     forceParse: 0,
+                     showMeridian: 1
+					
+				});
+			});
+		</script>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label"><span class="red">*</span>投标截止日期</div>
                         <div class="col-sm-10">
-                            <input type="text" name="tbjzrq" class="form-control" v-model="zbxqd.tbjzrq"/>
+<!--                             <input type="text" name="tbjzrq" class="form-control" v-model="zbxqd.tbjzrq"/>
+ -->                            <div class="input-group">
+								
+							
+		                    <input readonly type='text' name="tbjzrq" v-model="zbxqd.tbjzrq" class="form-control" id='datetime2' />
+							<span class="input-group-addon"><span onClick=show2() class="glyphicon glyphicon-th"></span></span>
+							<input type="hidden" id="yzbdate2"   value="" />
+		
+							</div>
                         </div>
                     </div>
+                               <script>
+			function show2(){
+				$('#datetime2').datetimepicker('show');
+			}
+			$(function() {
+				$('#datetime2')
+				.datetimepicker()
+				.on('changeDate', function(ev){
+				  var da=$('#datetime2').val()+'';
+				  $('#yzbdate2').val(da);
+				
+
+				});
+				$("#datetime2").datetimepicker({
+					 language : 'zh-CN',
+                     //format : 'yyyy-mm-dd hh:ii:ss',//日期格式。可以将日期格式，定成年月日时分秒。
+                     format : 'yyyy-mm-dd',//日期格式。可以将日期格式，定成年月日时，分秒为0。
+                     weekStart: 1,
+                     todayBtn:  1,
+                     autoclose: 1,
+                     todayHighlight: 1,
+                     startView: 2,
+                     forceParse: 0,
+                     showMeridian: 1
+					
+				});
+			});
+		</script>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label"><span class="red">*</span>制标申请人</div>
                         <div class="col-sm-10">
@@ -508,7 +588,7 @@
                         <div class="col-sm-2 control-label"><span class="red">*</span>项目经理社保要求</div>
                         <div class="col-sm-10">
 <!--                             <input type="text" class="form-control" v-model="zbxqd.jlsbyq" />
- -->                                <select class="form-control" name="jlzgyq" v-model="zbxqd.jlzgyq" id="">
+ -->                                <select class="form-control" name="jlsbyq" v-model="zbxqd.jlsbyq" id="">
 									<option value="3个月">3个月</option>
 		  							<option value="6个月">6个月</option>
   									<option value="12个月">12个月</option>
@@ -588,9 +668,45 @@
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label"><span class="red">*</span>开标时间</div>
                         <div class="col-sm-10">
-                            <input type="text" name="kbsj" class="form-control" v-model="zbxqd.kbsj" />
+<!--                             <input type="text" name="kbsj" class="form-control" v-model="zbxqd.kbsj" />
+ -->                           <div class="input-group">
+								
+							
+		                    <input readonly type='text' name="kbsj" v-model="zbxqd.kbsj"  class="form-control" id='datetime3' />
+							<span class="input-group-addon"><span onClick=show3() class="glyphicon glyphicon-th"></span></span>
+							<input type="hidden" id="yzbdate3"  value="" />
+		
+							</div>
                         </div>
                     </div>
+                                          <script>
+			function show3(){
+				$('#datetime3').datetimepicker('show');
+			}
+			$(function() {
+				$('#datetime3')
+				.datetimepicker()
+				.on('changeDate', function(ev){
+				  var da=$('#datetime3').val()+'';
+				  $('#yzbdate3').val(da);
+				
+
+				});
+				$("#datetime3").datetimepicker({
+					 language : 'zh-CN',
+                     //format : 'yyyy-mm-dd hh:ii:ss',//日期格式。可以将日期格式，定成年月日时分秒。
+                     format : 'yyyy-mm-dd',//日期格式。可以将日期格式，定成年月日时，分秒为0。
+                     weekStart: 1,
+                     todayBtn:  1,
+                     autoclose: 1,
+                     todayHighlight: 1,
+                     startView: 2,
+                     forceParse: 0,
+                     showMeridian: 1
+					
+				});
+			});
+		</script>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label"><span class="red">*</span>开标地点</div>
                         <div class="col-sm-10">

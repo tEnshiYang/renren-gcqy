@@ -132,9 +132,42 @@
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label"><span class="red">*</span>开标时间</div>
                         <div class="col-sm-10">
-                            <input type="text" name="kbsj" class="form-control" v-model="tbfkgl.kbsj" />
+<!--                             <input type="text" name="kbsj" class="form-control" v-model="tbfkgl.kbsj" />
+ -->                             <div class="input-group">
+				                    <input name="kbsj" readonly type='text' class="form-control" id='datetime' />
+									<span class="input-group-addon"><span onClick=show() class="glyphicon glyphicon-th"></span></span>
+									<input type="hidden" id="yzbdate" v-model="tbfkgl.kbsj"  value="" />
+                        		</div>
                         </div>
                     </div>
+                    <script>
+			function show(){
+				$('#datetime').datetimepicker('show');
+			}
+			$(function() {
+				$('#datetime')
+				.datetimepicker()
+				.on('changeDate', function(ev){
+				  var da=$('#datetime').val()+'';
+				  $('#yzbdate').val(da);
+				
+				console.log(da);
+				});
+				$("#datetime").datetimepicker({
+					 language : 'zh-CN',
+                     //format : 'yyyy-mm-dd hh:ii:ss',//日期格式。可以将日期格式，定成年月日时分秒。
+                     format : 'yyyy-mm-dd hh:ii:ss',//日期格式。可以将日期格式，定成年月日时，分秒为0。
+                     weekStart: 1,
+                     todayBtn:  1,
+                     autoclose: 1,
+                     todayHighlight: 1,
+                     startView: 2,
+                     forceParse: 0,
+                     showMeridian: 1
+					
+				});
+			});
+		</script>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label"><span class="red">*</span>反馈类型</div>
                         <div class="col-sm-10">
@@ -160,9 +193,10 @@
 <!--                             <input type="text" class="form-control" v-model="tbfkgl.rwdw" />
  -->                      <div class="table-box" style="margin: 20px;width:900px;">
 						    <div id="toolbar">
-						        <button id="button" class="btn btn-default">insertRow</button>
-						        <button id="getTableData" class="btn btn-default">getTableData</button>
-						    </div>
+						        <button id="button" class="btn btn-default">添加</button>
+<!-- 						        <button id="getTableData" class="btn btn-default">getTableData</button>
+ -->						 
+ 							   </div>
 						    <table id="table"></table>
 						</div>
 

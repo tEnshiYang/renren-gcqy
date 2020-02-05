@@ -164,10 +164,44 @@
                     </div>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label"><span class="red">*</span>回款日期</div>
-                        <div class="col-sm-10">
-                            <input type="text" name="hkrq" class="form-control" v-model="bzjtk.hkrq" placeholder="回款日期"/>
+                  	
+                       
+	                        <div class="col-sm-10">
+	                         <div class="input-group">
+	<!--                             <input type="text" name="hkrq" class="form-control" v-model="bzjtk.hkrq" placeholder="回款日期"/>
+	 -->                         <input readonly type='text' name="hkrq" v-model="bzjtk.hkrq" class="form-control" id='datetime' />
+								<span class="input-group-addon"><span onClick=show() class="glyphicon glyphicon-th"></span></span>
+<!-- 								<input type="hidden" id="yzbdate" v-model="bzjtk.hkrq"  value="" />
+ -->			
+	                        </div>
                         </div>
                     </div>
+                    <script>
+			function show(){
+				$('#datetime').datetimepicker('show');
+			}
+			$(function() {
+				$('#datetime')
+				.datetimepicker()
+				.on('changeDate', function(ev){
+			
+
+				});
+				$("#datetime").datetimepicker({
+					 language : 'zh-CN',
+                     //format : 'yyyy-mm-dd hh:ii:ss',//日期格式。可以将日期格式，定成年月日时分秒。
+                     format : 'yyyy-mm-dd hh:ii:ss',//日期格式。可以将日期格式，定成年月日时，分秒为0。
+                     weekStart: 1,
+                     todayBtn:  1,
+                     autoclose: 1,
+                     todayHighlight: 1,
+                     startView: 2,
+                     forceParse: 0,
+                     showMeridian: 1
+					
+				});
+			});
+		</script>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label"><span class="red">*</span>回款金额</div>
                         <div class="col-sm-10">

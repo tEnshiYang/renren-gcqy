@@ -318,6 +318,7 @@ var vm = new Vue({
 		         }
 		   	 }
                 var url = vm.tbbm.tbbmId == null ? "sys/tbbm/save" : "sys/tbbm/update";
+                vm.tbbm.tbsj=$('#datetime').val();
                 var bootstrapValidator = $("#gzform").data('bootstrapValidator');          
                 //手动触发验证
                 bootstrapValidator.validate();
@@ -384,6 +385,8 @@ var vm = new Vue({
 		getInfo: function(tbbmId){
 			$.get(baseURL + "sys/tbbm/info/"+tbbmId, function(r){
                 vm.tbbm = r.tbbm;
+                $('#datetime').val(r.tbbm.sqsj);
+                $('#datetime').text(r.tbbm.sqsj);
             });
 		},
 		reload: function (event) {
@@ -397,6 +400,7 @@ var vm = new Vue({
 				postData:{'xmmc': vm.q.xmmc,'sqr':vm.q.sqr,'tbfs':vm.q.tbfs},
                 page:page
             }).trigger("reloadGrid");
+			window.location.reload();
 		},
 		ryload: function (event) {
 			/*

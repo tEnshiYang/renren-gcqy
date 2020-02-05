@@ -1,9 +1,12 @@
 package io.renren.modules.sys.controller;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import io.renren.common.validator.ValidatorUtils;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,11 +38,13 @@ public class RwddwController {
     /**
      * 列表
      */
-    @RequestMapping("/list")
-    public R list(@RequestParam Map<String, Object> params){
+    @RequestMapping("/list/{xmmc}")
+    public R list(@PathVariable("xmmc") String xmmc){
+    	Map<String, Object> params=new HashMap<>();
+    	params.put("xmmc", xmmc);
         PageUtils page = rwddwService.queryPage(params);
-
-        return R.ok().put("page", page);
+        List<RwddwEntity> list=(List<RwddwEntity>) page.getList();
+        return R.ok().put("list", list);
     }
 
 
@@ -53,14 +58,23 @@ public class RwddwController {
 
         return R.ok().put("rwddw", rwddw);
     }
-
+    //按项目名查入围单位
+//    @RequestMapping("/select/{xmmc}")
+//    
+//    public R select(@PathVariable("xmmc") String xmmc){
+//        RwddwEntity rwddw = rwddwService.q
+//
+//        return R.ok().put("rwddw", rwddw);
+//    }
     /**
      * 保存
      */
     @RequestMapping("/save")
 
-    public R save(@RequestBody RwddwEntity rwddw){
-        rwddwService.save(rwddw);
+    public R save(@RequestBody RwddwEntity[] rwddw){
+    	 for(int i=0;i<rwddw.length;i++){
+         	rwddwService.save(rwddw[i]);
+         }
 
         return R.ok();
     }
@@ -69,9 +83,15 @@ public class RwddwController {
      * 修改
      */
     @RequestMapping("/update")
-    public R update(@RequestBody RwddwEntity rwddw){
-        ValidatorUtils.validateEntity(rwddw);
-        rwddwService.updateById(rwddw);
+    public R update(@RequestBody RwddwEntity[] rwddw){
+        
+        for(int i=0;i<rwddw.length;i++){
+        	System.out.println("++++++++++++++++++++");
+        	System.out.println(rwddw[i]);
+        	ValidatorUtils.validateEntity(rwddw);
+        	rwddwService.updateById(rwddw[i]);
+        }
+        
         
         return R.ok();
     }

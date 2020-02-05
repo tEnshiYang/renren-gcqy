@@ -182,7 +182,9 @@ var vm = new Vue({
 		   	 }
 		  
 		    	var url = vm.bzjtk.bzjtkId == null ? "sys/bzjtk/save" : "sys/bzjtk/update";
-                var bootstrapValidator = $("#gzform").data('bootstrapValidator');          
+		    	vm.bzjtk.hkrq=$('#datetime').val();
+
+		    	var bootstrapValidator = $("#gzform").data('bootstrapValidator');          
                 //手动触发验证
                 bootstrapValidator.validate();
                 if(bootstrapValidator.isValid()){
@@ -248,6 +250,8 @@ var vm = new Vue({
 		getInfo: function(bzjtkId){
 			$.get(baseURL + "sys/bzjtk/info/"+bzjtkId, function(r){
                 vm.bzjtk = r.bzjtk;
+                $('#datetime').val(r.bzjtk.hkrq);
+                $('#datetime').text(r.bzjtk.hkrq);
             });
 		},
 		reload: function (event) {
@@ -258,6 +262,7 @@ var vm = new Vue({
 
                 page:page
             }).trigger("reloadGrid");
+			location.reload();
 		},
 		ryload: function (event) {
 			/*

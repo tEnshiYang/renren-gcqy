@@ -12,12 +12,16 @@ $(function() {
     let $table = $('#table');
     let $button = $('#button');
     let $getTableData = $('#getTableData');
-
+    $('#button').show();
     $button.click(function() {
+    	if($('#xmmc').val()==null||$('#xmmc').val()==''){
+    		alert('请先选择项目!');return;
+    		}
+    	
         $table.bootstrapTable('insertRow', {
             index: 0,
             row: {
-            	xmmc: '',
+            	xmmc: $('#xmmc').val(),
             	 dwmc: '',
                  bj: '',
                  jsdf: '',
@@ -29,8 +33,10 @@ $(function() {
         });
         console.log($('#xmmc').val());
        
-        $('td').parent().find('td').eq(1).val($('#xmmc').val());
-        console.log( $('td').parent().find('td').eq(1).val());
+//        $('td').parent().find('td').eq(1).val($('#xmmc').val());
+//        $('td').parent().find('td').eq(1).text($('#xmmc').val());
+//        $('td').parent().find('td').eq(1).hide();
+//        console.log( $('td').parent().find('td').eq(1).val());
     });
 
     $table.bootstrapTable({
@@ -42,10 +48,13 @@ $(function() {
         showColumns: false,
         showPaginationSwitch: false,     //显示切换分页按钮
         showRefresh: false,      //显示刷新按钮
-        //clickToSelect: true,  //点击row选中radio或CheckBox
+        //clickToSelect: true,  //点击row选中radio或CheckBox visible: false
         columns: [{
             checkbox: true
-        },  {
+        }, {
+            field: 'rwddwId',
+            visible: false
+        }, {
             field: 'xmmc',
             title: '项目名称'
         }, {
@@ -96,13 +105,13 @@ $(function() {
     $getTableData.click(function() {
     	var json=JSON.stringify($table.bootstrapTable('getData'));
        // alert(json);
-         var url =  "sys/rwddw/update";
+         var url =  "sys/rwddw/save";
 
         $.ajax({
             type: "POST",
             url: baseURL + url,
             contentType: "application/json",
-            data: JSON.stringify(vm.tbfkgl),
+            data: json,
             success: function(r){
                 if(r.code === 0){
                      layer.msg("操作成功", {icon: 1});
@@ -268,7 +277,8 @@ var vm = new Vue({
         },
 		showList: true,
 		title: null,
-		tbfkgl: {}
+		tbfkgl: {},
+		rwddw:{}
 	},
 	methods: {
 		query: function () {
@@ -300,12 +310,29 @@ var vm = new Vue({
 		saveOrUpdate: function (event) {
 		    $('#btnSaveOrUpdate').button('loading').delay(1000).queue(function() {
                 var url = vm.tbfkgl.tbfkId == null ? "sys/tbfkgl/save" : "sys/tbfkgl/update";
+                var url2 = vm.tbfkgl.tbfkId == null ? "sys/rwddw/save":"sys/rwddw/update";
                 var bootstrapValidator = $("#gzform").data('bootstrapValidator');          
                 //手动触发验证
                 bootstrapValidator.validate();
+		    	vm.tbfkgl.kbsj=$('#datetime').val();
+
                 if(bootstrapValidator.isValid()){
              //  var url = vm.tbfkgl.tbfkId == null ? "sys/tbfkgl/save" : "sys/tbfkgl/update";
 
+                	var json=JSON.stringify($('#table').bootstrapTable('getData'));
+                    // alert(json);
+                      
+
+                     $.ajax({
+                         type: "POST",
+                         url: baseURL + url2,
+                         contentType: "application/json",
+                         data: json,
+                         success: function(r){
+                            
+                         }
+                     });
+                	
                 $.ajax({
                     type: "POST",
                     url: baseURL + url,
@@ -363,7 +390,35 @@ var vm = new Vue({
 		getInfo: function(tbfkId){
 			$.get(baseURL + "sys/tbfkgl/info/"+tbfkId, function(r){
                 vm.tbfkgl = r.tbfkgl;
+                var xmmc=vm.tbfkgl.xmmc;
+                $('#datetime').val(r.tbfkgl.kbsj);
+                $('#datetime').text(r.tbfkgl.kbsj);
+                //动态增加可编辑入围单位列表
+    			$.get(baseURL + "sys/rwddw/list/"+xmmc, function(r){
+                   
+                    for(var i=0;i<r.list.length;i++){
+                    //	vm.rwddw[i]=r.list[i];
+                        $('#table').bootstrapTable('insertRow', {
+                            index: 0,
+                            row: {
+                            	rwddwId: r.list[i].rwddwId,
+                            	xmmc: r.list[i].xmmc,
+                            	 dwmc: r.list[i].dwmc,
+                                 bj: r.list[i].bj,
+                                 jsdf: r.list[i].jsdf,
+                                 swdf: r.list[i].swdf,
+                                 xmjl: r.list[i].xmjl,
+                                 pm: r.list[i].pm,
+                                 sfzb: r.list[i].sfzb
+                            }
+                        });
+                    }
+                   // console.log(vm.rwddw);
+                    $('#button').hide();
+                    
+                });
             });
+			
 		},
 		reload: function (event) {
 			vm.showList = true;
@@ -373,6 +428,7 @@ var vm = new Vue({
 
                 page:page
             }).trigger("reloadGrid");
+			window.location.reload();
 		},
 		ryload: function (event) {
 			/*
