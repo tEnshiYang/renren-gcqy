@@ -50,6 +50,9 @@ function Modify(id){
 
 }
 function Download(rows){
+	var pathName=window.document.location.pathname;
+	//截取，得到项目名称
+	var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
 	var strs= new Array(); //定义一数组 
 	strs=rows.split("&"); //字符分割 
 	strs.splice(strs.length-1,1);
@@ -59,9 +62,10 @@ function Download(rows){
 	for (i=0;i<strs.length ;i++ ) 
 	{ 
 		var a=strs[i].split("/");
-		
+		strs[i]=projectName+strs[i].substr(2,strs[i].length-1);
+
 		names[i]=a[a.length-1];
-		console.log(names[i]);
+		
 		$('#downlist').append("<a href="+strs[i]+" download="+names[i]+">"+names[i]+"</a><br>");
 	} 
 
@@ -288,6 +292,9 @@ var vm = new Vue({
                 var url = vm.xm.xmId == null ? "sys/xm/save" : "sys/xm/update";
                 var bootstrapValidator = $("#xmform").data('bootstrapValidator');
                 console.log(bootstrapValidator);
+		    	vm.xm.kgrq=$('#datetime').val();
+		    	vm.xm.wgrq=$('#datetime1').val();
+
                 //手动触发验证
                 var formData=JSON.stringify(vm.xm);
                 console.log(formData);
@@ -356,9 +363,14 @@ var vm = new Vue({
 		getInfo: function(xmId){
 			$.get(baseURL + "sys/xm/info/"+xmId, function(r){
                 vm.xm = r.xm;
+                $('#datetime').val(r.xm.kgrq);
+                $('#datetime').text(r.xm.kgrq);
+                
+                $('#datetime1').val(r.xm.wgrq);
+                $('#datetime1').text(r.xm.wgrq);
             });
 		},
-		   deptTree: function(){
+		deptTree: function(){
 	            layer.open({
 	                type: 1,
 	                offset: '50px',
@@ -387,6 +399,7 @@ var vm = new Vue({
 				 postData:{'xmname': vm.q.xmname,'gcbh':vm.q.gcbh},
                 page:page
             }).trigger("reloadGrid");
+			window.location.reload();
 		},
 		ryload: function (event) {
 			/*

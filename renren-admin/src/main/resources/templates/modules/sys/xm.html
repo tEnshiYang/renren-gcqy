@@ -137,35 +137,104 @@ $('#xmform').bootstrapValidator({
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">开工日期</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="xm.kgrq" placeholder="开工日期"/>
+<!--                             <input type="text" class="form-control" v-model="xm.kgrq" placeholder="开工日期"/>
+ -->                            <div class="input-group">
+		                      <input readonly type='text' name="kgrq" v-model="xm.kgrq" class="form-control" id='datetime' />
+								<span class="input-group-addon"><span onClick=show() class="glyphicon glyphicon-th"></span></span>
+		
+	                        </div>
                         </div>
                     </div>
+                    
+                       <script>
+			function show(){
+				$('#datetime').datetimepicker('show');
+			}
+			$(function() {
+				$('#datetime')
+				.datetimepicker()
+				.on('changeDate', function(ev){
+			
+
+				});
+				$("#datetime").datetimepicker({
+					 language : 'zh-CN',
+                     //format : 'yyyy-mm-dd hh:ii:ss',//日期格式。可以将日期格式，定成年月日时分秒。
+                     format : 'yyyy-mm-dd hh:ii:ss',//日期格式。可以将日期格式，定成年月日时，分秒为0。
+                     weekStart: 1,
+                     todayBtn:  1,
+                     autoclose: 1,
+                     todayHighlight: 1,
+                     startView: 2,
+                     forceParse: 0,
+                     showMeridian: 1
+					
+				});
+			});
+		</script>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">完工日期</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="xm.wgrq" placeholder="完工日期"/>
+<!--                             <input type="text" class="form-control" v-model="xm.wgrq" placeholder="完工日期"/>
+ -->                             <div class="input-group">
+		                      <input readonly type='text' name="wgrq" v-model="xm.wgrq" class="form-control" id='datetime1' />
+								<span class="input-group-addon"><span onClick=show1() class="glyphicon glyphicon-th"></span></span>
+		
+	                        </div>
                         </div>
                     </div>
+                                     <script>
+			function show1(){
+				$('#datetime1').datetimepicker('show');
+			}
+			$(function() {
+				$('#datetime1')
+				.datetimepicker()
+				.on('changeDate', function(ev){
+			
+
+				});
+				$("#datetime1").datetimepicker({
+					 language : 'zh-CN',
+                     //format : 'yyyy-mm-dd hh:ii:ss',//日期格式。可以将日期格式，定成年月日时分秒。
+                     format : 'yyyy-mm-dd hh:ii:ss',//日期格式。可以将日期格式，定成年月日时，分秒为0。
+                     weekStart: 1,
+                     todayBtn:  1,
+                     autoclose: 1,
+                     todayHighlight: 1,
+                     startView: 2,
+                     forceParse: 0,
+                     showMeridian: 1
+					
+				});
+			});
+		</script>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label"><span class="red">*</span>核算单元</div>
-                        <div class="col-sm-10 input-group">
-                            <input type="text" class="form-control" readonly id="hsdy" v-model="xm.hsdy" placeholder="核算单元"/>
-                              <span class="input-group-addon" @click="deptTree">+</span>
+                        <div class="col-sm-10 ">
+	                        <div class="input-group">
+	                            <input type="text" class="form-control" readonly id="hsdy" v-model="xm.hsdy" placeholder="核算单元"/>
+	                              <span class="input-group-addon" @click="deptTree">+</span>
+	                       </div>
                         </div>
                     </div>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label"><span class="red">*</span>核算单元负责人</div>
-                        <div class="col-sm-10 input-group">
-                            <input type="text" class="form-control" readonly id="hsdyfzr" v-model="xm.hsdyfzr" placeholder="核算单元负责人"/>
-                            <span class="input-group-addon" data-toggle="modal" data-target="#myModal" onClick="q1()">+</span>
+                        <div class="col-sm-10">
+                        	  <div class="input-group">
+                        
+	                            <input type="text" class="form-control" readonly id="hsdyfzr" v-model="xm.hsdyfzr" placeholder="核算单元负责人"/>
+	                            <span class="input-group-addon" data-toggle="modal" data-target="#myModal" onClick="q1()">+</span>
+                      		 </div>
                         </div>
                     </div>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">项目经理</div>
-                        <div class="col-sm-10 input-group">
-                            <input type="text" class="form-control" readonly id="xmjl" v-model="xm.xmjl" placeholder="项目经理"/>
-                            <span class="input-group-addon" data-toggle="modal" data-target="#myModal" onClick="q2()">+</span>
-                            
+                        <div class="col-sm-10 ">
+                        	<div class="input-group">
+	                            <input type="text" class="form-control" readonly id="xmjl" v-model="xm.xmjl" placeholder="项目经理"/>
+	                            <span class="input-group-addon" data-toggle="modal" data-target="#myModal" onClick="q2()">+</span>
+                            </div>
                         </div>
                     </div>
 											                    <div class="form-group">

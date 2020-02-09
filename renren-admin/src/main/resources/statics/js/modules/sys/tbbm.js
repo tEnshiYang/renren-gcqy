@@ -41,6 +41,9 @@ function Modify(id){
 
 }
 function Download(rows){
+	var pathName=window.document.location.pathname;
+	//截取，得到项目名称
+	var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
 	var strs= new Array(); //定义一数组 
 	strs=rows.split("&"); //字符分割 
 	strs.splice(strs.length-1,1);
@@ -52,7 +55,7 @@ function Download(rows){
 		strs[i]=strs[i].slice(3);
 
 		var a=strs[i].split("/");
-		
+		console.log(names[i]);
 		names[i]=a[a.length-1];
 		strs[i]=baseURL+strs[i];
 		 $("#yulan").attr("src",strs[i]);

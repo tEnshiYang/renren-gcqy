@@ -1,3 +1,124 @@
+function refresh(){
+	window.location.reload();
+
+}
+$(function() {
+    let $table = $('#table');
+    let $button = $('#button');
+    let $getTableData = $('#getTableData');
+    $('#button').show();
+    $button.click(function() {
+    	if($('#dwmc').val()==null||$('#dwmc').val()==''){
+    		alert('请先选择项目!');return;
+    		}
+    	
+        $table.bootstrapTable('insertRow', {
+            index: 0,
+            row: {
+            	 dwmc:$('#dwmc').val() ,
+            	 xm: '',
+                 xb: '',
+                 bgdh: '',
+                 yddh: '',
+                 gyslxfs:'',
+                 yx: ''
+            }
+        });
+        console.log($('#dwmc').val());
+       
+//        $('td').parent().find('td').eq(1).val($('#xmmc').val()); 
+//        $('td').parent().find('td').eq(1).text($('#xmmc').val());
+//        $('td').parent().find('td').eq(1).hide();
+//        console.log( $('td').parent().find('td').eq(1).val());
+    });
+
+    $table.bootstrapTable({
+        url: 'data2.json',
+        toolbar: '#toolbar',
+        clickEdit: true,
+        showToggle: true,
+        pagination: true,       //显示分页条
+        showColumns: false,
+        showPaginationSwitch: false,     //显示切换分页按钮
+        showRefresh: false,      //显示刷新按钮
+        //clickToSelect: true,  //点击row选中radio或CheckBox visible: false
+        columns: [{
+            checkbox: true
+        }, {
+            field: 'yfryxxId',
+            visible: false
+        }, {
+            field: 'dwmc',
+            title: '公司名称'
+        }, {
+            field: 'xm',
+            title: '姓名'
+        },
+         {
+            field: 'xb',
+            title: '性别'
+        },
+         {
+            field: 'bgdh',
+            title: '办公电话'
+        },
+         {
+            field: 'yddh',
+            title: '移动电话'
+        },
+        {
+            field: 'gyslxfs',
+            title: '供应商联系方式'
+        },
+         {
+            field: 'yx',
+            title: '邮箱'
+        } ],
+        /**
+         * @param {点击列的 field 名称} field
+         * @param {点击列的 value 值} value
+         * @param {点击列的整行数据} row
+         * @param {td 元素} $element
+         */
+        onClickCell: function(field, value, row, $element) {
+            $element.attr('contenteditable', true);
+            $element.blur(function() {
+                let index = $element.parent().data('index');
+                let tdValue = $element.html();
+
+                saveData(index, field, tdValue);
+            })
+        }
+    });
+
+    $getTableData.click(function() {
+    	var json=JSON.stringify($table.bootstrapTable('getData'));
+       // alert(json);
+         var url =  "sys/yfryxx/save";
+
+        $.ajax({
+            type: "POST",
+            url: baseURL + url,
+            contentType: "application/json",
+            data: json,
+            success: function(r){
+                if(r.code === 0){
+                     layer.msg("操作成功", {icon: 1});
+                }
+            }
+        });
+    });
+
+    function saveData(index, field, value) {
+        $table.bootstrapTable('updateCell', {
+            index: index,       //行索引
+            field: field,       //列名
+            value: value        //cell值
+        })
+    }
+
+});
+
 $(function () {
     $("#jqGrid").jqGrid({
         url: baseURL + 'sys/gysdj/list',
@@ -82,6 +203,22 @@ var vm = new Vue({
 		saveOrUpdate: function (event) {
 		    $('#btnSaveOrUpdate').button('loading').delay(1000).queue(function() {
                 var url = vm.gysdj.gysId == null ? "sys/gysdj/save" : "sys/gysdj/update";
+                var url2 = vm.gysdj.gysId == null ? "sys/yfryxx/save":"sys/yfryxx/update";
+
+                var json=JSON.stringify($('#table').bootstrapTable('getData'));
+                // alert(json);
+                  console.log(json+" "+url2);
+
+                 $.ajax({
+                     type: "POST",
+                     url: baseURL + url2,
+                     contentType: "application/json",
+                     data: json,
+                     success: function(r){
+                        
+                     }
+                 });
+                
                 $.ajax({
                     type: "POST",
                     url: baseURL + url,
@@ -134,6 +271,30 @@ var vm = new Vue({
 		getInfo: function(gysId){
 			$.get(baseURL + "sys/gysdj/info/"+gysId, function(r){
                 vm.gysdj = r.gysdj;
+                var dwmc=vm.gysdj.dwmc;
+            	$.get(baseURL + "sys/yfryxx/list/"+dwmc, function(r){
+                    console.log(r.list[0].yfryxxId+"+"+r.list[0].dwmc);
+
+                    for(var i=0;i<r.list.length;i++){
+                    //	vm.rwddw[i]=r.list[i];
+                        $('#table').bootstrapTable('insertRow', {
+                            index: 0,
+                            row: {
+                            	yfryxxId: r.list[i].yfryxxId,
+                            	dwmc: r.list[i].dwmc,
+                            	 xm: r.list[i].xm,
+                                 xb: r.list[i].xb,
+                                 bgdh: r.list[i].bgdh,
+                                 yddh: r.list[i].yddh,
+                                 gyslxfs:r.list[i].gyslxfs,
+                                 yx: r.list[i].yx
+                            }
+                        });
+                    }
+                   // console.log(vm.rwddw);
+                    $('#button').hide();
+                    
+                });
             });
 		},
 		reload: function (event) {

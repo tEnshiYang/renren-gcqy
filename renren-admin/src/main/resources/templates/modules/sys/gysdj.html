@@ -3,6 +3,10 @@
 <head>
     <title>供应商登记</title>
 		<#include "/header.html">
+				<link rel="stylesheet" href="${request.contextPath}/statics/css/bootstrap-table.min.css">
+		
+	<script src="${request.contextPath}/statics/libs/bootstrap-table.min.js"></script>
+		<script src="${request.contextPath}/statics/js/bootstrap-table-editable.js"></script>
 </head>
 <body>
 <div id="rrapp" v-cloak>
@@ -34,10 +38,10 @@
     <div v-show="!showList" class="panel panel-default">
         <div class="panel-heading">{{title}}</div>
         <form class="form-horizontal">
-														                    <div class="form-group">
+		          <div class="form-group">
                         <div class="col-sm-2 control-label">单位名称</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="gysdj.dwmc" placeholder="单位名称"/>
+                            <input type="text" id="dwmc" class="form-control" v-model="gysdj.dwmc" placeholder="单位名称"/>
                         </div>
                     </div>
 											                    <div class="form-group">
@@ -85,7 +89,21 @@
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">企业性质</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="gysdj.qyxz" placeholder="企业性质"/>
+<!--                             <input type="text" class="form-control" v-model="gysdj.qyxz" placeholder="企业性质"/>
+ -->                      		<select class="form-control" name="" id="" v-model="gysdj.qyxz">
+                      			<option value="合伙企业">合伙企业</option>
+                      			<option value="集体企业">集体企业</option>
+                      			<option value="国有企业">国有企业</option>
+                      			<option value="联营企业">联营企业</option>
+                      			<option value="有限责任公司">有限责任公司</option>
+                      			<option value="股份合作制企业">股份合作制企业</option>
+                      			<option value="私营企业">私营企业</option>
+                      			<option value="政府">政府</option>
+                      			<option value="部队">部队</option>
+                      			<option value="个体工商户">个体工商户</option>
+                      			<option value="事业单位">事业单位</option>
+                      			<option value="个人独资企业">个人独资企业</option>
+                      		</select>
                         </div>
                     </div>
 											                    <div class="form-group">
@@ -145,7 +163,17 @@
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">联系人信息</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="gysdj.lxrxx" placeholder="联系人信息"/>
+<!--                             <input type="text" class="form-control" v-model="gysdj.lxrxx" placeholder="联系人信息"/>
+ -->                             <div class="table-box" style="margin: 20px;width:900px;">
+						    <div id="toolbar">
+						        <!-- <button id="button" class="btn btn-default">添加</button> -->
+						        <a id="button" class="btn btn-default">添加</a>
+<!-- 						        <button id="getTableData" class="btn btn-default">getTableData</button>
+ -->						 
+ 							   </div>
+						    <table id="table"></table>
+						</div>
+                       
                         </div>
                     </div>
 											                    <div class="form-group">

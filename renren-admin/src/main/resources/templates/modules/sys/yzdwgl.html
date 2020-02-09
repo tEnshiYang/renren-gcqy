@@ -3,13 +3,17 @@
 <head>
     <title>业主单位管理</title>
 		<#include "/header.html">
+			<link rel="stylesheet" href="${request.contextPath}/statics/css/bootstrap-table.min.css">
+		
+	<script src="${request.contextPath}/statics/libs/bootstrap-table.min.js"></script>
+		<script src="${request.contextPath}/statics/js/bootstrap-table-editable.js"></script>
 </head>
 <body>
 <div id="rrapp" v-cloak>
     <div v-show="showList">
         <div class="grid-btn">
         	<div>
-				<label class="form-inline" />工程名：<input type="text" class="form-control" v-model="q.gsmc" @keyup.enter="query" >
+				<label class="form-inline" />公司名称：<input type="text" class="form-control" v-model="q.gsmc" @keyup.enter="query" >
 				<a class="btn btn-default form-inline" @click="query">查询</a>
 			
 			</div>
@@ -34,7 +38,7 @@
 														                    <div class="form-group">
                         <div class="col-sm-2 control-label">公司名称</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="yzdwgl.gsmc" placeholder="公司名称"/>
+                            <input type="text" id="gsmc" class="form-control" v-model="yzdwgl.gsmc" placeholder="公司名称"/>
                         </div>
                     </div>
 											                    <div class="form-group">
@@ -118,7 +122,17 @@
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">甲乙方人员基本信息</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="yzdwgl.jyfryjbxx" placeholder="甲乙方人员基本信息"/>
+<!--                             <input type="text" class="form-control" v-model="yzdwgl.jyfryjbxx" placeholder="甲乙方人员基本信息"/>
+ -->                           <div class="table-box" style="margin: 20px;width:900px;">
+						    <div id="toolbar">
+						        <!-- <button id="button" class="btn btn-default">添加</button> -->
+						        <a id="button" class="btn btn-default">添加</a>
+<!-- 						        <button id="getTableData" class="btn btn-default">getTableData</button>
+ -->						 
+ 							   </div>
+						    <table id="table"></table>
+						</div>
+                        
                         </div>
                     </div>
 											                    <div class="form-group">
@@ -127,12 +141,7 @@
                             <input type="text" class="form-control" v-model="yzdwgl.bz" placeholder="备注"/>
                         </div>
                     </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">附件</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="yzdwgl.fj" placeholder="附件"/>
-                        </div>
-                    </div>
+					
 							            <div class="form-group">
                 <div class="col-sm-2 control-label"></div>
                 <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>
@@ -141,7 +150,84 @@
         </form>
     </div>
 </div>
-
+     <!-- 模态框（Modal） -->
+        <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            选择附件
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                     <div class="grid-btn">
+                    	
+							
+                         <table id="fiGrid">
+                         	<form id= "uploadForm">  
+						      <input type="hidden" id="scxmId"  />
+ 						      <p >上传文件： <input  type="file" name="file1" id="file1"  multiple="multiple"  /></p> 
+ 						     <p > <input  type="file" name="file2" id="file2"  multiple="multiple"  /></p> 
+ 						      	<p > <input   type="file" name="file3" id="file3"  multiple="multiple"  /></p>
+ 						      	<p > <input  type="file" name="file4" id="file4"  multiple="multiple"  /></p>
+ 						      	<p > <input   type="file" name="file5" id="file5"  multiple="multiple"  /></p>					      						    
+							  <input type="button" name="button" value="添加附件" onclick="addInput()">
+							<input type="button" name="button" value="删除附件" onclick="deleteInput()">
+							<span id="upload"></span>
+						</form> 
+                         </table>
+       					 <div id="fiGridPager"></div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" onclick="refresh()" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" onclick="doUpload()" class="btn btn-primary">
+                        		    确定
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal  $("input[name='FORMID']").val(); -->
+        </div>
+    
+    
+    </div>
+      <!-- x下载模态框（Modal） -->
+        <div class="modal fade" id="downModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            	选择附件
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                     <div class="grid-btn">
+                    	
+							
+                         <table id="downlist">
+                        
+                         </table>
+       					
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" onclick="refresh()" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                      
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal  $("input[name='FORMID']").val(); -->
+        </div>
+        
+     
+    </div>
 <script src="${request.contextPath}/statics/js/modules/sys/yzdwgl.js?_${.now?long}"></script>
 </body>
 </html>

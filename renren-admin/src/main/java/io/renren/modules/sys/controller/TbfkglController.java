@@ -1,6 +1,8 @@
 package io.renren.modules.sys.controller;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import io.renren.common.validator.ValidatorUtils;
@@ -13,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.renren.modules.sys.entity.RwddwEntity;
 import io.renren.modules.sys.entity.SysUserEntity;
 import io.renren.modules.sys.entity.TbfkglEntity;
+import io.renren.modules.sys.service.RwddwService;
 import io.renren.modules.sys.service.TbfkglService;
 import io.renren.modules.sys.shiro.ShiroUtils;
 import io.renren.common.utils.PageUtils;
@@ -35,6 +39,8 @@ public class TbfkglController {
     @Autowired
     private TbfkglService tbfkglService;
 
+    @Autowired
+    private RwddwService rwddwService;
     /**
      * 列表
      */
@@ -95,8 +101,18 @@ public class TbfkglController {
     @RequestMapping("/delete")
     @RequiresPermissions("sys:tbfkgl:delete")
     public R delete(@RequestBody Integer[] tbfkIds){
+    	  //删除相关入围单位
+    	   TbfkglEntity tbfkglEntity=tbfkglService.getById(tbfkIds);
+           Map<String, Object> params=new HashMap<>();
+       	params.put("xmmc", tbfkglEntity.getXmmc());
+           PageUtils page = rwddwService.queryPage(params);
+           List<RwddwEntity> list=(List<RwddwEntity>) page.getList();
+           for(RwddwEntity r:list){
+           	rwddwService.removeById(r.getRwddwId());
+           }
         tbfkglService.removeByIds(Arrays.asList(tbfkIds));
-
+      
+     
         return R.ok();
     }
 

@@ -89,7 +89,13 @@ public class RwddwController {
         	System.out.println("++++++++++++++++++++");
         	System.out.println(rwddw[i]);
         	ValidatorUtils.validateEntity(rwddw);
-        	rwddwService.updateById(rwddw[i]);
+        	 if(rwddw[i].getRwddwId()==null){
+             	rwddwService.save(rwddw[i]);
+
+        	 }else{
+             	rwddwService.updateById(rwddw[i]);
+
+        	 }
         }
         
         

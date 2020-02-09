@@ -38,8 +38,11 @@ function Modify(id){
 
 }
 function Download(rows){
-	console.log(rows);
-
+	
+	//获取路径
+	var pathName=window.document.location.pathname;
+	//截取，得到项目名称
+	var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
 	var strs= new Array(); //定义一数组 
 	strs=rows.split("&"); //字符分割 
 	strs.splice(strs.length-1,1);
@@ -49,10 +52,11 @@ function Download(rows){
 	for (i=0;i<strs.length ;i++ ) 
 	{ 
 		var a=strs[i].split("/");
-		if(strs.length!=1){
+//		if(strs.length!=1){
 			names[i]=a[a.length-1];
-		}
-		
+//		}
+		strs[i]=projectName+strs[i].substr(2,strs[i].length-1);
+
 		console.log(names[i]);
 		$('#downlist').append("<a href="+strs[i]+" download="+names[i]+">"+names[i]+"</a><br>");
 	} 
