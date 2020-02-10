@@ -1,3 +1,46 @@
+/*$(function () {
+	$("#ryGrid").jqGrid({
+        url: baseURL + 'sys/xm/list',
+        datatype: "json",
+        colModel: [			
+			{ label: '序号', name: 'xmId', index: 'xm_id', width: 50, key: true },
+			{ label: '项目名称', name: 'xmname', index: 'xmname', width: 80 }, 			
+			{ label: '工程编号', name: 'gcbh', index: 'gcbh', width: 80 }, 			
+	
+			{ label: '核算单元', name: 'hsdy', index: 'hsdy', width: 80 }, 			
+			{ label: '核算单元负责人', name: 'hsdyfzr', index: 'hsdyfzr', width: 80 }, 			
+				
+		 			
+				
+        ],
+		viewrecords: true,
+        height: 385,
+        rowNum: 10,
+		rowList : [10,30,50],
+        rownumbers: true, 
+        rownumWidth: 25, 
+        autowidth:true,
+        multiselect: true,
+        pager: "#ryGridPager",
+        jsonReader : {
+            root: "page.list",
+            page: "page.currPage",
+            total: "page.totalPage",
+            records: "page.totalCount"
+        },
+        prmNames : {
+            page:"page", 
+            rows:"limit", 
+            order: "order"
+        },
+        gridComplete:function(){
+        	//隐藏grid底部滚动条
+        	$("#ryGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
+        }
+    });
+	
+});*/
+
 //生成菜单
 var menuItem = Vue.extend({
     name: 'menu-item',
@@ -41,11 +84,40 @@ var vm = new Vue({
 		user:{},
 		menuList:{},
 		main:"main.html",
+		ry:{xmmc:null},
 		password:'',
 		newPassword:'',
         navTitle:"控制台"
 	},
 	methods: {
+		query1: function () {
+			vm.ryload();
+		},
+		ryload: function (event) {
+			/*
+			vm.showList = true;*/
+			
+			var page1 = $("#ryGrid").jqGrid('getGridParam','page');
+			$("#ryGrid").jqGrid('setGridParam',{ 
+				 postData:{'xmname': vm.ry.xmmc},
+                page:page1
+            }).trigger("reloadGrid");
+		},
+		savery: function (event) {
+			console.log("savvvvvvvvv");
+			//var h=$('#ryGrid').bootstrapTable('getSelections');
+			 //获取选中的数据组
+            var array = $("table input[type=checkbox]:checked").map(function () {
+                return { "cell6": $.trim($(this).closest("tr").find("td:eq(3)").text())};
+            }).get();
+            $.each(array, function (i, d) {
+            	  console.log("c"+d.cell6);
+            
+
+            	
+            })
+   
+		},
 		getMenuList: function (event) {
 			$.getJSON("sys/menu/nav?_"+$.now(), function(r){
 				vm.menuList = r.menuList;

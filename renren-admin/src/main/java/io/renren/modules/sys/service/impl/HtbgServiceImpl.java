@@ -21,6 +21,7 @@ public class HtbgServiceImpl extends ServiceImpl<HtbgDao, HtbgEntity> implements
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
+    	
         String htbh = (String)params.get("htbh");
         String htmc = (String)params.get("htmc");
         String bgbt = (String)params.get("bgbt");

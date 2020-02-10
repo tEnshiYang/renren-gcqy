@@ -95,6 +95,8 @@ $('#xmform').bootstrapValidator({
 			<#if shiro.hasPermission("sys:xm:delete")>
             <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
 			</#if>
+			 <a class="btn btn-primary" @click="changexm"><i class="fa fa-pencil-square-o"></i>&nbsp;设为默认项目</a>
+			
         </div>
         <table id="jqGrid"></table>
         <div id="jqGridPager"></div>

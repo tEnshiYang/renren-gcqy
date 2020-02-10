@@ -6,6 +6,8 @@
 </head>
 <body>
 <div id="rrapp" v-cloak>
+<span id="syssqr" style="display:none;">{{user.username}}</span>
+
     <div v-show="showList">
         <div class="grid-btn">
         <div>
@@ -38,7 +40,10 @@
 														                    <div class="form-group">
                         <div class="col-sm-2 control-label">所属项目名称</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="yzht.ssxmmc" placeholder="所属项目名称"/>
+                        	<div class="input-group">
+                            <input readonly id="xmname" name="xmname" type="text" class="form-control" v-model="yzht.ssxmmc" placeholder="所属项目名称"/>
+                               <span class="input-group-addon" data-toggle="modal" data-target="#myModal" >+</span>
+                       		 </div>
                         </div>
                     </div>
 											                    <div class="form-group">
@@ -92,16 +97,22 @@
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">甲方单位</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="yzht.jfdw" placeholder="甲方单位"/>
+	                        <div class="input-group">
+	                            <input readonly type="text" id="jfdw" class="form-control" v-model="yzht.jfdw" placeholder="甲方单位"/>
+	                           <span class="input-group-addon" data-toggle="modal" data-target="#myModal2" >+</span>
+	                        </div>
                         </div>
                     </div>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">乙方单位</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="yzht.yfdw" placeholder="乙方单位"/>
+                          <div class="input-group">
+                            <input readonly type="text" id="yfdw" class="form-control" v-model="yzht.yfdw" placeholder="乙方单位"/>
+                       		<span class="input-group-addon" data-toggle="modal" data-target="#myModal3" >+</span>
+                       	  </div>
                         </div>
                     </div>
-											                    <div class="form-group">
+					  <div class="form-group">
                         <div class="col-sm-2 control-label">甲方联系人</div>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" v-model="yzht.jflxr" placeholder="甲方联系人"/>
@@ -212,7 +223,7 @@
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">申请人</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="yzht.sqr" placeholder="申请人"/>
+                            <input readonly type="text" id="hsdyfzr" class="form-control" v-model="yzht.sqr" placeholder="申请人"/>
                         </div>
                     </div>
 											                    <div class="form-group">
@@ -317,18 +328,7 @@
                             <input type="text" class="form-control" v-model="yzht.bz" placeholder="备注"/>
                         </div>
                     </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">审批状态</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="yzht.spzt" placeholder="审批状态"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">合同状态</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="yzht.htzt" placeholder="合同状态"/>
-                        </div>
-                    </div>
+							
 							            <div class="form-group">
                 <div class="col-sm-2 control-label"></div>
                 <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>
@@ -336,8 +336,114 @@
             </div>
         </form>
     </div>
+    <div class="container">
+    	 <!-- 模态框（Modal） -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            选择项目
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                     <div class="grid-btn">
+                    	<div>
+ 							<label class="form-inline" />项目名称：<input type="text" v-model="ry.xmname" class="form-control"  @keyup.enter="query1" >
+ 			
+							</div>
+						<a class="btn btn-default" @click="query1">查询</a>
+						</div>
+							
+                         <table id="ryGrid"></table>
+       					 <div id="ryGridPager"></div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" @click="saveusername" class="btn btn-primary">
+                        		    确定
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal  $("input[name='FORMID']").val(); -->
+        </div>
+        	 <!-- 模态框（Modal） -->
+        <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            选择甲方单位
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                     <div class="grid-btn">
+                    	<div>
+ 							<label class="form-inline" />公司名称：<input type="text" v-model="jf.gsmc" class="form-control"  @keyup.enter="query2" >
+ 			
+							</div>
+						<a class="btn btn-default" @click="query2">查询</a>
+						</div>
+							
+                         <table id="jfGrid"></table>
+       					 <div id="jfGridPager"></div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" @click="savejf" class="btn btn-primary">
+                        		    确定
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal  $("input[name='FORMID']").val(); -->
+        </div>
+                <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            选择乙方单位
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                     <div class="grid-btn">
+                    	<div>
+ 							<label class="form-inline" />单位名称：<input type="text" v-model="yf.dwmc" class="form-control"  @keyup.enter="query3" >
+ 			
+							</div>
+						<a class="btn btn-default" @click="query3">查询</a>
+						</div>
+							
+                         <table id="yfGrid"></table>
+       					 <div id="yfGridPager"></div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" @click="saveyf" class="btn btn-primary">
+                        		    确定
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal  $("input[name='FORMID']").val(); -->
+        </div>
+    </div>
 </div>
-
+   
 <script src="${request.contextPath}/statics/js/modules/sys/yzht.js?_${.now?long}"></script>
 </body>
 </html>

@@ -6,6 +6,8 @@
 </head>
 <body>
 <div id="rrapp" v-cloak>
+<span id="syssqr" style="display:none;">{{user.username}}</span>
+
     <div v-show="showList">
         <div class="grid-btn">
         <div>
@@ -37,13 +39,19 @@
 														                    <div class="form-group">
                         <div class="col-sm-2 control-label">所属项目名称</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="htbg.ssxmmc" placeholder="所属项目名称"/>
+	                        <div class="input-group">
+	                            <input readonly type="text" id="ssxmmc" class="form-control" v-model="htbg.ssxmmc" placeholder="所属项目名称"/>
+	                            <span class="input-group-addon" data-toggle="modal" data-target="#myModal" >+</span>
+	                       </div>
                         </div>
                     </div>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">合同名称</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="htbg.htmc" placeholder="合同名称"/>
+	                        <div class="input-group">
+	                            <input readonly type="text" id="htmc" class="form-control" v-model="htbg.htmc" placeholder="合同名称"/>
+	                             <span class="input-group-addon" data-toggle="modal" data-target="#myModal2" >+</span>
+	                       </div>
                         </div>
                     </div>
 											                    <div class="form-group">
@@ -61,19 +69,19 @@
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">合同原金额</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="htbg.htyje" placeholder="合同原金额"/>
+                            <input readonly type="text" id="htyje" class="form-control" v-model="htbg.htyje" placeholder="合同原金额"/>
                         </div>
                     </div>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">本次变更金额</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="htbg.bcbgje" placeholder="本次变更金额"/>
+                            <input type="text" id="bcbgje"  class="form-control" v-model="htbg.bcbgje" placeholder="本次变更金额"/>
                         </div>
                     </div>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">变更后金额</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="htbg.bghje" placeholder="变更后金额"/>
+                            <input readonly id="bghje" type="text" class="form-control" v-model="htbg.bghje" placeholder="变更后金额"/>
                         </div>
                     </div>
 											                    <div class="form-group">
@@ -91,7 +99,7 @@
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">申请人姓名</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="htbg.sqrxm" placeholder="申请人姓名"/>
+                            <input readonly type="text" id="sqrxm" class="form-control" v-model="htbg.sqrxm" placeholder="申请人姓名"/>
                         </div>
                     </div>
 											                    <div class="form-group">
@@ -106,18 +114,86 @@
                             <input type="text" class="form-control" v-model="htbg.bz" placeholder="备注"/>
                         </div>
                     </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">审批状态</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="htbg.spzt" placeholder="审批状态"/>
-                        </div>
-                    </div>
+								
 							            <div class="form-group">
                 <div class="col-sm-2 control-label"></div>
                 <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>
                 &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
             </div>
         </form>
+    </div>
+    <div class="container">
+    	 <!-- 模态框（Modal） -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            选择项目
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                     <div class="grid-btn">
+                    	<div>
+ 							<label class="form-inline" />项目名称：<input type="text" v-model="ry.xmmc" class="form-control"  @keyup.enter="query1" >
+ 			
+							</div>
+						<a class="btn btn-default" @click="query1">查询</a>
+						</div>
+							
+                         <table id="ryGrid"></table>
+       					 <div id="ryGridPager"></div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" @click="savery" class="btn btn-primary">
+                        		    确定
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal  $("input[name='FORMID']").val(); -->
+        </div>
+        	 <!-- 模态框（Modal） -->
+        <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            选择合同
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                     <div class="grid-btn">
+                    	<div>
+ 							<label class="form-inline" />合同名称：<input type="text" v-model="ht.htmc" class="form-control"  @keyup.enter="query2" >
+ 			
+							</div>
+						<a class="btn btn-default" @click="query2">查询</a>
+						</div>
+							
+                         <table id="htGrid"></table>
+       					 <div id="htGridPager"></div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" @click="saveht" class="btn btn-primary">
+                        		    确定
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal  $("input[name='FORMID']").val(); -->
+        </div>
+    
     </div>
 </div>
 

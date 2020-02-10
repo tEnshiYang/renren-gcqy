@@ -26,6 +26,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 import io.renren.modules.sys.entity.XmEntity;
 import io.renren.modules.sys.service.XmService;
+import io.renren.modules.sys.shiro.ShiroUtils;
 import io.renren.common.utils.PageUtils;
 import io.renren.common.utils.R;
 
@@ -57,6 +58,18 @@ public class XmController {
         PageUtils page = xmService.queryPage(params);
 
         return R.ok().put("page", page);
+    }
+    @RequestMapping("/setdefaultxm")
+    public String setxm(@RequestBody String xmId){
+    	System.out.println(xmId);
+    	String subId=xmId.substring(5);
+    	Integer id=Integer.parseInt(subId);
+    	int id2=(int)id;
+  
+    	XmEntity xmEntity=xmService.getById(id);
+    	ShiroUtils.setSessionAttribute("defaultxm", xmEntity);
+    	
+    	return "OK";
     }
 
     //附件

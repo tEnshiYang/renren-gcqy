@@ -267,6 +267,26 @@ var vm = new Vue({
             
             vm.getInfo(xmId)
 		},
+		changexm: function (event) {
+			console.log("change");
+			var xmId = getSelectedRow();
+			console.log(xmId);
+			if(xmId == null){
+				return ;
+			}
+			  $.ajax({
+                  type: "POST",
+                  url: baseURL + "sys/xm/setdefaultxm",
+                  contentType: "application/json",
+                  data: {"xmId":xmId},
+                  success: function(r){
+                	  console.log(r);
+                	   layer.msg("操作成功", {icon: 1});
+                       $("#jqGrid").trigger("reloadGrid");
+                     
+                  }
+			    });
+		},
 		saveOrUpdate: function (event) {
 			 var zjjl = $("#zjjl")[0];         //获取JQuery对象
 	         if(zjjl.checked){   
