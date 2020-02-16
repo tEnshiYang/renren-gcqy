@@ -268,9 +268,8 @@ var vm = new Vue({
             vm.getInfo(xmId)
 		},
 		changexm: function (event) {
-			console.log("change");
+		
 			var xmId = getSelectedRow();
-			console.log(xmId);
 			if(xmId == null){
 				return ;
 			}
@@ -280,12 +279,15 @@ var vm = new Vue({
                   contentType: "application/json",
                   data: {"xmId":xmId},
                   success: function(r){
-                	  console.log(r);
-                	   layer.msg("操作成功", {icon: 1});
-                       $("#jqGrid").trigger("reloadGrid");
+                	  console.log("111111111");
+                	  console.log(r)
+                	 
+//                	   layer.msg("操作成功", {icon: 1});
+//                       $("#jqGrid").trigger("reloadGrid");
                      
                   }
 			    });
+			  alert("设置默认项目成功！");
 		},
 		saveOrUpdate: function (event) {
 			 var zjjl = $("#zjjl")[0];         //获取JQuery对象

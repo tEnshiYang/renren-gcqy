@@ -5,6 +5,7 @@ function beforeSelectRow()
 	}
 $(function () {
 	vm.getUser();
+	
     $("#jfGrid").jqGrid({
         url: baseURL + 'sys/yzdwgl/list',
         datatype: "json",
@@ -374,7 +375,7 @@ var vm = new Vue({
             }).get();
             $.each(array, function (i, d) {
             	  console.log("c"+d.cell6);
-            	  vm.yzht.xmname=d.cell6;
+            	  vm.yzht.jfdw=d.cell6;
             	  $("#jfdw").val(d.cell6);
               	  $('#myModal2').modal('hide');
 //                alert(d.cell2 + "|" + d.cell3);
@@ -400,7 +401,7 @@ var vm = new Vue({
             }).get();
             $.each(array, function (i, d) {
             	  console.log("c"+d.cell6);
-            	  vm.yzht.xmname=d.cell6;
+            	  vm.yzht.yfdw=d.cell6;
             	  $("#yfdw").val(d.cell6);
               	  $('#myModal3').modal('hide');
 //                alert(d.cell2 + "|" + d.cell3);

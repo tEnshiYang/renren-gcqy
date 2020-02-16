@@ -12,10 +12,7 @@ $(function () {
         colModel: [			
 			{ label: '序号', name: 'xmId', index: 'xm_id', width: 50, key: true },
 			{ label: '项目名称', name: 'xmname', index: 'xmname', width: 80 }, 			
-			{ label: '工程编号', name: 'gcbh', index: 'gcbh', width: 80 }, 			
-					
-				
-
+			{ label: '工程编号', name: 'gcbh', index: 'gcbh', width: 80 }, 												
 			{ label: '核算单元', name: 'hsdy', index: 'hsdy', width: 80 }, 			
 			{ label: '核算单元负责人', name: 'hsdyfzr', index: 'hsdyfzr', width: 80 }, 			
 				
@@ -95,12 +92,8 @@ $(function () {
 			{ label: '序号', name: 'yzhtId', index: 'yzht_id', width: 50, key: true },
 			{ label: '合同名称', name: 'htmc', index: 'htmc', width: 80 }, 			
 			{ label: '合同金额', name: 'htje', index: 'htje', width: 80 }, 			
-
-			{ label: '档案编号', name: 'dabh', index: 'dabh', width: 80 }, 			
-			
-			{ label: '财务编号', name: 'cwbh', index: 'cwbh', width: 80 }			
-			
-				
+			{ label: '档案编号', name: 'dabh', index: 'dabh', width: 80 }, 						
+			{ label: '财务编号', name: 'cwbh', index: 'cwbh', width: 80 }										
         ],
 		viewrecords: true,
         height: 385,

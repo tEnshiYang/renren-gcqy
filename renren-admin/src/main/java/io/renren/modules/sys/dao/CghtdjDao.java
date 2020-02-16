@@ -13,5 +13,5 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface CghtdjDao extends BaseMapper<CghtdjEntity> {
-	
+	Long getmaxid();
 }

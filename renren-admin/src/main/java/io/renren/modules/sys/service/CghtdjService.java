@@ -14,7 +14,7 @@ import java.util.Map;
  * @date 2020-01-11 20:23:03
  */
 public interface CghtdjService extends IService<CghtdjEntity> {
-
+	Long getmaxid();
     PageUtils queryPage(Map<String, Object> params);
 }
 

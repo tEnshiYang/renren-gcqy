@@ -303,8 +303,7 @@ var vm = new Vue({
 				return ;
 			}
 			vm.showList = false;
-            vm.title = "修改";
-            
+            vm.title = "修改";            
             vm.getInfo(tbfkId)
 		},
 		saveOrUpdate: function (event) {

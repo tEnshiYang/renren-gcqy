@@ -48,6 +48,11 @@ public class CghtdjEntity implements Serializable {
 	 * 合同名称
 	 */
 	private String htmc;
+	private String zlyq;
+	private String ysbz;
+	private String jsfs;
+	private String wyzr;
+
 	/**
 	 * 合同编号
 	 */

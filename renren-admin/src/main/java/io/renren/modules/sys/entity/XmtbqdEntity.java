@@ -24,6 +24,9 @@ public class XmtbqdEntity implements Serializable {
 	 */
 	@TableId
 	private Long xmtbqdId;
+	
+	private Long htId;
+
 	/**
 	 * 系统名称
 	 */

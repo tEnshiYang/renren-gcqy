@@ -21,6 +21,13 @@
         <result property="jbr" column="jbr"/>
         <result property="fpsd" column="fpsd"/>
         <result property="cgsz" column="cgsz"/>
+        
+                <result property="zlyq" column="zlyq"/>
+                <result property="ysbz" column="ysbz"/>
+                <result property="jsfs" column="jsfs"/>
+                <result property="wyzr" column="wyzr"/>
+        
+        
         <result property="qdrq" column="qdrq"/>
         <result property="ljdpje" column="ljdpje"/>
         <result property="jhsj" column="jhsj"/>
@@ -40,6 +47,9 @@
         <result property="qt" column="qt"/>
         <result property="zzj" column="zzj"/>
     </resultMap>
-
+	
+	<select id="getmaxid" resultType="long">
+		select max(xmtbqd_id) from tb_xmtbqd	
+		</select>
 
 </mapper>

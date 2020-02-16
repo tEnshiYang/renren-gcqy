@@ -6,6 +6,8 @@
 </head>
 <body>
 <div id="rrapp" v-cloak>
+	<span id="sysjbr" style="display:none;">{{user.username}}</span>
+
     <div v-show="showList">
         <div class="grid-btn">
         <div>
@@ -33,22 +35,20 @@
     <div v-show="!showList" class="panel panel-default">
         <div class="panel-heading">{{title}}</div>
         <form class="form-horizontal">
-														                    <div class="form-group">
-                        <div class="col-sm-2 control-label">审批状态</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="htzf.spzt" placeholder="审批状态"/>
-                        </div>
-                    </div>
+							
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">所属项目名称</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="htzf.ssxmmc" placeholder="所属项目名称"/>
+                            <input type="text" id="ssxmmc" readonly class="form-control" v-model="htzf.ssxmmc"/>
                         </div>
                     </div>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">合同名称</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="htzf.htmc" placeholder="合同名称"/>
+                       		 <div class="input-group">
+	                            <input type="text" readonly id="htmc" class="form-control" v-model="htzf.htmc" placeholder="合同名称"/>
+	                           <span class="input-group-addon" data-toggle="modal" data-target="#myModal2" >+</span>
+                            </div>
                         </div>
                     </div>
 											                    <div class="form-group">
@@ -60,7 +60,7 @@
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">申请人姓名</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="htzf.sqrxm" placeholder="申请人姓名"/>
+                            <input type="text"	id="sqrxm"  class="form-control" v-model="htzf.sqrxm" placeholder="申请人姓名"/>
                         </div>
                     </div>
 											                    <div class="form-group">
@@ -69,12 +69,12 @@
                             <input type="text" class="form-control" v-model="htzf.sqdwmc" placeholder="申请单位名称"/>
                         </div>
                     </div>
-											                    <div class="form-group">
+							<!-- 				                    <div class="form-group">
                         <div class="col-sm-2 control-label">申请日期</div>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" v-model="htzf.sqrq" placeholder="申请日期"/>
                         </div>
-                    </div>
+                    </div> -->
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">作废情况说明</div>
                         <div class="col-sm-10">
@@ -84,21 +84,10 @@
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">备注</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="htzf.bz" placeholder="备注"/>
+                            <textarea  class="form-control" v-model="htzf.bz" placeholder="备注"></textarea>
                         </div>
                     </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">操作人</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="htzf.czr" placeholder="操作人"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">操作时间</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="htzf.czsj" placeholder="操作时间"/>
-                        </div>
-                    </div>
+										
 							            <div class="form-group">
                 <div class="col-sm-2 control-label"></div>
                 <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>
@@ -106,6 +95,40 @@
             </div>
         </form>
     </div>
+            <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            选择合同
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                     <div class="grid-btn">
+                    	<div>
+ 							<label class="form-inline" />合同名称：<input type="text" v-model="ht.htmc" class="form-control"  @keyup.enter="query2" >
+ 			
+							</div>
+						<a class="btn btn-default" @click="query2">查询</a>
+						</div>
+							
+                         <table id="htGrid"></table>
+       					 <div id="htGridPager"></div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" @click="saveht" class="btn btn-primary">
+                        		    确定
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal  $("input[name='FORMID']").val(); -->
+        </div>
 </div>
 
 <script src="${request.contextPath}/statics/js/modules/sys/htzf.js?_${.now?long}"></script>

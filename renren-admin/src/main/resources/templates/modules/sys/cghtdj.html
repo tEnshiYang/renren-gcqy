@@ -3,9 +3,16 @@
 <head>
     <title>采购合同登记</title>
 		<#include "/header.html">
+		
+			<link rel="stylesheet" href="${request.contextPath}/statics/css/bootstrap-table.min.css">
+
+		<script src="${request.contextPath}/statics/libs/bootstrap-table.min.js"></script>
+		<script src="${request.contextPath}/statics/js/bootstrap-table-editable.js"></script>
 </head>
 <body>
 <div id="rrapp" v-cloak>
+<span id="syssqr" style="display:none;">{{user.username}}</span>
+
     <div v-show="showList">
         <div class="grid-btn">
         <div>
@@ -39,7 +46,7 @@
                             <input type="text" class="form-control" v-model="cghtdj.cghtze" placeholder="采购合同总额"/>
                         </div>
                     </div>
-											                    <div class="form-group">
+									<!-- 		                    <div class="form-group">
                         <div class="col-sm-2 control-label">审批状态</div>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" v-model="cghtdj.spzt" placeholder="审批状态"/>
@@ -50,7 +57,7 @@
                         <div class="col-sm-10">
                             <input type="text" class="form-control" v-model="cghtdj.htzt" placeholder="合同状态"/>
                         </div>
-                    </div>
+                    </div> -->
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">占业主合同金额比例</div>
                         <div class="col-sm-10">
@@ -60,7 +67,7 @@
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">所属项目名称</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="cghtdj.ssxmmc" placeholder="所属项目名称"/>
+                            <input type="text" id="ssxmmc" readonly class="form-control" v-model="cghtdj.ssxmmc" placeholder="所属项目名称"/>
                         </div>
                     </div>
 											                    <div class="form-group">
@@ -72,19 +79,26 @@
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">合同编号</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="cghtdj.htbh" placeholder="合同编号"/>
+                            <input type="text" readonly id="htbh" class="form-control" v-model="cghtdj.htbh" placeholder="合同编号"/>
                         </div>
                     </div>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">合同类型</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="cghtdj.htlx" placeholder="合同类型"/>
+<!--                             <input type="text" class="form-control" v-model="cghtdj.htlx" placeholder="合同类型"/>
+ -->                        	<select class="form-control"  name="" id=""  v-model="cghtdj.htlx">
+                        		<option value="两方合同">两方合同</option>
+                        		<option value="三方合同">三方合同</option>                        		
+                        	</select>
                         </div>
                     </div>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">甲方单位</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="cghtdj.jfdw" placeholder="甲方单位"/>
+                        	<div class="input-group">
+	                            <input type="text" readonly id="jfdw" class="form-control" v-model="cghtdj.jfdw" placeholder="甲方单位"/>
+	                        	<span class="input-group-addon" data-toggle="modal" data-target="#myModal2" >+</span>
+                        	</div>
                         </div>
                     </div>
 											                    <div class="form-group">
@@ -96,7 +110,11 @@
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">乙方单位</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="cghtdj.yfdw" placeholder="乙方单位"/>
+	                        <div class="input-group">
+	                            <input type="text" readonly id="yfdw" class="form-control" v-model="cghtdj.yfdw" placeholder="乙方单位"/>
+	                           	 <span class="input-group-addon" data-toggle="modal" data-target="#myModal3" >+</span>
+	                      
+	                       </div>
                         </div>
                     </div>
 											                    <div class="form-group">
@@ -108,7 +126,7 @@
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">经办人</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="cghtdj.jbr" placeholder="经办人"/>
+                            <input type="text" readonly id="jbr" class="form-control" v-model="cghtdj.jbr" placeholder="经办人"/>
                         </div>
                     </div>
 											                    <div class="form-group">
@@ -120,7 +138,16 @@
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">采购事由</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="cghtdj.cgsz" placeholder="采购事由"/>
+<!--                             <input type="text" class="form-control" v-model="cghtdj.cgsz" placeholder="采购事由"/>
+ -->                      		<select class="form-control"  name="" id="" v-model="cghtdj.cgsz">
+                      			<option value="合同内清单采购">合同内清单采购</option>
+                      			<option value="合同内增加部分采购，有签证">合同内增加部分采购，有签证</option>
+                      			<option value="合同内增加部分采购，无签证，但有甲方书面通知或项目负责人书面承诺">合同内增加部分采购，无签证，但有甲方书面通知或项目负责人书面承诺</option>
+                      			<option value="合同外增加部分采购，有签证">合同外增加部分采购，有签证</option>
+                      			<option value="合同外增加部分采购，无签证，但有甲方书面通知或者项目负责人书面承诺">合同外增加部分采购，无签证，但有甲方书面通知或者项目负责人书面承诺</option>
+                      			<option value="其他">其他</option>
+                      		
+                      		</select>
                         </div>
                     </div>
 											                    <div class="form-group">
@@ -135,6 +162,8 @@
                             <input type="text" class="form-control" v-model="cghtdj.ljdpje" placeholder="累计到票金额"/>
                         </div>
                     </div>
+                    <h3>合同文本</h3>
+                    <h4>到货管理</h4>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">交货时间</div>
                         <div class="col-sm-10">
@@ -156,7 +185,9 @@
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">运输方式及运输费用</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="cghtdj.ysfsjfy" placeholder="运输方式及运输费用"/>
+                            <p   v-model="cghtdj.ysfsjfy" id="ysfsjfy">
+                            乙方或者乙方委托的承运人送至交货地点、卸货；相关费用由乙方承担，并承担货物在①②（①检验合格；②甲方接收）之前的一切风险和费用。 发货、结算：乙方按照甲方采购部门书面《发货通知单》（注：由项目部提供）的要求到货，货到现场3个工作日内乙方必须提供甲方现场材料员和项目经理签字确认的货物签收单的原件或扫描件至甲方采购服务专员，结算货款依据甲方现场材料员和项目经理签字确认的货物签收单所列实际提货数量、合同单价。随货提供合格证、检测报告、送货清单等报验资料（进口设备需提供报关资料）。否则视为未送货或公司拒绝付款，若发生变化，以公司书面通知和拍照微信邮箱为准。
+                            </p>
                         </div>
                     </div>
 											                    <div class="form-group">
@@ -201,36 +232,161 @@
                             <input type="text" class="form-control" v-model="cghtdj.yx" placeholder="邮箱"/>
                         </div>
                     </div>
+                    <h3>质量要求及技术标准</h3>
+                    				                    <div class="form-group">
+                    			    <div class="col-sm-1 control-label"></div>
+                    				                    
+                        <div class="col-sm-10">
+                            <p   v-model="cghtdj.zlyq" id="zlyq">
+1.乙方保证销售给甲方产品系原厂供应的原装产品，同时随产品提供原厂商各项证明文件（包括但不限于检测报告合格证等相关报验资料），如没随产品提供上述文件，每延迟一天提供，按每天伍佰元计算逾期交付违约金；
+<br>2.乙方所提供的产品质量必须符合或优于国家有关现行技术标准规范的规定，满足  柳林县城东小学智能信息化工程项目施工  项目的招标文件和设计图纸中的相关技术指标。乙方保证所有产品为全新的，如乙方产品经开箱检验出产品质量问题，乙方承诺立即无条件给予免费更换。在本合同约定的质保期内，乙方依法承担产品质量保证责任。
+<br>3.乙方应保证提供货物的商标、专利等知识产权的合法性，保证提供的产品不侵犯任何第三者的知识产权。如果最终用户在中华人民共和国和/或其他国家和地区因使用乙方提供的产品而侵犯了第三方的知识产权，由乙方负责处理由此出现的问题，甲方将不承担任何由此而引起的法律和经济方面的责任。                            </p>
+                        </div>
+                    </div>
+                      <h3>验收标准</h3>
+                    				                    <div class="form-group">
+                    			    <div class="col-sm-1 control-label"></div>
+                    				                    
+                        <div class="col-sm-10">
+                            <p   v-model="cghtdj.ysbz" id="ysbz">
+按国家相关标准及双方确认的规格要求进行验收                        </div>
+                    </div>
+                    
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">设备安装调试服务</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="cghtdj.sbazts" placeholder="设备安装调试服务"/>
+<!--                             <input type="text" class="form-control" v-model="cghtdj.sbazts" placeholder="设备安装调试服务"/>
+ -->                        <label><input type="radio" name="sbazts" v-model="cghtdj.sbazts" value="乙方按甲方工期要求及时提供安装指导、调试开通、培训用户使用人员、提供操作说明等服务，并免费提供与其他系统的通信接口。">乙方按甲方工期要求及时提供安装指导、调试开通、培训用户使用人员、提供操作说明等服务，并免费提供与其他系统的通信接口。</label>
+						<label><input type="radio" name="sbazts" v-model="cghtdj.sbazts" value="乙方免费为甲方培训调试人员，经乙方考核合格后由甲方负责安装调试开通、培训用户使用人员、提供操作说明等服务，并免费提供与其他系统的通信接口。（遇重大问题乙方免费派人至现场指导完成服务）">乙方免费为甲方培训调试人员，经乙方考核合格后由甲方负责安装调试开通、培训用户使用人员、提供操作说明等服务，并免费提供与其他系统的通信接口。（遇重大问题乙方免费派人至现场指导完成服务）</label>
                         </div>
                     </div>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">设备保修方式</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="cghtdj.sbbxfs" placeholder="设备保修方式"/>
+                        <button @click="showtext()">show</button>
+<!--                             <input type="text" class="form-control" v-model="cghtdj.sbbxfs" placeholder="设备保修方式"/>
+ -->                             <label ><input type="radio" id="sbbxfsinput1" name="sbbxfs" v-model="cghtdj.sbbxfs"><span id="sbbxfs1">在质量保证期内若设备出现质量问题，乙方必须无条件免费维修或更换；乙方收到甲方故障请求后，在 
+	<span contenteditable>______</span>小时内通过通讯方式帮助甲方排除故障，若仍未能排除故障，乙方必须在<span contenteditable>______</span>
+	小时之内抵达用户现场提供维修或更换设备。在质量保证期外若设备出现质量问题，乙方按质保期内承诺的服务时间进行服务，只收取维修配件成本费用及人员差旅费用。
+	      乙方售后服务电话：<span contenteditable>__________</span>
+	      乙方联系人：<span contenteditable>_______</span>
+	      </span>
+	</label>
+                          <label><input type="radio" id="sbbxfsinput2" name="sbbxfs" v-model="cghtdj.sbbxfs" value="设备保修由甲方负责。
+      乙方或乙方协调厂家为甲方免费培训维修人员，设备保修期内乙方免费提供产品维修部件、保修期外以成本价提供产品维修部件。遇重大问题乙方派人至现场支持完成服务（保修期内免费，保修期外甲方提供乙方人员车旅费用）。"><span></span>设备保修由甲方负责。
+      乙方或乙方协调厂家为甲方免费培训维修人员，设备保修期内乙方免费提供产品维修部件、保修期外以成本价提供产品维修部件。遇重大问题乙方派人至现场支持完成服务（保修期内免费，保修期外甲方提供乙方人员车旅费用）。</span></label>
+                      
                         </div>
                     </div>
 											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">质保期_年</div>
+                        <div class="col-sm-2 control-label">质保期</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="cghtdj.zbq" placeholder="质保期_年"/>
+                            <input type="text" class="form-control" v-model="cghtdj.zbq" placeholder="质保期"/>
+                           <label ><input type="radio" id="zbqinput1" name="zbq" v-model="cghtdj.zbq"><span id="zbq1">在质量保证期内若设备出现质量问题，乙方必须无条件免费维修或更换；乙方收到甲方故障请求后，在 
+	<span contenteditable>______</span>年,从设备到货经项目经理清点签收之日起开始。
+	      </span>
+	</label>         <label ><input type="radio" id="zbqinput2" name="zbq" v-model="cghtdj.zbq"><span id="zbq2">在质量保证期内若设备出现质量问题，乙方必须无条件免费维修或更换；乙方收到甲方故障请求后，在 
+	<span contenteditable>______</span>年,从设备调试开通验收合格之日起开始。
+	      </span>
+	</label><label ><input type="radio" id="zbqinput3" name="zbq" v-model="cghtdj.zbq"><span id="zbq3">在质量保证期内若设备出现质量问题，乙方必须无条件免费维修或更换；乙方收到甲方故障请求后，在 
+	<span contenteditable>______</span>年,从设备经业主单项验收合格之日起开始。
+	      </span>
+	</label>
+	<label ><input type="radio" id="zbqinput4" name="zbq" v-model="cghtdj.zbq"><span id="zbq4">在质量保证期内若设备出现质量问题，乙方必须无条件免费维修或更换；乙方收到甲方故障请求后，在 
+	<span contenteditable>______</span>年,项目经业主整体验收合格之日起开始。
+	      </span>
+	</label>
+	<label ><input type="radio" id="zbqinput5" name="zbq" v-model="cghtdj.zbq"><span id="zbq5">
+	<span contenteditable>______</span>年,<span contenteditable>_______________</span>
+	      </span>
+	</label>
+                          
                         </div>
                     </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">其他</div>
+                    			                    <div class="form-group">
+                        <div class="col-sm-2 control-label">结算方式及付款期限</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="cghtdj.qt" placeholder="其他"/>
+                        <button @click="showtext()">show</button>
+<!--                             <input type="text" class="form-control" v-model="cghtdj.sbbxfs" placeholder="设备保修方式"/>
+ -->                             <label ><input type="radio" id="jsfsinput1" name="jsfs" v-model="cghtdj.jsfs"><span id="jsfs1">
+						 			货到现场后，由现场项目经理或签收人对货物验收合格后
+									<span contenteditable>______</span>日内付清。
+							      </span>
+								</label>
+								    <label ><input type="radio" id="jsfsinput2" name="jsfs" v-model="cghtdj.jsfs"><span id="jsfs2">
+						 			合同签订后，预付合同价款的 <span contenteditable>______</span>
+									%(即人民币<span contenteditable>______</span>
+									元)，货到现场后，由项目部签收人对货物验收合格后15日内付到合同价款的 
+									%(即人民币 <span contenteditable>______</span>
+									元)，待设备安装、调试、试运行结束后15日内付到合同价款的 <span contenteditable>______</span>
+									%(即人民币 <span contenteditable>______</span>
+									 元)，剩余 <span contenteditable>______</span>
+									%为质量保证金，质保期结束30日内付清。
+							      </span>
+								</label>
+								    <label ><input type="radio" id="jsfsinput3" name="jsfs" v-model="cghtdj.jsfs"><span id="jsfs3">
+						 			采用背靠背方式付款，业主方支付甲方工程货款后<span contenteditable>______</span> 
+									日内，甲方按此合同系统占工程比例付给乙方。
+							      </span>
+								</label>
+								    <label ><input type="radio" id="jsfsinput4" name="jsfs" v-model="cghtdj.jsfs"><span id="jsfs4">
+						 			其他
+									<span contenteditable>__________________________</span>
+							      </span>
+								</label>
+								<label for="">  乙方需对其在合同中提供的银行账号的真实性负责，若乙方银行账号变更应提前15天通知甲方，由于乙方未及时通知或未通知甲方造成的损失由乙方承担，甲方不承担相应的责任。
+
+       每次付款前，乙方需先提供等额发票后甲方才可支付，如乙方提供虚假发票一经查实，则甲方有权对乙方处以合同金额20%的违约金，同时乙方承担由此引起的一切后果。</label>
+                       
                         </div>
                     </div>
-											                    <div class="form-group">
+                    				                    <div class="form-group">
+                        <div class="col-sm-2 control-label">违约责任</div>
+                        <div class="col-sm-10">
+                            <p   v-model="cghtdj.wyzr" id="wyzr">
+
+1、在履行本合同的过程中：乙方逾期交货和提供服务，视为合同违约行为。每逾期一天，应向对方支付合同总金额的5‰价款作为违约金，该延迟供货部分的违约金额最高不超过本合同总金额的10%；如甲方在收到乙方催款通知后无正当理由未及时给乙方支付合同款项，也视为合同违约行为。每逾期一天，应向对方支付应付款项的5‰价款作为违约金，该延迟付款违约金额最高不超过应付款项的10%；或者按月息2%计付违约金。
+
+<br>2、如发现假冒伪劣产品视为乙方违约，甲方有权向乙方主张相当于本合同总金额十倍以上的罚款，且由此造成的一切后果将由乙方承担。
+
+<br>3、如在质保期内，乙方无故未在合理时间内提供相应服务，则甲方有权委托第三方处理应由乙方承担的义务，因该等事务产生的费用甲方有权从质保金中扣除，如质保金不足支付该等费用的，甲方有权向乙方追偿。
+
+<br>4、按本合同规定应赔付的违约金、赔偿金及其它经济损失，应当在明确责任后15日内支付给对方，否则按逾期付款处理。                            </p>
+                        </div>
+                    </div>
+							
+							<!-- 				                    <div class="form-group">
                         <div class="col-sm-2 control-label">最终价</div>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" v-model="cghtdj.zzj" placeholder="最终价"/>
                         </div>
+                    </div> -->
+                    				                    <div class="form-group">
+                        <div class="col-sm-2 control-label">其他</div>
+                        <div class="col-sm-10">
+                          <!--   <input type="text" class="form-control" placeholder="其他"/> -->
+                       		<p v-model="cghtdj.qt">
+						本合同一式<span contenteditable>______</span> 
+						份，双方各持<span contenteditable>______</span> 
+						份，经双方盖章后生效，传真件及复印件与合同正本具有同等法律效力，涂改无效。其它未尽事宜，由双方协商解决。如发生争议不能解决，双方同意提交南京仲裁委员会仲裁。
+                       </p>
+                        </div>
                     </div>
+                    				                    <div class="form-group">
+                        <div class="col-sm-2 control-label">采购清单</div>
+                        <div class="col-sm-10">
+	                   		<div class="table-box" style="margin: 20px;width:900px;">
+							    <div id="toolbar">
+							  <span class="btn btn-default" data-toggle="modal" data-target="#myModal4" >获取</span>
+							        
+							 
+	 							   </div>
+							    <table id="table"></table>
+							</div>
+
+                        </div>
+                    </div>
+                    
 							            <div class="form-group">
                 <div class="col-sm-2 control-label"></div>
                 <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>
@@ -238,6 +394,108 @@
             </div>
         </form>
     </div>
+     <div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" style="width:900px">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            项目投标清单
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                     <div class="grid-btn">
+                    	<div>
+ 							<label class="form-inline" />物品名称：<input type="text" v-model="cg.wpmc" class="form-control"  @keyup.enter="query4" >
+ 			
+							</div>
+						<a class="btn btn-default" @click="query4">查询</a>
+						</div>
+							
+                         <table id="cgGrid"></table>
+       					 <div id="cgGridPager"></div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" @click="savecg" class="btn btn-primary">
+                        		    确定
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal  $("input[name='FORMID']").val(); -->
+        </div>
+     <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            选择甲方单位
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                     <div class="grid-btn">
+                    	<div>
+ 							<label class="form-inline" />公司名称：<input type="text" v-model="jf.gsmc" class="form-control"  @keyup.enter="query2" >
+ 			
+							</div>
+						<a class="btn btn-default" @click="query2">查询</a>
+						</div>
+							
+                         <table id="jfGrid"></table>
+       					 <div id="jfGridPager"></div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" @click="savejf" class="btn btn-primary">
+                        		    确定
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal  $("input[name='FORMID']").val(); -->
+        </div>
+                <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            选择乙方单位
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                     <div class="grid-btn">
+                    	<div>
+ 							<label class="form-inline" />单位名称：<input type="text" v-model="yf.dwmc" class="form-control"  @keyup.enter="query3" >
+ 			
+							</div>
+						<a class="btn btn-default" @click="query3">查询</a>
+						</div>
+							
+                         <table id="yfGrid"></table>
+       					 <div id="yfGridPager"></div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" @click="saveyf" class="btn btn-primary">
+                        		    确定
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div>
+         </div>
 </div>
 
 <script src="${request.contextPath}/statics/js/modules/sys/cghtdj.js?_${.now?long}"></script>

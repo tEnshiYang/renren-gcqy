@@ -60,6 +60,7 @@ public class XmController {
         return R.ok().put("page", page);
     }
     @RequestMapping("/setdefaultxm")
+    @ResponseBody
     public String setxm(@RequestBody String xmId){
     	System.out.println(xmId);
     	String subId=xmId.substring(5);
@@ -67,9 +68,17 @@ public class XmController {
     	int id2=(int)id;
   
     	XmEntity xmEntity=xmService.getById(id);
+    	
     	ShiroUtils.setSessionAttribute("defaultxm", xmEntity);
     	
     	return "OK";
+    }
+    @RequestMapping("/getdefaultxm")
+    @ResponseBody
+    public XmEntity getxm(){
+    	XmEntity xmEntity=(XmEntity)ShiroUtils.getSessionAttribute("defaultxm");
+
+    	return xmEntity;
     }
 
     //附件
