@@ -1,4 +1,44 @@
 $(function () {
+	vm.getXm();
+	$("#htGrid").jqGrid({
+	     url: baseURL + 'sys/cghtdj/list',
+	     datatype: "json",
+	     colModel: [			
+				{ label: '序号', name: 'cghtdjId', index: 'cghtdj_id', width: 50, key: true },							 			
+				{ label: '合同名称', name: 'htmc', index: 'htmc', width: 80 }, 
+				{ label: '采购合同总额', name: 'cghtze', index: 'cghtze', width: 80 },
+				{ label: '合同编号', name: 'htbh', index: 'htbh', width: 80 }, 			
+				{ label: '合同类型', name: 'htlx', index: 'htlx', width: 80 }, 			
+				{ label: '签订日期', name: 'qdrq', index: 'qdrq', width: 80 }, 			
+				{ label: '累计到票金额', name: 'ljdpje', index: 'ljdpje', width: 80 }, 			
+				
+				{ label: '最终价', name: 'zzj', index: 'zzj', width: 80 }			
+	     ],
+			viewrecords: true,
+	     height: 385,
+	     rowNum: 10,
+			rowList : [10,30,50],
+	     rownumbers: true, 
+	     rownumWidth: 25, 
+	     autowidth:true,
+	     multiselect: true,
+	     pager: "#htGridPager",
+	     jsonReader : {
+	         root: "page.list",
+	         page: "page.currPage",
+	         total: "page.totalPage",
+	         records: "page.totalCount"
+	     },
+	     prmNames : {
+	         page:"page", 
+	         rows:"limit", 
+	         order: "order"
+	     },
+	     gridComplete:function(){
+	     	//隐藏grid底部滚动条
+	     	$("#htGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
+	     }
+	 });
     $("#jqGrid").jqGrid({
         url: baseURL + 'sys/cghtfk/list',
         datatype: "json",
@@ -52,6 +92,14 @@ var vm = new Vue({
 			htlx:null
 
 		},
+		  ht:{
+				htmc:null,
+				htbh:null,
+				htlx:null
+
+			},
+			nextfkbh:null,
+		defaultxm:null,
 		showList: true,
 		title: null,
 		cghtfk: {}
@@ -60,10 +108,61 @@ var vm = new Vue({
 		query: function () {
 			vm.reload();
 		},
+		query4: function () {
+			vm.htload();
+		},
 		add: function(){
 			vm.showList = false;
 			vm.title = "新增";
 			vm.cghtfk = {};
+			vm.getBh();
+			vm.cghtfk.ssxmmc=vm.defaultxm.xmname;
+			var xmm=vm.defaultxm.xmname;		        
+			 console.log(xmm);
+			 $('#ssxmmc').text(123);
+			 $('#ssxmmc').val(123);
+			
+			 $('#htmc').val(123);
+			 $('#htmc').text(123);
+			 $('#htbh').val(123);
+			 $('#htbh').text(123);
+			 console.log($('#htmc').val());
+			 console.log($('#ssxmmc').val());
+			 console.log($('#htbh').val());
+		},
+		getXm:function(){
+			
+			 $.ajax({
+              type: "POST",
+              url: baseURL + "sys/xm/getdefaultxm",
+              contentType: "application/json",
+              data: null,
+              success: function(r){
+           	  
+             	 vm.defaultxm=r;
+             
+
+
+              }
+          });
+		},
+		getBh:function(){
+			 $.ajax({
+	               type: "POST",
+	               url: baseURL + "sys/cghtfk/getnextbh",
+	               contentType: "application/json",
+	               data: null,
+	               success: function(r){
+	            	  var bh="CGFK"+r.zfbh;
+	            	  vm.nextfkbh=bh;
+	            	  vm.cghtfk.bgbh=vm.nextfkbh;
+	     			 $('#fkbh').val(vm.nextfkbh);
+	     			 $('#fkbh').text(vm.nextfkbh);
+	            	  console.log(bh);
+
+
+	               }
+	           });
 		},
 		update: function (event) {
 			var tbCghtfk = getSelectedRow();
@@ -140,6 +239,43 @@ var vm = new Vue({
 
                 page:page
             }).trigger("reloadGrid");
+		},
+		htload: function (event) {
+			vm.showList = true;
+			var page = $("#htGrid").jqGrid('getGridParam','page');
+			$("#htGrid").jqGrid('setGridParam',{ 
+				 postData:{'htmc': vm.ht.htmc,'htbh': vm.ht.htbh,'htlx': vm.ht.htlx},
+
+                page:page
+            }).trigger("reloadGrid");
+		},
+		saveht: function (event) {
+			console.log("savvvvvvvvvcccg");
+			//var h=$('#ryGrid').bootstrapTable('getSelections');
+			 //获取选中的数据组
+            var array = $("#htGrid input[type=checkbox]:checked").map(function () {
+                return { 
+                	"htmc": $.trim($(this).closest("tr").find("td:eq(3)").text()),
+                	"htbh": $.trim($(this).closest("tr").find("td:eq(5)").text()),
+                	"cghtze": $.trim($(this).closest("tr").find("td:eq(4)").text()),
+                	};
+            }).get();
+            $.each(array, function (i, d) {
+//            	  console.log("c"+d.id);
+//            	  console.log("xtmc"+d.xtmc);
+          	  
+                  console.log(d.htmc);
+            	  vm.cghtfk.htbh=d.htbh;
+            	  vm.cghtfk.htmc=d.htmc;
+            	  vm.cghtfk.zje=d.cghtze;
+            	  $("#htmc").val(d.htmc);
+            	  $("#htbh").val(d.htbh);
+            	  $("#zje").val(d.cghtze);
+              	  $('#myModal4').modal('hide');
+
+            	
+            })
+   
 		}
 	}
 });

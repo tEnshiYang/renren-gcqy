@@ -6,6 +6,7 @@
 </head>
 <body>
 <div id="rrapp" v-cloak>
+
     <div v-show="showList">
         <div class="grid-btn">
           <div class="row" >
@@ -37,25 +38,28 @@
 														                    <div class="form-group">
                         <div class="col-sm-2 control-label">所属项目名称</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="lwfwhtfk.ssxmmc" placeholder="所属项目名称"/>
+                            <input type="text" readonly id="ssxmmc" class="form-control" v-model="lwfwhtfk.ssxmmc" placeholder="所属项目名称"/>
                         </div>
                     </div>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">合同名称</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="lwfwhtfk.htmc" placeholder="合同名称"/>
+	                        <div class="input-group">
+	                            <input readonly type="text" id="htmc" class="form-control" v-model="lwfwhtfk.htmc" placeholder="合同名称"/>
+	                        	<span class="input-group-addon" data-toggle="modal" data-target="#myModal2" >+</span>
+	                        </div>
                         </div>
                     </div>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">合同编号</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="lwfwhtfk.htbh" placeholder="合同编号"/>
+                            <input type="text" id="htbh" class="form-control" v-model="lwfwhtfk.htbh" placeholder="合同编号"/>
                         </div>
                     </div>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">支付编号</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="lwfwhtfk.zfbh" placeholder="支付编号"/>
+                            <input type="text" id="zfbh" class="form-control" v-model="lwfwhtfk.zfbh" placeholder="支付编号"/>
                         </div>
                     </div>
 											                    <div class="form-group">
@@ -121,7 +125,7 @@
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">总金额</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="lwfwhtfk.zje" placeholder="总金额"/>
+                            <input type="text" readonly id="zje" class="form-control" v-model="lwfwhtfk.zje" placeholder="总金额"/>
                         </div>
                     </div>
 											                    <div class="form-group">
@@ -160,30 +164,6 @@
                             <input type="text" class="form-control" v-model="lwfwhtfk.sffpbq" placeholder="是否发票补齐"/>
                         </div>
                     </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">操作人</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="lwfwhtfk.czr" placeholder="操作人"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">操作时间</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="lwfwhtfk.czsj" placeholder="操作时间"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">创建人</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="lwfwhtfk.cjr" placeholder="创建人"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">创建时间</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="lwfwhtfk.cjsj" placeholder="创建时间"/>
-                        </div>
-                    </div>
 							            <div class="form-group">
                 <div class="col-sm-2 control-label"></div>
                 <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>
@@ -191,6 +171,39 @@
             </div>
         </form>
     </div>
+    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" style="width:850px">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            选择劳务服务合同
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                     <div class="grid-btn">
+                    	<div>
+			 				<label class="form-inline" />合同名称：<input type="text" class="form-control" v-model="ht.htmc" @keyup.enter="query2" >
+						</div>
+						<a class="btn btn-default" @click="query2">查询</a>
+						</div>
+							
+                         <table id="htGrid"></table>
+       					 <div id="htGridPager"></div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" @click="saveht" class="btn btn-primary">
+                        		    确定
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div>
+         </div>
 </div>
 
 <script src="${request.contextPath}/statics/js/modules/sys/lwfwhtfk.js?_${.now?long}"></script>

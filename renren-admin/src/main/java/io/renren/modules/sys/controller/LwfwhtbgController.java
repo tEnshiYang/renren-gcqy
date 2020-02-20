@@ -4,15 +4,18 @@ import java.util.Arrays;
 import java.util.Map;
 
 import io.renren.common.validator.ValidatorUtils;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.renren.modules.sys.entity.LwfwhtbgEntity;
+import io.renren.modules.sys.entity.LwfwhtdjEntity;
 import io.renren.modules.sys.service.LwfwhtbgService;
 import io.renren.common.utils.PageUtils;
 import io.renren.common.utils.R;
@@ -43,7 +46,25 @@ public class LwfwhtbgController {
         return R.ok().put("page", page);
     }
 
-
+    @RequestMapping("/getxh")
+    @ResponseBody
+    public LwfwhtbgEntity getCount(){
+    	Integer xh=lwfwhtbgService.count()+1;
+    	String res="-";
+    	if((xh+"").length()==1){
+    		res+="000"+xh;
+    	}else if((xh+"").length()==2){
+    		res+="00"+xh;
+    	}else if((xh+"").length()==3){
+    		res+="0"+xh;
+    	}else if((xh+"").length()==4){
+    		res+=""+xh;
+    	}
+    	LwfwhtbgEntity lwfwhtbgEntity=new LwfwhtbgEntity();
+    	lwfwhtbgEntity.setBgbh(res);
+    	
+    	return lwfwhtbgEntity;
+    }
     /**
      * 信息
      */

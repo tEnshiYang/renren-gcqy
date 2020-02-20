@@ -4,14 +4,17 @@ import java.util.Arrays;
 import java.util.Map;
 
 import io.renren.common.validator.ValidatorUtils;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.renren.modules.sys.entity.CghtfkEntity;
 import io.renren.modules.sys.entity.CghtzfEntity;
 import io.renren.modules.sys.service.CghtzfService;
 import io.renren.common.utils.PageUtils;
@@ -54,7 +57,24 @@ public class CghtzfController {
 
         return R.ok().put("cghtzf", cghtzf);
     }
-
+    @RequestMapping("/getnextbh")
+    @ResponseBody
+    public CghtzfEntity getCount(){
+    	Integer xh=cghtzfService.count()+1;
+    	String res="-";
+    	if((xh+"").length()==1){
+    		res+="000"+xh;
+    	}else if((xh+"").length()==2){
+    		res+="00"+xh;
+    	}else if((xh+"").length()==3){
+    		res+="0"+xh;
+    	}else if((xh+"").length()==4){
+    		res+=""+xh;
+    	}
+    	CghtzfEntity cghtzfEntity=new CghtzfEntity();
+    	cghtzfEntity.setZfbh(res);
+    	return cghtzfEntity;
+    }
     /**
      * 保存
      */

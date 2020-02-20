@@ -16,7 +16,9 @@ import io.renren.common.validator.Assert;
 import io.renren.common.validator.ValidatorUtils;
 import io.renren.common.validator.group.AddGroup;
 import io.renren.common.validator.group.UpdateGroup;
+import io.renren.modules.sys.entity.SysDeptEntity;
 import io.renren.modules.sys.entity.SysUserEntity;
+import io.renren.modules.sys.service.SysDeptService;
 import io.renren.modules.sys.service.SysUserRoleService;
 import io.renren.modules.sys.service.SysUserService;
 import io.renren.modules.sys.shiro.ShiroUtils;
@@ -44,6 +46,9 @@ public class SysUserController extends AbstractController {
 	@Autowired
 	private SysUserRoleService sysUserRoleService;
 	
+	@Autowired
+	private SysDeptService sysDeptService;
+	
 	/**
 	 * 所有用户列表
 	 */
@@ -64,7 +69,10 @@ public class SysUserController extends AbstractController {
 	 */
 	@RequestMapping("/info")
 	public R info(){
-		return R.ok().put("user", getUser());
+		SysUserEntity user=getUser();
+		SysDeptEntity deptEntity=sysDeptService.getById(user.getDeptId());
+		user.setDeptName(deptEntity.getName());
+		return R.ok().put("user", user);
 	}
 	
 	/**

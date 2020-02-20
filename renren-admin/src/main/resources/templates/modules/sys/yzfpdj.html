@@ -3,9 +3,15 @@
 <head>
     <title>业主发票登记</title>
 		<#include "/header.html">
+			<link rel="stylesheet" href="${request.contextPath}/statics/css/bootstrap-table.min.css">
+
+		<script src="${request.contextPath}/statics/libs/bootstrap-table.min.js"></script>
+		<script src="${request.contextPath}/statics/js/bootstrap-table-editable.js"></script>
 </head>
 <body>
 <div id="rrapp" v-cloak>
+<span id="syssqr" style="display:none;">{{user.username}}</span>
+
     <div v-show="showList">
         <div class="grid-btn">
 			<#if shiro.hasPermission("sys:yzfpdj:save")>
@@ -28,15 +34,10 @@
 														                    <div class="form-group">
                         <div class="col-sm-2 control-label">项目名称</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="yzfpdj.xmmc" placeholder="项目名称"/>
+                            <input type="text" readonly id="xmmc" class="form-control" v-model="yzfpdj.xmmc" placeholder="项目名称"/>
                         </div>
                     </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">审批状态</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="yzfpdj.spzt" placeholder="审批状态"/>
-                        </div>
-                    </div>
+											 
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">项目地址</div>
                         <div class="col-sm-10">
@@ -46,25 +47,28 @@
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">合同名称</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="yzfpdj.htmc" placeholder="合同名称"/>
+                       		 <div class="input-group">
+	                            <input type="text"  readonly id="htmc" class="form-control" v-model="yzfpdj.htmc" placeholder="合同名称"/>
+	                        	<span class="input-group-addon" data-toggle="modal" data-target="#myModal2" >+</span>
+                        	</div>
                         </div>
                     </div>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">合同编号</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="yzfpdj.htbh" placeholder="合同编号"/>
+                            <input type="text"   id="htbh" class="form-control" v-model="yzfpdj.htbh" placeholder="合同编号"/>
                         </div>
                     </div>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">申请时间</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="yzfpdj.sqsj" placeholder="申请时间"/>
+                            <input type="text"  readonly id="sqsj" class="form-control" v-model="yzfpdj.sqsj" placeholder="申请时间"/>
                         </div>
                     </div>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">申请人</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="yzfpdj.sqr" placeholder="申请人"/>
+                            <input type="text"  readonly id="sqr" class="form-control" v-model="yzfpdj.sqr" placeholder="申请人"/>
                         </div>
                     </div>
 											                    <div class="form-group">
@@ -130,7 +134,14 @@
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">项目到票明细</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="yzfpdj.xudpmx" placeholder="项目到票明细"/>
+<!--                             <input type="text" class="form-control" v-model="yzfpdj.xudpmx" placeholder="项目到票明细"/>
+ -->                       		<div class="table-box" style="margin: 20px;width:900px;">
+							    <div id="toolbar">
+							        <a id="button" class="btn btn-default">添加</a>
+							 
+	 							   </div>
+							    <table id="table"></table>
+							</div>
                         </div>
                     </div>
 											                    <div class="form-group">
@@ -142,7 +153,7 @@
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">备注</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="yzfpdj.bz" placeholder="备注"/>
+                            <textarea type="text" class="form-control" v-model="yzfpdj.bz" placeholder="备注"></textarea>
                         </div>
                     </div>
 							            <div class="form-group">
@@ -152,6 +163,42 @@
             </div>
         </form>
     </div>
+       	 <!-- 模态框（Modal） -->
+        <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            选择合同
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                     <div class="grid-btn">
+                    	<div>
+ 							<label class="form-inline" />合同名称：<input type="text" v-model="ht.htmc" class="form-control"  @keyup.enter="query2" >
+ 			
+							</div>
+						<a class="btn btn-default" @click="query2">查询</a>
+						</div>
+							
+                         <table id="htGrid"></table>
+       					 <div id="htGridPager"></div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" @click="saveht" class="btn btn-primary">
+                        		    确定
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal  $("input[name='FORMID']").val(); -->
+        </div>
+    
 </div>
 
 <script src="${request.contextPath}/statics/js/modules/sys/yzfpdj.js?_${.now?long}"></script>

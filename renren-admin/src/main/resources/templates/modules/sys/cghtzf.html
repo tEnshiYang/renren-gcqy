@@ -36,37 +36,40 @@
 														                    <div class="form-group">
                         <div class="col-sm-2 control-label">所属项目名称</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="cghtzf.ssxmmc" placeholder="所属项目名称"/>
+                            <input readonly type="text" id="ssxmmc" class="form-control" v-model="cghtzf.ssxmmc" placeholder="所属项目名称"/>
                         </div>
                     </div>
-											                    <div class="form-group">
+								<!-- 			                    <div class="form-group">
                         <div class="col-sm-2 control-label">审批状态</div>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" v-model="cghtzf.spzt" placeholder="审批状态"/>
                         </div>
-                    </div>
+                    </div> -->
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">合同名称</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="cghtzf.htmc" placeholder="合同名称"/>
+                          <div class="input-group">
+                            <input readonly type="text" id="htmc" class="form-control" v-model="cghtzf.htmc" placeholder="合同名称"/>
+                      		<span class="input-group-addon" data-toggle="modal" data-target="#myModal4" >+</span>
+                      	  </div>
                         </div>
                     </div>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">作废编号</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="cghtzf.zfbh" placeholder="作废编号"/>
+                            <input type="text" id="zfbh" class="form-control" v-model="cghtzf.zfbh" placeholder="作废编号"/>
                         </div>
                     </div>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">申请人姓名</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="cghtzf.sqrxm" placeholder="申请人姓名"/>
+                            <input type="text" id="sqrxm" class="form-control" v-model="cghtzf.sqrxm" placeholder="申请人姓名"/>
                         </div>
                     </div>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">申请日期</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="cghtzf.sqrq" placeholder="申请日期"/>
+                            <input type="text" id="sqrq" class="form-control" v-model="cghtzf.sqrq" placeholder="申请日期"/>
                         </div>
                     </div>
 											                    <div class="form-group">
@@ -84,13 +87,13 @@
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">合同签订日期</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="cghtzf.htqdrq" placeholder="合同签订日期"/>
+                            <input readonly type="text" id="htqdrq" class="form-control" v-model="cghtzf.htqdrq" placeholder="合同签订日期"/>
                         </div>
                     </div>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">签订金额</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="cghtzf.qdje" placeholder="签订金额"/>
+                            <input type="text" id="qdje" class="form-control" v-model="cghtzf.qdje" placeholder="签订金额"/>
                         </div>
                     </div>
 											                    <div class="form-group">
@@ -111,30 +114,7 @@
                             <input type="text" class="form-control" v-model="cghtzf.zfmx" placeholder="作废明细"/>
                         </div>
                     </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">操作人</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="cghtzf.czr" placeholder="操作人"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">操作时间</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="cghtzf.czsj" placeholder="操作时间"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">创建人</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="cghtzf.cjr" placeholder="创建人"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">创建时间</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="cghtzf.cjsj" placeholder="创建时间"/>
-                        </div>
-                    </div>
+											     
 							            <div class="form-group">
                 <div class="col-sm-2 control-label"></div>
                 <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>
@@ -142,6 +122,39 @@
             </div>
         </form>
     </div>
+      <div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" style="width:850px">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            选择采购合同
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                     <div class="grid-btn">
+                    	<div>
+			 				<label class="form-inline" />合同名称：<input type="text" class="form-control" v-model="ht.htmc" @keyup.enter="query4" >
+						</div>
+						<a class="btn btn-default" @click="query4">查询</a>
+						</div>
+							
+                         <table id="htGrid"></table>
+       					 <div id="htGridPager"></div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" @click="saveht" class="btn btn-primary">
+                        		    确定
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div>
+         </div>
 </div>
 
 <script src="${request.contextPath}/statics/js/modules/sys/cghtzf.js?_${.now?long}"></script>

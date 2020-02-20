@@ -1,4 +1,7 @@
 $(function () {
+	vm.getXm();
+	vm.getUser();
+
     $("#jqGrid").jqGrid({
         url: baseURL + 'sys/lwfwhtdj/list',
         datatype: "json",
@@ -51,18 +54,92 @@ var vm = new Vue({
 			cjrxm:null
 
 		},
+		user:{},
+		defaultxm:null,
 		showList: true,
 		title: null,
 		lwfwhtdj: {}
 	},
 	methods: {
+		 getUser: function(){
+				$.getJSON(baseURL +"sys/user/info?_"+$.now(), function(r){
+					vm.user = r.user;
+					console.log(vm.user);
+					
+					if(vm.user.quanxian=="领导"){
+						$('#shenpi').show();
+
+					}else{
+						$('#shenpi').hide();
+
+					}
+				});
+			},
+			getXm:function(){
+				 $.ajax({
+	             type: "POST",
+	             url: baseURL + "sys/xm/getdefaultxm",
+	             contentType: "application/json",
+	             data: null,
+	             success: function(r){
+
+	            	 vm.defaultxm=r;
+
+
+	             }
+	         });
+			},
 		query: function () {
 			vm.reload();
+		},
+		getXh: function(){
+//			console.log("getxh");
+			 $.ajax({
+	                type: "POST",
+	                url: baseURL + "sys/lwfwhtdj/getxh",
+	                contentType: "application/json",
+	                data: null,
+	                success: function(r){
+//	                	console.log(vm.defaultxm);
+	                	console.log(r);
+	                	var bh=(vm.defaultxm.gcbh)+""+r.htbh;
+	    				vm.lwfwhtdj.htbh = bh;
+	    				$('#htbh').val(bh);
+	    				$('#htbh').text(bh);
+
+	 
+	                }
+	            });
+
 		},
 		add: function(){
 			vm.showList = false;
 			vm.title = "新增";
 			vm.lwfwhtdj = {};
+			vm.getXh();
+			vm.lwfwhtdj.ssxmmc=vm.defaultxm.xmname;
+		
+
+			  console.log("add");
+
+			var xmm=vm.defaultxm.xmname;	
+			
+			 
+          	 $('#ssxmmc').val(xmm);
+			 $('#ssxmmc').text(xmm);	
+			 
+			  var bm=$("#sysbm").text();
+			  var sqr=$("#syssqr").text();
+	 	        console.log("sqr:"+sqr);
+
+	 	        console.log("bm:"+bm);
+	 	        vm.lwfwhtdj.hsdy=bm;
+	 	        $('#hsdy').val(bm);
+	 	        $('#hsdy').text(bm);
+	 	       vm.lwfwhtdj.gtfqr=sqr;
+	 	        $('#gtfqr').val(sqr);
+	 	        $('#gtfqr').text(sqr);
+
 		},
 		update: function (event) {
 			var lwfwhtId = getSelectedRow();
@@ -74,6 +151,7 @@ var vm = new Vue({
             
             vm.getInfo(lwfwhtId)
 		},
+		
 		saveOrUpdate: function (event) {
 		    $('#btnSaveOrUpdate').button('loading').delay(1000).queue(function() {
                 var url = vm.lwfwhtdj.lwfwhtId == null ? "sys/lwfwhtdj/save" : "sys/lwfwhtdj/update";

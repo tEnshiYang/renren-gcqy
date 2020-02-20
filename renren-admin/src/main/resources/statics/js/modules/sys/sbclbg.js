@@ -1,4 +1,35 @@
+
+function getNowDate(){
+	var date=new Date();
+
+ 	var year=date.getFullYear();
+ 	var month=date.getMonth();
+ 	var day=date.getDate();
+
+     var hour=date.getHours();
+     var minute=date.getMinutes();
+     var second=date.getSeconds();
+
+     //这样写显示时间在1~9会挤占空间；所以要在1~9的数字前补零;
+     if (hour<10) {
+     	hour='0'+hour;
+     }
+     if (minute<10) {
+     	minute='0'+minute;
+     }
+     if (second<10) {
+     	second='0'+second;
+     }
+
+
+     var x=date.getDay();//获取星期
+
+
+     var time=year+'/'+(1+month)+'/'+day+' '+hour+':'+minute+':'+second
+     return time;
+}
 $(function () {
+	vm.getXm();
     $("#jqGrid").jqGrid({
         url: baseURL + 'sys/sbclbg/list',
         datatype: "json",
@@ -48,7 +79,7 @@ var vm = new Vue({
 			dh:null,
 			bt:null
 		},
-
+		defaultxm:null,
 		showList: true,
 		title: null,
 		sbclbg: {}
@@ -61,6 +92,29 @@ var vm = new Vue({
 			vm.showList = false;
 			vm.title = "新增";
 			vm.sbclbg = {};
+			
+			vm.sbclbg.ssxm=vm.defaultxm.xmname;		
+			var xmm=vm.defaultxm.xmname;			
+	    	
+          	$('#ssxmmc').val(xmm);
+			$('#ssxmmc').text(xmm);		
+			
+			var date=getNowDate();
+	
+			vm.sbclbg.cjsj=date;
+		},
+		getXm:function(){
+			 $.ajax({
+            type: "POST",
+            url: baseURL + "sys/xm/getdefaultxm",
+            contentType: "application/json",
+            data: null,
+            success: function(r){
+           	 vm.defaultxm=r;
+
+
+            }
+        });
 		},
 		update: function (event) {
 			var sbclbgId = getSelectedRow();
@@ -71,6 +125,9 @@ var vm = new Vue({
             vm.title = "修改";
             
             vm.getInfo(sbclbgId)
+            var date=getNowDate();
+        	
+			vm.sbclbg.czsj=date;
 		},
 		saveOrUpdate: function (event) {
 		    $('#btnSaveOrUpdate').button('loading').delay(1000).queue(function() {

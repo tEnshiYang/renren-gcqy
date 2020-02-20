@@ -36,31 +36,30 @@
 														                    <div class="form-group">
                         <div class="col-sm-2 control-label">所属项目名称</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="cghtfk.ssxmmc" placeholder="所属项目名称"/>
+                            <input type="text"  id="ssxmmc" readonly class="form-control" v-model="cghtfk.ssxmmc" placeholder="所属项目名称"/>
                         </div>
                     </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">合同编号</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="cghtfk.htzt" placeholder="合同编号"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
+                    				                    <div class="form-group">
                         <div class="col-sm-2 control-label">合同名称</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="cghtfk.htmc" placeholder="合同名称"/>
+                        	<div class="input-group">
+	                            <input readonly type="text" id="htmc" class="form-control" v-model="cghtfk.htmc" placeholder="合同名称"/>
+	                       		<span class="input-group-addon" data-toggle="modal" data-target="#myModal4" >+</span>
+                       		</div>
                         </div>
                     </div>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">合同编号</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="cghtfk.htbh" placeholder="合同编号"/>
+                            <input readonly type="text" id="htbh" class="form-control" v-model="cghtfk.htzt" placeholder="合同编号"/>
                         </div>
                     </div>
+							
+								
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">支付编号</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="cghtfk.zfbh" placeholder="支付编号"/>
+                            <input type="text" readonly id="fkbh" class="form-control" v-model="cghtfk.zfbh" placeholder="支付编号"/>
                         </div>
                     </div>
 											                    <div class="form-group">
@@ -126,7 +125,7 @@
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">总金额</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="cghtfk.zje" placeholder="总金额"/>
+                            <input type="text" id="zje" class="form-control" v-model="cghtfk.zje" placeholder="总金额"/>
                         </div>
                     </div>
 											                    <div class="form-group">
@@ -177,7 +176,7 @@
                             <input type="text" class="form-control" v-model="cghtfk.sffpbq" placeholder="是否发票补齐"/>
                         </div>
                     </div>
-											                    <div class="form-group">
+								<!-- 			                    <div class="form-group">
                         <div class="col-sm-2 control-label"></div>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" v-model="cghtfk.czr" placeholder=""/>
@@ -188,7 +187,7 @@
                         <div class="col-sm-10">
                             <input type="text" class="form-control" v-model="cghtfk.czsj" placeholder=""/>
                         </div>
-                    </div>
+                    </div> -->
 							            <div class="form-group">
                 <div class="col-sm-2 control-label"></div>
                 <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>
@@ -196,6 +195,39 @@
             </div>
         </form>
     </div>
+         <div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" style="width:850px">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            选择采购合同
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                     <div class="grid-btn">
+                    	<div>
+			 				<label class="form-inline" />合同名称：<input type="text" class="form-control" v-model="ht.htmc" @keyup.enter="query4" >
+						</div>
+						<a class="btn btn-default" @click="query4">查询</a>
+						</div>
+							
+                         <table id="htGrid"></table>
+       					 <div id="htGridPager"></div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" @click="saveht" class="btn btn-primary">
+                        		    确定
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div>
+         </div>
 </div>
 
 <script src="${request.contextPath}/statics/js/modules/sys/cghtfk.js?_${.now?long}"></script>

@@ -6,12 +6,13 @@
 </head>
 <body>
 <div id="rrapp" v-cloak>
+<span id="syssqr" style="display:none;">{{user.username}}</span>
+
     <div v-show="showList">
         <div class="grid-btn">
          <div class="row" >
 			<div>
 				 <label class="form-inline" />标题：<input class="form-control"  type="text"  v-model="q.bt" @keyup.enter="query" >	
-				 <label class="form-inline" />申请人：<input class="form-control"  type="text"  v-model="sqr"  @keyup.enter="query">	
 				 <label class="form-inline" />借款类型：<input class="form-control"  type="text"  v-model="q.jklx" @keyup.enter="query" >	
 					<a class="btn btn-default form-inline" @click="query">查询</a>
 			</div>
@@ -36,15 +37,10 @@
 														                    <div class="form-group">
                         <div class="col-sm-2 control-label">项目名称</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="zjwljkdj.xmmc" placeholder="项目名称"/>
+                            <input readonly type="text" id="xmmc" class="form-control" v-model="zjwljkdj.xmmc" placeholder="项目名称"/>
                         </div>
                     </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">审批状态</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="zjwljkdj.spzt" placeholder="审批状态"/>
-                        </div>
-                    </div>
+								
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">标题</div>
                         <div class="col-sm-10">
@@ -54,9 +50,9 @@
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">申请人</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="zjwljkdj.sqr" placeholder="申请人"/>
+                            <input type="text" readonly id="sqr" class="form-control" v-model="zjwljkdj.sqr" placeholder="申请人"/>
                         </div>
-                    </div>
+                    </div> 
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">申请部门</div>
                         <div class="col-sm-10">
@@ -78,13 +74,16 @@
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">被借项目</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="zjwljkdj.bjxm" placeholder="被借项目"/>
+	                        <div class="input-group">
+	                            <input type="text" readonly id="bjxm" class="form-control" v-model="zjwljkdj.bjxm" placeholder="被借项目"/>
+	                       	   <span class="input-group-addon" data-toggle="modal" data-target="#myModal2" >+</span>
+	                       </div>
                         </div>
                     </div>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">借款时间</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="zjwljkdj.jksj" placeholder="借款时间"/>
+                            <input type="text" readonly id="jksj" class="form-control" v-model="zjwljkdj.jksj" placeholder="借款时间"/>
                         </div>
                     </div>
 											                    <div class="form-group">
@@ -136,6 +135,41 @@
             </div>
         </form>
     </div>
+    
+       <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            选择项目
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                     <div class="grid-btn">
+                    	<div>
+ 							<label class="form-inline" />项目名称：<input type="text" v-model="xm.xmname" class="form-control"  @keyup.enter="query2" >
+ 			
+							</div>
+						<a class="btn btn-default" @click="query2">查询</a>
+						</div>
+							
+                         <table id="xmGrid"></table>
+       					 <div id="xmGridPager"></div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" @click="savexm" class="btn btn-primary">
+                        		    确定
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal  $("input[name='FORMID']").val(); -->
+        </div>
 </div>
 
 <script src="${request.contextPath}/statics/js/modules/sys/zjwljkdj.js?_${.now?long}"></script>

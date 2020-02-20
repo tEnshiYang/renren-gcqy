@@ -69,12 +69,19 @@ public class CghtdjController {
     @RequestMapping("/gethtid")
     @ResponseBody
     public CghtdjEntity gethtid(){
-    	Long res=cghtdjService.getmaxid()+1;
+    	Long long1=cghtdjService.getmaxid();
+    	Long res;
+    	if(long1==null){
+    		res=(long) 1;
+    	}else{
+    		res=long1+1;
+    	}
+    	
     	CghtdjEntity entity=new CghtdjEntity();
     	entity.setCghtdjId(res);
     	return entity;
     }
-
+    //获取编号
     @RequestMapping("/getxh")
     @ResponseBody
     public CghtdjEntity getCount(){

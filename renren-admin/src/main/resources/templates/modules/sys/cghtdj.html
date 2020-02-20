@@ -234,38 +234,47 @@
                     </div>
                     <h3>质量要求及技术标准</h3>
                     				                    <div class="form-group">
-                    			    <div class="col-sm-1 control-label"></div>
+                    			    <div class="col-sm-2 control-label"></div>
                     				                    
                         <div class="col-sm-10">
-                            <p   v-model="cghtdj.zlyq" id="zlyq">
+                            <textarea readonly  class="form-control" v-model="cghtdj.zlyq" id="zlyq"></textarea>
+                            <label><input type="radio" id="zlyqinput" name="zlyq" v-model="cghtdj.zlyq" value="1.乙方保证销售给甲方产品系原厂供应的原装产品，同时随产品提供原厂商各项证明文件（包括但不限于检测报告合格证等相关报验资料），如没随产品提供上述文件，每延迟一天提供，按每天伍佰元计算逾期交付违约金；
+<br>2.乙方所提供的产品质量必须符合或优于国家有关现行技术标准规范的规定，满足  柳林县城东小学智能信息化工程项目施工  项目的招标文件和设计图纸中的相关技术指标。乙方保证所有产品为全新的，如乙方产品经开箱检验出产品质量问题，乙方承诺立即无条件给予免费更换。在本合同约定的质保期内，乙方依法承担产品质量保证责任。
+<br>3.乙方应保证提供货物的商标、专利等知识产权的合法性，保证提供的产品不侵犯任何第三者的知识产权。如果最终用户在中华人民共和国和/或其他国家和地区因使用乙方提供的产品而侵犯了第三方的知识产权，由乙方负责处理由此出现的问题，甲方将不承担任何由此而引起的法律和经济方面的责任。 ">
 1.乙方保证销售给甲方产品系原厂供应的原装产品，同时随产品提供原厂商各项证明文件（包括但不限于检测报告合格证等相关报验资料），如没随产品提供上述文件，每延迟一天提供，按每天伍佰元计算逾期交付违约金；
 <br>2.乙方所提供的产品质量必须符合或优于国家有关现行技术标准规范的规定，满足  柳林县城东小学智能信息化工程项目施工  项目的招标文件和设计图纸中的相关技术指标。乙方保证所有产品为全新的，如乙方产品经开箱检验出产品质量问题，乙方承诺立即无条件给予免费更换。在本合同约定的质保期内，乙方依法承担产品质量保证责任。
-<br>3.乙方应保证提供货物的商标、专利等知识产权的合法性，保证提供的产品不侵犯任何第三者的知识产权。如果最终用户在中华人民共和国和/或其他国家和地区因使用乙方提供的产品而侵犯了第三方的知识产权，由乙方负责处理由此出现的问题，甲方将不承担任何由此而引起的法律和经济方面的责任。                            </p>
+<br>3.乙方应保证提供货物的商标、专利等知识产权的合法性，保证提供的产品不侵犯任何第三者的知识产权。如果最终用户在中华人民共和国和/或其他国家和地区因使用乙方提供的产品而侵犯了第三方的知识产权，由乙方负责处理由此出现的问题，甲方将不承担任何由此而引起的法律和经济方面的责任。                         
+                      </lable>
                         </div>
                     </div>
                       <h3>验收标准</h3>
                     				                    <div class="form-group">
-                    			    <div class="col-sm-1 control-label"></div>
+                    			    <div class="col-sm-2 control-label"></div>
                     				                    
                         <div class="col-sm-10">
-                            <p   v-model="cghtdj.ysbz" id="ysbz">
-按国家相关标准及双方确认的规格要求进行验收                        </div>
+                            <textarea readonly class="form-control"  v-model="cghtdj.ysbz" id="ysbz"></textarea>
+            
+ <label><input type="radio" id="ysbzinput" name="ysbz" v-model="cghtdj.ysbz" value="按国家相关标准及双方确认的规格要求进行验收  ">
+      按国家相关标准及双方确认的规格要求进行验收         
+        			</label>
+                      
+
+						</div>
                     </div>
                     
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">设备安装调试服务</div>
                         <div class="col-sm-10">
-<!--                             <input type="text" class="form-control" v-model="cghtdj.sbazts" placeholder="设备安装调试服务"/>
- -->                        <label><input type="radio" name="sbazts" v-model="cghtdj.sbazts" value="乙方按甲方工期要求及时提供安装指导、调试开通、培训用户使用人员、提供操作说明等服务，并免费提供与其他系统的通信接口。">乙方按甲方工期要求及时提供安装指导、调试开通、培训用户使用人员、提供操作说明等服务，并免费提供与其他系统的通信接口。</label>
+                            <textarea readonly type="text" class="form-control" v-model="cghtdj.sbazts" placeholder="设备安装调试服务"></textarea>
+                        <label><input type="radio" name="sbazts" v-model="cghtdj.sbazts" value="乙方按甲方工期要求及时提供安装指导、调试开通、培训用户使用人员、提供操作说明等服务，并免费提供与其他系统的通信接口。">乙方按甲方工期要求及时提供安装指导、调试开通、培训用户使用人员、提供操作说明等服务，并免费提供与其他系统的通信接口。</label>
 						<label><input type="radio" name="sbazts" v-model="cghtdj.sbazts" value="乙方免费为甲方培训调试人员，经乙方考核合格后由甲方负责安装调试开通、培训用户使用人员、提供操作说明等服务，并免费提供与其他系统的通信接口。（遇重大问题乙方免费派人至现场指导完成服务）">乙方免费为甲方培训调试人员，经乙方考核合格后由甲方负责安装调试开通、培训用户使用人员、提供操作说明等服务，并免费提供与其他系统的通信接口。（遇重大问题乙方免费派人至现场指导完成服务）</label>
                         </div>
                     </div>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">设备保修方式</div>
                         <div class="col-sm-10">
-                        <button @click="showtext()">show</button>
-<!--                             <input type="text" class="form-control" v-model="cghtdj.sbbxfs" placeholder="设备保修方式"/>
- -->                             <label ><input type="radio" id="sbbxfsinput1" name="sbbxfs" v-model="cghtdj.sbbxfs"><span id="sbbxfs1">在质量保证期内若设备出现质量问题，乙方必须无条件免费维修或更换；乙方收到甲方故障请求后，在 
+                            <textarea readonly type="text" class="form-control" v-model="cghtdj.sbbxfs" placeholder="设备保修方式"></textarea>
+                             <label ><input type="radio" id="sbbxfsinput1" name="sbbxfs" v-model="cghtdj.sbbxfs"><span id="sbbxfs1">在质量保证期内若设备出现质量问题，乙方必须无条件免费维修或更换；乙方收到甲方故障请求后，在 
 	<span contenteditable>______</span>小时内通过通讯方式帮助甲方排除故障，若仍未能排除故障，乙方必须在<span contenteditable>______</span>
 	小时之内抵达用户现场提供维修或更换设备。在质量保证期外若设备出现质量问题，乙方按质保期内承诺的服务时间进行服务，只收取维修配件成本费用及人员差旅费用。
 	      乙方售后服务电话：<span contenteditable>__________</span>
@@ -281,18 +290,18 @@
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">质保期</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="cghtdj.zbq" placeholder="质保期"/>
-                           <label ><input type="radio" id="zbqinput1" name="zbq" v-model="cghtdj.zbq"><span id="zbq1">在质量保证期内若设备出现质量问题，乙方必须无条件免费维修或更换；乙方收到甲方故障请求后，在 
+                            <textarea readonly class="form-control" v-model="cghtdj.zbq" placeholder="质保期"></textarea>
+                           <label ><input type="radio" id="zbqinput1" name="zbq" v-model="cghtdj.zbq"><span id="zbq1">
 	<span contenteditable>______</span>年,从设备到货经项目经理清点签收之日起开始。
 	      </span>
-	</label>         <label ><input type="radio" id="zbqinput2" name="zbq" v-model="cghtdj.zbq"><span id="zbq2">在质量保证期内若设备出现质量问题，乙方必须无条件免费维修或更换；乙方收到甲方故障请求后，在 
+	</label>         <label ><input type="radio" id="zbqinput2" name="zbq" v-model="cghtdj.zbq"><span id="zbq2">
 	<span contenteditable>______</span>年,从设备调试开通验收合格之日起开始。
 	      </span>
-	</label><label ><input type="radio" id="zbqinput3" name="zbq" v-model="cghtdj.zbq"><span id="zbq3">在质量保证期内若设备出现质量问题，乙方必须无条件免费维修或更换；乙方收到甲方故障请求后，在 
+	</label><label ><input type="radio" id="zbqinput3" name="zbq" v-model="cghtdj.zbq"><span id="zbq3">
 	<span contenteditable>______</span>年,从设备经业主单项验收合格之日起开始。
 	      </span>
 	</label>
-	<label ><input type="radio" id="zbqinput4" name="zbq" v-model="cghtdj.zbq"><span id="zbq4">在质量保证期内若设备出现质量问题，乙方必须无条件免费维修或更换；乙方收到甲方故障请求后，在 
+	<label ><input type="radio" id="zbqinput4" name="zbq" v-model="cghtdj.zbq"><span id="zbq4">
 	<span contenteditable>______</span>年,项目经业主整体验收合格之日起开始。
 	      </span>
 	</label>
@@ -306,9 +315,8 @@
                     			                    <div class="form-group">
                         <div class="col-sm-2 control-label">结算方式及付款期限</div>
                         <div class="col-sm-10">
-                        <button @click="showtext()">show</button>
-<!--                             <input type="text" class="form-control" v-model="cghtdj.sbbxfs" placeholder="设备保修方式"/>
- -->                             <label ><input type="radio" id="jsfsinput1" name="jsfs" v-model="cghtdj.jsfs"><span id="jsfs1">
+                           <textarea readonly class="form-control" v-model="cghtdj.sbbxfs" placeholder="设备保修方式"></textarea>
+                              <label ><input type="radio" id="jsfsinput1" name="jsfs" v-model="cghtdj.jsfs"><span id="jsfs1">
 						 			货到现场后，由现场项目经理或签收人对货物验收合格后
 									<span contenteditable>______</span>日内付清。
 							      </span>
@@ -343,15 +351,19 @@
                     				                    <div class="form-group">
                         <div class="col-sm-2 control-label">违约责任</div>
                         <div class="col-sm-10">
-                            <p   v-model="cghtdj.wyzr" id="wyzr">
+                            <textarea readonly  class="form-control"  v-model="cghtdj.wyzr" id="wyzr"></textarea>
+                               <label ><input type="radio" id="wyzrinput" name="wyzr" v-model="cghtdj.wyzr" value="1、在履行本合同的过程中：乙方逾期交货和提供服务，视为合同违约行为。每逾期一天，应向对方支付合同总金额的5‰价款作为违约金，该延迟供货部分的违约金额最高不超过本合同总金额的10%；如甲方在收到乙方催款通知后无正当理由未及时给乙方支付合同款项，也视为合同违约行为。每逾期一天，应向对方支付应付款项的5‰价款作为违约金，该延迟付款违约金额最高不超过应付款项的10%；或者按月息2%计付违约金。<br>2、如发现假冒伪劣产品视为乙方违约，甲方有权向乙方主张相当于本合同总金额十倍以上的罚款，且由此造成的一切后果将由乙方承担。	<br>3、如在质保期内，乙方无故未在合理时间内提供相应服务，则甲方有权委托第三方处理应由乙方承担的义务，因该等事务产生的费用甲方有权从质保金中扣除，如质保金不足支付该等费用的，甲方有权向乙方追偿。	<br>4、按本合同规定应赔付的违约金、赔偿金及其它经济损失，应当在明确责任后15日内支付给对方，否则按逾期付款处理。     "><span id="wyzr">
+						1、在履行本合同的过程中：乙方逾期交货和提供服务，视为合同违约行为。每逾期一天，应向对方支付合同总金额的5‰价款作为违约金，该延迟供货部分的违约金额最高不超过本合同总金额的10%；如甲方在收到乙方催款通知后无正当理由未及时给乙方支付合同款项，也视为合同违约行为。每逾期一天，应向对方支付应付款项的5‰价款作为违约金，该延迟付款违约金额最高不超过应付款项的10%；或者按月息2%计付违约金。
 
-1、在履行本合同的过程中：乙方逾期交货和提供服务，视为合同违约行为。每逾期一天，应向对方支付合同总金额的5‰价款作为违约金，该延迟供货部分的违约金额最高不超过本合同总金额的10%；如甲方在收到乙方催款通知后无正当理由未及时给乙方支付合同款项，也视为合同违约行为。每逾期一天，应向对方支付应付款项的5‰价款作为违约金，该延迟付款违约金额最高不超过应付款项的10%；或者按月息2%计付违约金。
+	<br>2、如发现假冒伪劣产品视为乙方违约，甲方有权向乙方主张相当于本合同总金额十倍以上的罚款，且由此造成的一切后果将由乙方承担。
+	
+	<br>3、如在质保期内，乙方无故未在合理时间内提供相应服务，则甲方有权委托第三方处理应由乙方承担的义务，因该等事务产生的费用甲方有权从质保金中扣除，如质保金不足支付该等费用的，甲方有权向乙方追偿。
+	
+	<br>4、按本合同规定应赔付的违约金、赔偿金及其它经济损失，应当在明确责任后15日内支付给对方，否则按逾期付款处理。     
+							      </span>
+								</label>
 
-<br>2、如发现假冒伪劣产品视为乙方违约，甲方有权向乙方主张相当于本合同总金额十倍以上的罚款，且由此造成的一切后果将由乙方承担。
-
-<br>3、如在质保期内，乙方无故未在合理时间内提供相应服务，则甲方有权委托第三方处理应由乙方承担的义务，因该等事务产生的费用甲方有权从质保金中扣除，如质保金不足支付该等费用的，甲方有权向乙方追偿。
-
-<br>4、按本合同规定应赔付的违约金、赔偿金及其它经济损失，应当在明确责任后15日内支付给对方，否则按逾期付款处理。                            </p>
+           
                         </div>
                     </div>
 							
@@ -364,12 +376,11 @@
                     				                    <div class="form-group">
                         <div class="col-sm-2 control-label">其他</div>
                         <div class="col-sm-10">
-                          <!--   <input type="text" class="form-control" placeholder="其他"/> -->
-                       		<p v-model="cghtdj.qt">
-						本合同一式<span contenteditable>______</span> 
-						份，双方各持<span contenteditable>______</span> 
-						份，经双方盖章后生效，传真件及复印件与合同正本具有同等法律效力，涂改无效。其它未尽事宜，由双方协商解决。如发生争议不能解决，双方同意提交南京仲裁委员会仲裁。
-                       </p>
+                          <textarea readonly  class="form-control" v-model="cghtdj.qt" placeholder="其他"></textarea>
+                            <label ><input type="radio" id="qtinput" name="qt" v-model="cghtdj.qt"><span id="qt">本合同一式<span contenteditable>______</span> 份，双方各持<span contenteditable>______</span> 份，经双方盖章后生效，传真件及复印件与合同正本具有同等法律效力，涂改无效。其它未尽事宜，由双方协商解决。如发生争议不能解决，双方同意提交南京仲裁委员会仲裁。                
+							      </span>
+							</label>
+                       	
                         </div>
                     </div>
                     				                    <div class="form-group">

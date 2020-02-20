@@ -265,8 +265,7 @@ var vm = new Vue({
 				 postData:{'htmc': vm.ht.htmc},
                 page:page2
             }).trigger("reloadGrid");
-		}
-		,
+		},
 		savery: function (event) {
 			console.log("savvvvvvvvv");
 			//var h=$('#ryGrid').bootstrapTable('getSelections');

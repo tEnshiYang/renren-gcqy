@@ -354,6 +354,7 @@ var vm = new Vue({
 				
 			});
 		},
+		//zi
 		gethtid:function(){
 			 $.ajax({
 	                type: "POST",
@@ -399,23 +400,23 @@ var vm = new Vue({
 	 
 	                }
 	            });
-//			$.getJSON(baseURL +"sys/cghtdj/getxh", function(r){
-//				var bh=(vm.defaultxm.hcbh)+""+r;
-//				console.log(bh);
-//				vm.cghtdj.htbh = bh;
-//				$('#htbh').val(bh);
-//				$('#htbh').text(bh);
-//
-//			});
+
 		},
 		saveOrUpdate: function (event) {
 			var sbbxfs='#'+$('input[name=sbbxfs]:checked').prop('id');
 			var jsfs='#'+$('input[name=jsfs]:checked').prop('id');
 
 			var zbq='#'+$('input[name=zbq]:checked').prop('id');
+			var qt='#'+$('input[name=qt]:checked').prop('id');
+
 			if(sbbxfs=="#sbbxfsinput1"){
 
 				vm.cghtdj.sbbxfs=$('#sbbxfs1').text();
+			}
+
+			if(qt=="#qtinput"){
+
+				vm.cghtdj.qt=$('#qt').text();
 			}
 			if(zbq=="#zbqinput1"){
 				vm.cghtdj.zbq=$('#zbq1').text();
@@ -437,6 +438,7 @@ var vm = new Vue({
 			}else if(jsfs=="#jsfsinput4"){
 				vm.cghtdj.jsfs=$('#jsfs4').text();
 			}
+			
 		
 		    $('#btnSaveOrUpdate').button('loading').delay(1000).queue(function() {
                 var url = vm.cghtdj.cghtdjId == null ? "sys/cghtdj/save" : "sys/cghtdj/update";
@@ -540,7 +542,6 @@ var vm = new Vue({
 			var page = $("#jqGrid").jqGrid('getGridParam','page');
 			$("#jqGrid").jqGrid('setGridParam',{ 
 				 postData:{'htmc': vm.q.htmc,'htbh': vm.q.htbh,'htlx': vm.q.htlx},
-
                 page:page
             }).trigger("reloadGrid");
 			window.location.reload();
@@ -664,7 +665,7 @@ var vm = new Vue({
       	        });
 //            	  vm.cghtdj.jfdw=d.cell6;
 //            	  $("#jfdw").val(d.cell6);
-              	  $('#myModal2').modal('hide');
+              	  $('#myModal4').modal('hide');
 
             	
             })

@@ -49,7 +49,7 @@
     </resultMap>
 	
 	<select id="getmaxid" resultType="long">
-		select max(xmtbqd_id) from tb_xmtbqd	
+		select max(cghtdj_id) from tb_cghtdj
 		</select>
 
 </mapper>

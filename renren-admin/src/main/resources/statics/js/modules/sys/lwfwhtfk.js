@@ -1,4 +1,45 @@
 $(function () {
+	vm.getXm();
+	$("#htGrid").jqGrid({
+        url: baseURL + 'sys/lwfwhtdj/list',
+        datatype: "json",
+        colModel: [			
+			{ label: '序号', name: 'lwfwhtId', index: 'lwfwht_id', width: 50, key: true },
+			{ label: '劳务合同总额', name: 'lwhtze', index: 'lwhtze', width: 80 }, 			
+			{ label: '合同状态', name: 'htzt', index: 'htzt', width: 80 }, 			
+			{ label: '核算单元', name: 'hsdy', index: 'hsdy', width: 80 }, 			
+			{ label: '合同名称', name: 'htmc', index: 'htmc', width: 80 }, 			
+			{ label: '合同编号', name: 'htbh', index: 'htbh', width: 80 }, 			
+			{ label: '合同金额', name: 'htje', index: 'htje', width: 80 }, 			
+			{ label: '签订日期', name: 'qdrq', index: 'qdrq', width: 80 }, 			
+			{ label: '已到款金额', name: 'ydkje', index: 'ydkje', width: 80 } 			
+			
+        ],
+		viewrecords: true,
+        height: 385,
+        rowNum: 10,
+		rowList : [10,30,50],
+        rownumbers: true, 
+        rownumWidth: 25, 
+        autowidth:true,
+        multiselect: true,
+        pager: "#htGridPager",
+        jsonReader : {
+            root: "page.list",
+            page: "page.currPage",
+            total: "page.totalPage",
+            records: "page.totalCount"
+        },
+        prmNames : {
+            page:"page", 
+            rows:"limit", 
+            order: "order"
+        },
+        gridComplete:function(){
+        	//隐藏grid底部滚动条
+        	$("#htGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
+        }
+    });
     $("#jqGrid").jqGrid({
         url: baseURL + 'sys/lwfwhtfk/list',
         datatype: "json",
@@ -52,6 +93,14 @@ var vm = new Vue({
 			cjrxm:null
 
 		},
+		ht:{
+			htmc:null,
+			htbh:null,
+			cjrxm:null
+
+		},
+		defaultxm:null,
+		
 		showList: true,
 		title: null,
 		lwfwhtfk: {}
@@ -60,10 +109,19 @@ var vm = new Vue({
 		query: function () {
 			vm.reload();
 		},
+		query2: function () {
+			vm.htload();
+		},
 		add: function(){
 			vm.showList = false;
 			vm.title = "新增";
 			vm.lwfwhtfk = {};
+			vm.getXh();
+			vm.lwfwhtfk.ssxmmc=vm.defaultxm.xmname;		
+			var xmm=vm.defaultxm.xmname;							 
+          	$('#ssxmmc').val(xmm);
+			$('#ssxmmc').text(xmm);				 
+		
 		},
 		update: function (event) {
 			var lwfwhtfkId = getSelectedRow();
@@ -74,6 +132,20 @@ var vm = new Vue({
             vm.title = "修改";
             
             vm.getInfo(lwfwhtfkId)
+		},
+		getXm:function(){
+			 $.ajax({
+            type: "POST",
+            url: baseURL + "sys/xm/getdefaultxm",
+            contentType: "application/json",
+            data: null,
+            success: function(r){
+
+           	 vm.defaultxm=r;
+
+
+            }
+        });
 		},
 		saveOrUpdate: function (event) {
 		    $('#btnSaveOrUpdate').button('loading').delay(1000).queue(function() {
@@ -140,6 +212,66 @@ var vm = new Vue({
 
                 page:page
             }).trigger("reloadGrid");
+		},
+		getXh: function(){
+//			console.log("getxh");
+			 $.ajax({
+	                type: "POST",
+	                url: baseURL + "sys/lwfwhtfk/getxh",
+	                contentType: "application/json",
+	                data: null,
+	                success: function(r){
+//	                	console.log(vm.defaultxm);
+	                	console.log(r);
+	                	var bh=(vm.defaultxm.gcbh)+""+r.zfbh;
+	    				vm.lwfwhtfk.zfbh = bh;
+	    				$('#zfbh').val(bh);
+	    				$('#zfbh').text(bh);
+
+	 
+	                }
+	            });
+
+		},
+		htload: function (event) {
+			vm.showList = true;
+			var page = $("#htGrid").jqGrid('getGridParam','page');
+			$("#htGrid").jqGrid('setGridParam',{ 
+				postData:{'htmc': vm.ht.htmc,'htbh': vm.ht.htbh,'cjrxm': vm.ht.cjrxm},
+
+                page:page
+            }).trigger("reloadGrid");
+		},
+		saveht: function (event) {
+			console.log("savvvvvvvvvcccg");
+			//var h=$('#ryGrid').bootstrapTable('getSelections');
+			 //获取选中的数据组
+            var array = $("#htGrid input[type=checkbox]:checked").map(function () {
+                return { 
+                	"htmc": $.trim($(this).closest("tr").find("td:eq(6)").text()),
+                	"htje": $.trim($(this).closest("tr").find("td:eq(8)").text()),
+                	"htbh": $.trim($(this).closest("tr").find("td:eq(7)").text())
+                	};
+            }).get();
+            $.each(array, function (i, d) {
+//            	  console.log("c"+d.id);
+//            	  console.log("xtmc"+d.xtmc);
+            	console.log(d.htje);
+    	  
+            	console.log(d.htmc);
+            	  vm.lwfwhtfk.htmc=d.htmc;
+            	  vm.lwfwhtfk.htbh=d.htbh;
+
+            	  vm.lwfwhtfk.htje=d.htje;
+            	  $("#htmc").val(d.htmc);
+            	  $("#htbh").val(d.htbh);
+
+            	  $("#zje").val(d.htje);
+              	  $('#myModal2').modal('hide');
+
+            	
+            })
+   
 		}
 	}
 });

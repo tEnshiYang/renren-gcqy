@@ -3,9 +3,12 @@
 <head>
     <title>劳务合同供应商</title>
 		<#include "/header.html">
+	
+		
 </head>
 <body>
 <div id="rrapp" v-cloak>
+	<input type="hidden" id="filename"/>
     <div v-show="showList">
         <div class="grid-btn">
          <div class="row" >
@@ -35,12 +38,7 @@
     <div v-show="!showList" class="panel panel-default">
         <div class="panel-heading">{{title}}</div>
         <form class="form-horizontal">
-														                    <div class="form-group">
-                        <div class="col-sm-2 control-label">状态</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="lwhtgys.zy" placeholder="状态"/>
-                        </div>
-                    </div>
+							
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">供应商名称</div>
                         <div class="col-sm-10">
@@ -98,25 +96,30 @@
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">开户许可证</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="lwhtgys.khxkz" placeholder="开户许可证"/>
+                            <input type="hidden" id="khxkz" class="form-control"  v-model="lwhtgys.khxkz" placeholder="开户许可证"/>
+                        	<a class="btn btn-primary" onclick="Modify('khxkz')">上传</a>
                         </div>
                     </div>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">营业执照</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="lwhtgys.yyzz" placeholder="营业执照"/>
+                            <input type="hidden" id="yyzz" class="form-control" v-model="lwhtgys.yyzz" placeholder="营业执照"/>
+                       		<a class="btn btn-primary" onclick="Modify('yyzz')">上传</a>
+                       		
                         </div>
                     </div>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">资质证明</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="lwhtgys.zzzm" placeholder="资质证明"/>
+                            <input type="hidden" id="zzzm" class="form-control" v-model="lwhtgys.zzzm" placeholder="资质证明"/>
+                      		<a class="btn btn-primary" onclick="Modify('zzzm')">上传</a>
                         </div>
                     </div>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">企业信用查询结果</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="lwhtgys.qyxycx" placeholder="企业信用查询结果"/>
+                            <input type="hidden" id="qyxycx" class="form-control" v-model="lwhtgys.qyxycx" placeholder="企业信用查询结果"/>
+                       		<a class="btn btn-primary" onclick="Modify('qyxycx')">上传</a>
                         </div>
                     </div>
 											                    <div class="form-group">
@@ -125,24 +128,89 @@
                             <input type="text" class="form-control" v-model="lwhtgys.bz" placeholder="备注"/>
                         </div>
                     </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">确认人</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="lwhtgys.qrr" placeholder="确认人"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">确认时间</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="lwhtgys.qrsj" placeholder="确认时间"/>
-                        </div>
-                    </div>
+								
 							            <div class="form-group">
                 <div class="col-sm-2 control-label"></div>
                 <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>
                 &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
             </div>
         </form>
+    </div>
+            <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            选择附件
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                     <div class="grid-btn">
+                    	
+							
+                         <table id="fiGrid">
+                         	<form id= "uploadForm" >  
+						      <input type="hidden" id="scxmId"  />
+ 						      <p >上传文件： <input  type="file" name="file1" id="file1"  multiple="multiple"  /></p> 
+ 						     <p > <input  type="file" name="file2" id="file2"  multiple="multiple"  /></p> 
+ 						      	<p > <input   type="file" name="file3" id="file3"  multiple="multiple"  /></p>
+ 						      	<p > <input  type="file" name="file4" id="file4"  multiple="multiple"  /></p>
+ 						      	<p > <input   type="file" name="file5" id="file5"  multiple="multiple"  /></p>					      						    
+							  <input type="button" name="button" value="添加附件" onclick="addInput()">
+							<input type="button" name="button" value="删除附件" onclick="deleteInput()">
+							<span id="upload"></span>
+						</form> 
+                         </table>
+       					 <div id="fiGridPager"></div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" @click="doUpload" class="btn btn-primary">
+                        		    确定
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal  $("input[name='FORMID']").val(); -->
+        </div>
+    
+    
+    </div>
+       <div class="modal fade" id="downModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            	下载文件
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                     <div class="grid-btn">
+                    	
+							
+                         <table id="downlist">
+                        
+                         </table>
+       					
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                      
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal  $("input[name='FORMID']").val(); -->
+        </div>
+    
+    
     </div>
 </div>
 
