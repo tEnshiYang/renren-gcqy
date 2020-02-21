@@ -174,17 +174,17 @@ var vm = new Vue({
  	        $('#sqr').val(na);
 		},
 		getXm:function(){
-			 $.ajax({
-          type: "POST",
-          url: baseURL + "sys/xm/getdefaultxm",
-          contentType: "application/json",
-          data: null,
-          success: function(r){
-         	 vm.defaultxm=r;
-
-
-          }
-      });
+				 $.ajax({
+	          type: "POST",
+	          url: baseURL + "sys/xm/getdefaultxm",
+	          contentType: "application/json",
+	          data: null,
+	          success: function(r){
+	         	 vm.defaultxm=r;
+	
+	
+	          }
+	      });
 		},
 		update: function (event) {
 			var zjwljkdjId = getSelectedRow();

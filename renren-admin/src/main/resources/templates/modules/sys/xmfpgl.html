@@ -6,6 +6,8 @@
 </head>
 <body>
 <div id="rrapp" v-cloak>
+<span id="syssqr" style="display:none;">{{user.username}}</span>
+
     <div v-show="showList">
         <div class="grid-btn">
          <div class="row" >
@@ -34,15 +36,10 @@
 														                    <div class="form-group">
                         <div class="col-sm-2 control-label">所属项目</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="xmfpgl.ssxm" placeholder="所属项目"/>
+                            <input type="text" readonly id="ssxmmc" class="form-control" v-model="xmfpgl.ssxm" placeholder="所属项目"/>
                         </div>
                     </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">状态</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="xmfpgl.zt" placeholder="状态"/>
-                        </div>
-                    </div>
+										
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">供应商名称</div>
                         <div class="col-sm-10">
@@ -52,7 +49,7 @@
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">合同名称</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="xmfpgl.htmc" placeholder="合同名称"/>
+                            <input type="text" id="htmc" class="form-control" v-model="xmfpgl.htmc" placeholder="合同名称"/>
                         </div>
                     </div>
 											                    <div class="form-group">
@@ -94,27 +91,16 @@
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">登记人</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="xmfpgl.djr" placeholder="登记人"/>
+                            <input type="text" readonly id="djr" class="form-control" v-model="xmfpgl.djr" placeholder="登记人"/>
                         </div>
                     </div>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">备注</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="xmfpgl.bz" placeholder="备注"/>
+                            <textarea type="text" class="form-control" v-model="xmfpgl.bz" placeholder="备注"></textarea>
                         </div>
                     </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">操作人</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="xmfpgl.czr" placeholder="操作人"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">操作时间</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="xmfpgl.czsj" placeholder="操作时间"/>
-                        </div>
-                    </div>
+									
 							            <div class="form-group">
                 <div class="col-sm-2 control-label"></div>
                 <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>

@@ -1,4 +1,35 @@
+function getNowDate(){
+	var date=new Date();
+
+ 	var year=date.getFullYear();
+ 	var month=date.getMonth();
+ 	var day=date.getDate();
+
+     var hour=date.getHours();
+     var minute=date.getMinutes();
+     var second=date.getSeconds();
+
+     //这样写显示时间在1~9会挤占空间；所以要在1~9的数字前补零;
+     if (hour<10) {
+     	hour='0'+hour;
+     }
+     if (minute<10) {
+     	minute='0'+minute;
+     }
+     if (second<10) {
+     	second='0'+second;
+     }
+
+
+     var x=date.getDay();//获取星期
+
+
+     var time=year+'/'+(1+month)+'/'+day+' '+hour+':'+minute+':'+second
+     return time;
+}
 $(function () {
+	vm.getXm();
+	vm.getUser();
     $("#jqGrid").jqGrid({
         url: baseURL + 'sys/bhxzgl/list',
         datatype: "json",
@@ -52,11 +83,39 @@ var vm = new Vue({
 			gcmc:null
 
 		},
+		defaultxm:null,
+		user:{},
 		showList: true,
 		title: null,
 		bhxzgl: {}
 	},
 	methods: {
+		getXm:function(){
+			 $.ajax({
+       type: "POST",
+       url: baseURL + "sys/xm/getdefaultxm",
+       contentType: "application/json",
+       data: null,
+       success: function(r){
+      	 vm.defaultxm=r;
+
+
+       }
+   });
+	},
+	getUser: function(){
+		$.getJSON(baseURL +"sys/user/info?_"+$.now(), function(r){
+			vm.user = r.user;
+			console.log(vm.user);
+			if(vm.user.quanxian=="领导"){
+				$('#shenpi').show();
+
+			}else{
+				$('#shenpi').hide();
+
+			}
+		});
+	},
 		query: function () {
 			vm.reload();
 		},
@@ -64,6 +123,21 @@ var vm = new Vue({
 			vm.showList = false;
 			vm.title = "新增";
 			vm.bhxzgl = {};
+			vm.bhxzgl.xmmc=vm.defaultxm.xmname;		
+			var xmm=vm.defaultxm.xmname;			
+	    	
+          	$('#xmmc').val(xmm);
+			$('#xmmc').text(xmm);		
+			
+			var date=getNowDate();
+          	$('#sqrq').val(date);
+			$('#sqrq').text(date);	
+			vm.bhxzgl.sqrq=date;
+			 var na=$("#syssqr").text();
+ 	        console.log("na:"+na);
+ 	    
+ 	        vm.bhxzgl.sqr=na;
+ 	        $('#sqr').val(na);
 		},
 		update: function (event) {
 			var bhxzglId = getSelectedRow();

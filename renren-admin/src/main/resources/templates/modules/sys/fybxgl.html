@@ -3,9 +3,15 @@
 <head>
     <title>费用报销管理</title>
 		<#include "/header.html">
+		<link rel="stylesheet" href="${request.contextPath}/statics/css/bootstrap-table.min.css">
+
+		<script src="${request.contextPath}/statics/libs/bootstrap-table.min.js"></script>
+		<script src="${request.contextPath}/statics/js/bootstrap-table-editable.js"></script>
 </head>
 <body>
 <div id="rrapp" v-cloak>
+<span id="syssqr" style="display:none;">{{user.username}}</span>
+
     <div v-show="showList">
         <div class="grid-btn">
           <div class="row" >
@@ -34,15 +40,10 @@
 														                    <div class="form-group">
                         <div class="col-sm-2 control-label">项目名称</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="fybxgl.xmmc" placeholder="项目名称"/>
+                            <input type="text" id="xmmc" readonly class="form-control" v-model="fybxgl.xmmc" placeholder="项目名称"/>
                         </div>
                     </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">审批状态</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="fybxgl.spzt" placeholder="审批状态"/>
-                        </div>
-                    </div>
+											
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">报销部门</div>
                         <div class="col-sm-10">
@@ -52,7 +53,7 @@
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">经办人</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="fybxgl.jbr" placeholder="经办人"/>
+                            <input type="text" id="jbr" readonly class="form-control" v-model="fybxgl.jbr" placeholder="经办人"/>
                         </div>
                     </div>
 											                    <div class="form-group">
@@ -106,8 +107,13 @@
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">费用清单</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="fybxgl.fyqd" placeholder="费用清单"/>
-                        </div>
+							<div class="table-box" style="margin: 20px;width:900px;">
+							    <div id="toolbar">
+							        <a id="button" class="btn btn-default">添加</a>
+							 
+	 							   </div>
+							    <table id="table"></table>
+							</div>                           </div>
                     </div>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">备注</div>

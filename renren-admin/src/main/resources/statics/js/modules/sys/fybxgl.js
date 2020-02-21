@@ -1,4 +1,104 @@
+$(function() {
+	vm.getXm();
+	vm.getUser();
+    let $table = $('#table');
+    let $button = $('#button');
+    let $getTableData = $('#getTableData');
+    $('#button').show();
+    $button.click(function() {
+    	if($('#xmmc').val()==null||$('#xmmc').val()==''){
+    		alert('请先选择项目!');return;
+    		}
+    	
+        $table.bootstrapTable('insertRow', {
+            index: 0,
+            row: {
+            	xmmc: $('#xmmc').val(),
+            	 lb: '',
+                 je: '',
+                 bz: ''
+            }
+        });
+        console.log($('#xmmc').val());
+       
+//        $('td').parent().find('td').eq(1).val($('#xmmc').val());
+//        $('td').parent().find('td').eq(1).text($('#xmmc').val());
+//        $('td').parent().find('td').eq(1).hide();
+//        console.log( $('td').parent().find('td').eq(1).val());
+    });
+
+    $table.bootstrapTable({
+        url: 'data2.json',
+        toolbar: '#toolbar',
+        clickEdit: true,
+        showToggle: true,
+        pagination: true,       //显示分页条
+        showColumns: false,
+        showPaginationSwitch: false,     //显示切换分页按钮
+        showRefresh: false,      //显示刷新按钮
+        //clickToSelect: true,  //点击row选中radio或CheckBox visible: false
+        columns: [{
+            checkbox: true
+        }, {
+            field: 'fyqdId',
+            visible: false
+        }, {
+            field: 'lb',
+            title: '类别'
+        }, {
+            field: 'je',
+            title: '金额'
+        },
+         {
+            field: 'bz',
+            title: '备注'
+        } ],
+        /**
+         * @param {点击列的 field 名称} field
+         * @param {点击列的 value 值} value
+         * @param {点击列的整行数据} row
+         * @param {td 元素} $element
+         */
+        onClickCell: function(field, value, row, $element) {
+            $element.attr('contenteditable', true);
+            $element.blur(function() {
+                let index = $element.parent().data('index');
+                let tdValue = $element.html();
+
+                saveData(index, field, tdValue);
+            })
+        }
+    });
+
+    $getTableData.click(function() {
+    	var json=JSON.stringify($table.bootstrapTable('getData'));
+       // alert(json);
+         var url =  "sys/fyqd3/save";
+
+        $.ajax({
+            type: "POST",
+            url: baseURL + url,
+            contentType: "application/json",
+            data: json,
+            success: function(r){
+                if(r.code === 0){
+                     layer.msg("操作成功", {icon: 1});
+                }
+            }
+        });
+    });
+
+    function saveData(index, field, value) {
+        $table.bootstrapTable('updateCell', {
+            index: index,       //行索引
+            field: field,       //列名
+            value: value        //cell值
+        })
+    }
+
+});
 $(function () {
+	
     $("#jqGrid").jqGrid({
         url: baseURL + 'sys/fybxgl/list',
         datatype: "json",
@@ -45,11 +145,39 @@ var vm = new Vue({
 		q:{
 			bxbm:null
 		},
+		defaultxm:null,
+		user:{},
 		showList: true,
 		title: null,
 		fybxgl: {}
 	},
 	methods: {
+		getXm:function(){
+			 $.ajax({
+       type: "POST",
+       url: baseURL + "sys/xm/getdefaultxm",
+       contentType: "application/json",
+       data: null,
+       success: function(r){
+      	 vm.defaultxm=r;
+
+
+       }
+   });
+	},
+	getUser: function(){
+		$.getJSON(baseURL +"sys/user/info?_"+$.now(), function(r){
+			vm.user = r.user;
+			console.log(vm.user);
+			if(vm.user.quanxian=="领导"){
+				$('#shenpi').show();
+
+			}else{
+				$('#shenpi').hide();
+
+			}
+		});
+	},
 		query: function () {
 			vm.reload();
 		},
@@ -57,6 +185,19 @@ var vm = new Vue({
 			vm.showList = false;
 			vm.title = "新增";
 			vm.fybxgl = {};
+			
+			vm.fybxgl.xmmc=vm.defaultxm.xmname;		
+			var xmm=vm.defaultxm.xmname;			
+	    	
+          	$('#xmmc').val(xmm);
+			$('#xmmc').text(xmm);		
+			
+			
+			 var na=$("#syssqr").text();
+ 	        console.log("na:"+na);
+ 	    
+ 	        vm.fybxgl.jbr=na;
+ 	        $('#jbr').val(na);
 		},
 		update: function (event) {
 			var fybxglId = getSelectedRow();
@@ -71,6 +212,21 @@ var vm = new Vue({
 		saveOrUpdate: function (event) {
 		    $('#btnSaveOrUpdate').button('loading').delay(1000).queue(function() {
                 var url = vm.fybxgl.fybxglId == null ? "sys/fybxgl/save" : "sys/fybxgl/update";
+                var url2 = vm.fybxgl.fybxglId == null ? "sys/fyqd3/save":"sys/fyqd3/update";
+                
+                var json=JSON.stringify($('#table').bootstrapTable('getData'));
+                // alert(json);
+                  
+
+                 $.ajax({
+                     type: "POST",
+                     url: baseURL + url2,
+                     contentType: "application/json",
+                     data: json,
+                     success: function(r){
+                        
+                     }
+                 });
                 $.ajax({
                     type: "POST",
                     url: baseURL + url,
@@ -123,6 +279,29 @@ var vm = new Vue({
 		getInfo: function(fybxglId){
 			$.get(baseURL + "sys/fybxgl/info/"+fybxglId, function(r){
                 vm.fybxgl = r.fybxgl;
+                
+                var xmmc=vm.fybxgl.xmmc;
+                
+                //动态增加可编辑入围单位列表
+    			$.get(baseURL + "sys/fyqd3/list/"+xmmc, function(r){
+                   
+                    for(var i=0;i<r.list.length;i++){
+                    //	vm.rwddw[i]=r.list[i];
+                        $('#table').bootstrapTable('insertRow', {
+                            index: 0,
+                            row: {
+                            	 fyqdId: r.list[i].fyqdId,
+                            	 xmmc: r.list[i].xmmc,
+                            	 lb: r.list[i].lb,
+                                 je: r.list[i].je,
+                                 bz: r.list[i].bz
+                            }
+                        });
+                    }
+                   // console.log(vm.rwddw);
+                    $('#button').hide();
+                    
+                });
             });
 		},
 		reload: function (event) {
@@ -133,6 +312,7 @@ var vm = new Vue({
 
                 page:page
             }).trigger("reloadGrid");
+			window.location.reload();
 		}
 	}
 });

@@ -343,7 +343,7 @@ var vm = new Vue({
                 page:page1
             }).trigger("reloadGrid");
 		},
-saveusername: function (event) {
+		saveusername: function (event) {
 			
 			//var h=$('#ryGrid').bootstrapTable('getSelections');
 			 //获取选中的数据组

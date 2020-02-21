@@ -1,4 +1,133 @@
+function getNowDate(){
+	var date=new Date();
+
+ 	var year=date.getFullYear();
+ 	var month=date.getMonth();
+ 	var day=date.getDate();
+
+     var hour=date.getHours();
+     var minute=date.getMinutes();
+     var second=date.getSeconds();
+
+     //这样写显示时间在1~9会挤占空间；所以要在1~9的数字前补零;
+     if (hour<10) {
+     	hour='0'+hour;
+     }
+     if (minute<10) {
+     	minute='0'+minute;
+     }
+     if (second<10) {
+     	second='0'+second;
+     }
+
+
+     var x=date.getDay();//获取星期
+
+
+     var time=year+'/'+(1+month)+'/'+day+' '+hour+':'+minute+':'+second
+     return time;
+}
+$(function() {
+	vm.getXm();
+	vm.getUser();
+    let $table = $('#table');
+    let $button = $('#button');
+    let $getTableData = $('#getTableData');
+    $('#button').show();
+    $button.click(function() {
+    	if($('#fkxm').val()==null||$('#fkxm').val()==''){
+    		alert('请先选择项目!');return;
+    		}
+    	
+        $table.bootstrapTable('insertRow', {
+            index: 0,
+            row: {
+            	xmmc: $('#fkxm').val(),
+            	 lb: '',
+                 je: '',
+                 bz: ''
+            }
+        });
+        console.log($('#fkxm').val());
+       
+//        $('td').parent().find('td').eq(1).val($('#xmmc').val());
+//        $('td').parent().find('td').eq(1).text($('#xmmc').val());
+//        $('td').parent().find('td').eq(1).hide();
+//        console.log( $('td').parent().find('td').eq(1).val());
+    });
+
+    $table.bootstrapTable({
+        url: 'data2.json',
+        toolbar: '#toolbar',
+        clickEdit: true,
+        showToggle: true,
+        pagination: true,       //显示分页条
+        showColumns: false,
+        showPaginationSwitch: false,     //显示切换分页按钮
+        showRefresh: false,      //显示刷新按钮
+        //clickToSelect: true,  //点击row选中radio或CheckBox visible: false
+        columns: [{
+            checkbox: true
+        }, {
+            field: 'fyqdId',
+            visible: false
+        }, {
+            field: 'lb',
+            title: '类别'
+        }, {
+            field: 'je',
+            title: '金额'
+        },
+         {
+            field: 'bz',
+            title: '备注'
+        } ],
+        /**
+         * @param {点击列的 field 名称} field
+         * @param {点击列的 value 值} value
+         * @param {点击列的整行数据} row
+         * @param {td 元素} $element
+         */
+        onClickCell: function(field, value, row, $element) {
+            $element.attr('contenteditable', true);
+            $element.blur(function() {
+                let index = $element.parent().data('index');
+                let tdValue = $element.html();
+
+                saveData(index, field, tdValue);
+            })
+        }
+    });
+
+    $getTableData.click(function() {
+    	var json=JSON.stringify($table.bootstrapTable('getData'));
+       // alert(json);
+         var url =  "sys/fyqd/save";
+
+        $.ajax({
+            type: "POST",
+            url: baseURL + url,
+            contentType: "application/json",
+            data: json,
+            success: function(r){
+                if(r.code === 0){
+                     layer.msg("操作成功", {icon: 1});
+                }
+            }
+        });
+    });
+
+    function saveData(index, field, value) {
+        $table.bootstrapTable('updateCell', {
+            index: index,       //行索引
+            field: field,       //列名
+            value: value        //cell值
+        })
+    }
+
+});
 $(function () {
+	
     $("#jqGrid").jqGrid({
         url: baseURL + 'sys/zjwlbmjjs/list',
         datatype: "json",
@@ -47,11 +176,40 @@ var vm = new Vue({
 			skbm:null,
 			skxm:null
 		},
+		defaultxm:null,
+		user:{},
+		fyqd:{},
 		showList: true,
 		title: null,
 		zjwlbmjjs: {}
 	},
 	methods: {
+		getXm:function(){
+			 $.ajax({
+        type: "POST",
+        url: baseURL + "sys/xm/getdefaultxm",
+        contentType: "application/json",
+        data: null,
+        success: function(r){
+       	 vm.defaultxm=r;
+
+
+        }
+    });
+	},
+	getUser: function(){
+		$.getJSON(baseURL +"sys/user/info?_"+$.now(), function(r){
+			vm.user = r.user;
+			console.log(vm.user);
+			if(vm.user.quanxian=="领导"){
+				$('#shenpi').show();
+
+			}else{
+				$('#shenpi').hide();
+
+			}
+		});
+	},
 		query: function () {
 			vm.reload();
 		},
@@ -59,6 +217,22 @@ var vm = new Vue({
 			vm.showList = false;
 			vm.title = "新增";
 			vm.zjwlbmjjs = {};
+			
+			vm.zjwlbmjjs.fkxm=vm.defaultxm.xmname;		
+			var xmm=vm.defaultxm.xmname;			
+	    	
+          	$('#fkxm').val(xmm);
+			$('#fkxm').text(xmm);		
+			
+			var date=getNowDate();
+          	$('#cjsj').val(date);
+			$('#cjsj').text(date);	
+			vm.zjwlbmjjs.cjsj=date;
+			 var na=$("#syssqr").text();
+ 	        console.log("na:"+na);
+ 	    
+ 	        vm.zjwlbmjjs.sqr=na;
+ 	        $('#sqr').val(na);
 		},
 		update: function (event) {
 			var zjwlbmjjsId = getSelectedRow();
@@ -73,6 +247,21 @@ var vm = new Vue({
 		saveOrUpdate: function (event) {
 		    $('#btnSaveOrUpdate').button('loading').delay(1000).queue(function() {
                 var url = vm.zjwlbmjjs.zjwlbmjjsId == null ? "sys/zjwlbmjjs/save" : "sys/zjwlbmjjs/update";
+                var url2 = vm.zjwlbmjjs.zjwlbmjjsId == null ? "sys/fyqd/save":"sys/fyqd/update";
+
+                var json=JSON.stringify($('#table').bootstrapTable('getData'));
+                // alert(json);
+                  
+
+                 $.ajax({
+                     type: "POST",
+                     url: baseURL + url2,
+                     contentType: "application/json",
+                     data: json,
+                     success: function(r){
+                        
+                     }
+                 });
                 $.ajax({
                     type: "POST",
                     url: baseURL + url,
@@ -125,6 +314,29 @@ var vm = new Vue({
 		getInfo: function(zjwlbmjjsId){
 			$.get(baseURL + "sys/zjwlbmjjs/info/"+zjwlbmjjsId, function(r){
                 vm.zjwlbmjjs = r.zjwlbmjjs;
+                
+                var xmmc=vm.zjwlbmjjs.fkxm;
+          
+                //动态增加可编辑入围单位列表
+    			$.get(baseURL + "sys/fyqd/list/"+xmmc, function(r){
+                   
+                    for(var i=0;i<r.list.length;i++){
+                    //	vm.rwddw[i]=r.list[i];
+                        $('#table').bootstrapTable('insertRow', {
+                            index: 0,
+                            row: {
+                            	 fyqdId: r.list[i].fyqdId,
+                            	 xmmc: r.list[i].fkxm,
+                            	 lb: r.list[i].lb,
+                                 je: r.list[i].je,
+                                 bz: r.list[i].bz
+                            }
+                        });
+                    }
+                   // console.log(vm.rwddw);
+                    $('#button').hide();
+                    
+                });
             });
 		},
 		reload: function (event) {

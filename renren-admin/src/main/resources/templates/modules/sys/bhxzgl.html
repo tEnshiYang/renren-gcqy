@@ -6,6 +6,8 @@
 </head>
 <body>
 <div id="rrapp" v-cloak>
+<span id="syssqr" style="display:none;">{{user.username}}</span>
+
     <div v-show="showList">
         <div class="grid-btn">
           <div class="row" >
@@ -37,15 +39,10 @@
 														                    <div class="form-group">
                         <div class="col-sm-2 control-label">项目名称</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="bhxzgl.xmmc" placeholder="项目名称"/>
+                            <input type="text" readonly id="xmmc" class="form-control" v-model="bhxzgl.xmmc" placeholder="项目名称"/>
                         </div>
                     </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">审批状态</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="bhxzgl.spzt" placeholder="审批状态"/>
-                        </div>
-                    </div>
+										
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">编号</div>
                         <div class="col-sm-10">
@@ -61,13 +58,13 @@
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">申请人</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="bhxzgl.sqr" placeholder="申请人"/>
+                            <input type="text" readonly id="sqr" class="form-control" v-model="bhxzgl.sqr" placeholder="申请人"/>
                         </div>
                     </div>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">申请日期</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="bhxzgl.sqrq" placeholder="申请日期"/>
+                            <input type="text" readonly id="sqrq" class="form-control" v-model="bhxzgl.sqrq" placeholder="申请日期"/>
                         </div>
                     </div>
 											                    <div class="form-group">

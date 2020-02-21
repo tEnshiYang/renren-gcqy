@@ -11,7 +11,6 @@ function usbeforeSelectRow()
 $(function() {
     let $table = $('#table');
     let $button = $('#button');
-    let $getTableData = $('#getTableData');
     $('#button').show();
     $button.click(function() {
     	if($('#xmmc').val()==null||$('#xmmc').val()==''){
@@ -102,23 +101,6 @@ $(function() {
         }
     });
 
-    $getTableData.click(function() {
-    	var json=JSON.stringify($table.bootstrapTable('getData'));
-       // alert(json);
-         var url =  "sys/rwddw/save";
-
-        $.ajax({
-            type: "POST",
-            url: baseURL + url,
-            contentType: "application/json",
-            data: json,
-            success: function(r){
-                if(r.code === 0){
-                     layer.msg("操作成功", {icon: 1});
-                }
-            }
-        });
-    });
 
     function saveData(index, field, value) {
         $table.bootstrapTable('updateCell', {
@@ -400,8 +382,8 @@ var vm = new Vue({
                         $('#table').bootstrapTable('insertRow', {
                             index: 0,
                             row: {
-                            	rwddwId: r.list[i].rwddwId,
-                            	xmmc: r.list[i].xmmc,
+                            	 rwddwId: r.list[i].rwddwId,
+                            	 xmmc: r.list[i].xmmc,
                             	 dwmc: r.list[i].dwmc,
                                  bj: r.list[i].bj,
                                  jsdf: r.list[i].jsdf,

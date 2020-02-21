@@ -3,7 +3,7 @@ $(function () {
         url: baseURL + 'sys/hkdj/list',
         datatype: "json",
         colModel: [			
-			{ label: 'hkdjId', name: 'hkdjId', index: 'hkdj_id', width: 50, key: true },
+			{ label: '序号', name: 'hkdjId', index: 'hkdj_id', width: 50, key: true },
 			{ label: '标题', name: 'bt', index: 'bt', width: 80 }, 			
 			{ label: '审批状态', name: 'spzt', index: 'spzt', width: 80 }, 			
 			{ label: '合同状态', name: 'htzt', index: 'htzt', width: 80 }, 			

@@ -3,6 +3,10 @@
 <head>
     <title>特殊走账对账管理</title>
 		<#include "/header.html">
+		<link rel="stylesheet" href="${request.contextPath}/statics/css/bootstrap-table.min.css">
+
+		<script src="${request.contextPath}/statics/libs/bootstrap-table.min.js"></script>
+		<script src="${request.contextPath}/statics/js/bootstrap-table-editable.js"></script>
 </head>
 <body>
 <div id="rrapp" v-cloak>
@@ -35,15 +39,10 @@
 														                    <div class="form-group">
                         <div class="col-sm-2 control-label">项目名称</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="tszzdzgl.xmmc" placeholder="项目名称"/>
+                            <input type="text" id="xmmc" class="form-control" v-model="tszzdzgl.xmmc" placeholder="项目名称"/>
                         </div>
                     </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">审批状态</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="tszzdzgl.spzt" placeholder="审批状态"/>
-                        </div>
-                    </div>
+									
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">项目编号</div>
                         <div class="col-sm-10">
@@ -131,26 +130,51 @@
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">采购及特殊走账明细</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="tszzdzgl.cgjtszzmx" placeholder="采购及特殊走账明细"/>
+                        							        <a id="button" class="btn btn-default">添加</a>
+                        
+							<div class="table-box" style="margin: 20px;width:900px;">
+							    <div id="toolbar">
+							 
+	 							   </div>
+							    <table id="table"></table>
+							</div>                       
                         </div>
                     </div>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">往来款明细</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="tszzdzgl.wlkmx" placeholder="往来款明细"/>
-                        </div>
+                        <a id="button1" class="btn btn-default">添加</a>
+                        
+							<div class="table-box" style="margin: 20px;width:900px;">
+							    <div id="toolbar">
+							 
+	 							   </div>
+							    <table id="table1"></table>
+							</div>                          </div>
                     </div>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">业主发票明细</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="tszzdzgl.yzfpmx" placeholder="业主发票明细"/>
-                        </div>
+                         <a id="button2" class="btn btn-default">添加</a>
+                        
+								<div class="table-box" style="margin: 20px;width:900px;">
+							    <div id="toolbar">
+							 
+	 							   </div>
+							    <table id="table2"></table>
+							</div>                         </div>
                     </div>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">业主打款明细</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="tszzdzgl.yzdkmx" placeholder="业主打款明细"/>
-                        </div>
+								<a id="button3" class="btn btn-default">添加</a>
+                        
+								<div class="table-box" style="margin: 20px;width:900px;">
+							    <div id="toolbar">
+							 
+	 							   </div>
+							    <table id="table3"></table>
+							</div>                         </div>
                     </div>
 											                    <div class="form-group">
                         <div class="col-sm-2 control-label">备注</div>
